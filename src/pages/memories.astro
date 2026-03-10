@@ -1,0 +1,217 @@
+---
+import Layout from '../layouts/Layout.astro';
+import memoriesData from '../data/memories.json';
+import '../styles/memories.css';
+
+// Get unique years sorted descending
+const years = [...new Set(memoriesData.map(m => m.year))].sort((a, b) => Number(b) - Number(a));
+
+// Categories config
+const categories = [
+  { key: 'all',                  label: 'All Memories',       icon: '◈' },
+  { key: 'school-trip',         label: 'School Trips',        icon: '✈' },
+  { key: 'district-visit',      label: 'District Officials',  icon: '🏛' },
+  { key: 'motivational-speaker',label: 'Motivational Speakers',icon: '🎤' },
+  { key: 'fun-day',             label: 'Fun Days',            icon: '🎉' },
+  { key: 'farewell-ceremony',   label: 'Farewell Ceremonies', icon: '🎓' },
+];
+
+const categoryColors: Record<string, string> = {
+  'school-trip':          '#961107',
+  'district-visit':       '#1e40af',
+  'motivational-speaker': '#059669',
+  'fun-day':              '#cb8f24',
+  'farewell-ceremony':    '#7b2d8b',
+};
+
+const categoryBgs: Record<string, string> = {
+  'school-trip':          '#fff1f1',
+  'district-visit':       '#eff6ff',
+  'motivational-speaker': '#ecfdf5',
+  'fun-day':              '#fffbeb',
+  'farewell-ceremony':    '#fdf4ff',
+};
+---
+
+<Layout title="Memories - Tshikhuthula Secondary School" currentPage="memories" noNavbarPadding={true} showMainNav={true}>
+
+    <!-- ── HERO HEADER ── -->
+    <header class="mem-header">
+        <div class="mem-header-bg"></div>
+        <div class="mem-header-shimmer"></div>
+        <div class="mem-header-content">
+            <div class="mem-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                School Memories
+            </div>
+            <h1 class="mem-title">
+                Our <span class="mem-title-accent">Cherished</span><br/>Moments
+            </h1>
+            <p class="mem-tagline">
+                A living archive of the experiences, ceremonies, and celebrations that define the spirit of Tshikhuthula Secondary School.
+            </p>
+
+            <!-- Year stat pills -->
+            <div class="mem-year-pill-row">
+                {years.map(yr => (
+                    <div class="mem-year-pill">{yr}</div>
+                ))}
+            </div>
+        </div>
+    </header>
+
+    <!-- ── FILTER & CONTENT ── -->
+    <div class="mem-page-bg">
+        <div class="mem-container">
+
+            <!-- ── FILTER BAR ── -->
+            <div class="mem-filter-bar">
+                <!-- Year Filter -->
+                <div class="mem-filter-group">
+                    <span class="mem-filter-label">Year</span>
+                    <div class="mem-year-tabs" id="yearTabs">
+                        <button class="mem-year-tab active" data-year="all">All Years</button>
+                        {years.map(yr => (
+                            <button class="mem-year-tab" data-year={yr}>{yr}</button>
+                        ))}
+                    </div>
+                </div>
+
+                <!-- Category Filter -->
+                <div class="mem-filter-group">
+                    <span class="mem-filter-label">Category</span>
+                    <div class="mem-cat-tabs" id="catTabs">
+                        {categories.map((cat, i) => (
+                            <button
+                                class={`mem-cat-tab${i === 0 ? ' active' : ''}`}
+                                data-cat={cat.key}
+                                style={i === 0 ? '' : `--cat-color:${categoryColors[cat.key] || '#961107'}`}
+                            >
+                                <span class="mem-cat-icon">{cat.icon}</span>
+                                {cat.label}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                <!-- Results count -->
+                <div class="mem-results-count">
+                    <span id="resultsCount">{memoriesData.length}</span> memories found
+                </div>
+            </div>
+
+            <!-- ── MEMORY GRID ── -->
+            <div class="mem-grid" id="memoriesGrid">
+                {memoriesData.map((memory) => (
+                    <article
+                        class="mem-card"
+                        data-category={memory.category}
+                        data-year={memory.year}
+                        style={`--cat-color:${categoryColors[memory.category]};--cat-bg:${categoryBgs[memory.category]}`}
+                    >
+                        <!-- Image -->
+                        <div class="mem-card-img-wrap">
+                            <img
+                                src={memory.image}
+                                alt={memory.title}
+                                class="mem-card-img"
+                                loading="lazy"
+                                onerror="this.src='/assets/images/hero/slide1.png'"
+                            />
+                            <!-- Category tag overlay -->
+                            <div class="mem-card-cat-tag" style={`background:${categoryColors[memory.category]}`}>
+                                {categories.find(c => c.key === memory.category)?.icon}
+                                {categories.find(c => c.key === memory.category)?.label}
+                            </div>
+                            <!-- Year badge -->
+                            <div class="mem-card-year-badge">{memory.year}</div>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="mem-card-body">
+                            <div class="mem-card-date">{memory.date}</div>
+                            <h3 class="mem-card-title">{memory.title}</h3>
+                            <p class="mem-card-desc">{memory.description}</p>
+                            <div class="mem-card-footer">
+                                <span class="mem-card-participants">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                    {memory.participants}
+                                </span>
+                            </div>
+                        </div>
+                        <!-- Hover colour bar -->
+                        <div class="mem-card-bar"></div>
+                    </article>
+                ))}
+            </div>
+
+            <!-- Empty state -->
+            <div class="mem-empty" id="memEmpty" style="display:none">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                <h3>No memories found</h3>
+                <p>Try adjusting the year or category filters.</p>
+            </div>
+
+        </div>
+    </div>
+</Layout>
+
+<script>
+    const yearTabs = document.querySelectorAll<HTMLButtonElement>('.mem-year-tab');
+    const catTabs  = document.querySelectorAll<HTMLButtonElement>('.mem-cat-tab');
+    const cards     = document.querySelectorAll<HTMLElement>('.mem-card');
+    const countEl  = document.getElementById('resultsCount');
+    const emptyEl  = document.getElementById('memEmpty');
+
+    let activeYear = 'all';
+    let activeCat  = 'all';
+
+    function applyFilters() {
+        let visible = 0;
+        cards.forEach(card => {
+            const yearMatch = activeYear === 'all' || card.dataset.year === activeYear;
+            const catMatch  = activeCat  === 'all' || card.dataset.category === activeCat;
+            const show = yearMatch && catMatch;
+            card.style.display = show ? '' : 'none';
+            if (show) {
+                visible++;
+                // Re-trigger animation
+                card.classList.remove('mem-card-visible');
+                void card.offsetWidth;
+                card.classList.add('mem-card-visible');
+            }
+        });
+        if (countEl) countEl.textContent = String(visible);
+        if (emptyEl) emptyEl.style.display = visible === 0 ? 'flex' : 'none';
+    }
+
+    yearTabs.forEach(btn => {
+        btn.addEventListener('click', () => {
+            yearTabs.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeYear = btn.dataset.year ?? 'all';
+            applyFilters();
+        });
+    });
+
+    catTabs.forEach(btn => {
+        btn.addEventListener('click', () => {
+            catTabs.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeCat = btn.dataset.cat ?? 'all';
+            applyFilters();
+        });
+    });
+
+    // Initial animation
+    cards.forEach((card, i) => {
+        setTimeout(() => card.classList.add('mem-card-visible'), i * 60);
+    });
+
+    document.addEventListener('astro:after-swap', () => {
+        activeYear = 'all';
+        activeCat = 'all';
+        applyFilters();
+        cards.forEach((card, i) => setTimeout(() => card.classList.add('mem-card-visible'), i * 60));
+    });
+</script>

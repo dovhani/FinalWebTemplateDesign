@@ -1,0 +1,242 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SecondaryNav from '../../components/SecondaryNav.astro';
+import SubNav from '../../components/SubNav.astro';
+import '../../styles/our-school.css';
+
+const schoolSubNavItems = [
+    { title: 'Staff Directory', href: '/our-school/staff' },
+    { title: 'School Governing Body', href: '/our-school/sgb' },
+    { title: 'Food Handlers', href: '/our-school/food-handlers' },
+    { title: 'Ground Workers', href: '/our-school/ground-workers' },
+    { title: 'Security', href: '/our-school/security' }
+];
+
+const foodHandlers = [
+    {
+        name: "Mrs. Thembi Nkosi",
+        role: "Head of Food Services",
+        experience: "15 years",
+        responsibilities: "Menu planning, nutrition oversight, staff supervision",
+        contact: "canteen@tshikhuthula.co.za",
+        extension: "Ext. 501"
+    },
+    {
+        name: "Mr. Sipho Mthembu",
+        role: "Senior Cook",
+        experience: "12 years",
+        responsibilities: "Main kitchen operations, meal preparation, quality control",
+        contact: "kitchen@tshikhuthula.co.za",
+        extension: "Ext. 502"
+    },
+    {
+        name: "Mrs. Rose Baloyi",
+        role: "Dietary Coordinator",
+        experience: "8 years",
+        responsibilities: "Special dietary requirements, nutrition planning, allergen management",
+        contact: "dietary@tshikhuthula.co.za",
+        extension: "Ext. 503"
+    },
+    {
+        name: "Mr. John Moyo",
+        role: "Kitchen Assistant",
+        experience: "5 years",
+        responsibilities: "Food preparation, kitchen cleaning, inventory support",
+        contact: "kitchen@tshikhuthula.co.za",
+        extension: "Ext. 504"
+    },
+    {
+        name: "Mrs. Sarah Dube",
+        role: "Canteen Attendant",
+        experience: "10 years",
+        responsibilities: "Canteen operations, student service, cash handling",
+        contact: "canteen@tshikhuthula.co.za",
+        extension: "Ext. 505"
+    }
+];
+
+const standards = [
+    {
+        icon: "✅",
+        title: "Health & Safety Compliance",
+        description: "All food handlers are certified in food safety and hygiene practices. Regular health inspections ensure compliance with national standards."
+    },
+    {
+        icon: "🥗",
+        title: "Balanced Nutrition",
+        description: "Our menus are designed by qualified nutritionists to provide balanced, healthy meals that support student growth and learning."
+    },
+    {
+        icon: "🌱",
+        title: "Special Dietary Needs",
+        description: "We accommodate allergies, religious requirements, and medical dietary restrictions with proper planning and documentation."
+    },
+    {
+        icon: "📋",
+        title: "Quality Assurance",
+        description: "Daily quality checks, temperature monitoring, and food safety protocols ensure the highest standards are maintained."
+    }
+];
+
+const menuFeatures = [
+    "Hot meals prepared fresh daily",
+    "Vegetarian and vegan options available",
+    "Allergen-free preparation areas",
+    "Fresh fruits and vegetables",
+    "Whole grain and low-sodium choices",
+    "Age-appropriate portion sizes"
+];
+---
+
+<Layout title="Food Handlers - Tshikhuthula Secondary School" currentPage="our-school" noNavbarPadding={true} showMainNav={true}>
+    <SecondaryNav currentPage="our-school" />
+    <!-- ── Header ── -->
+    <header class="our-school-header ws-reveal">
+        <div class="our-school-header-bg"></div>
+        <div class="our-school-header-content">
+            <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-gold-500/30 bg-gold-500/10 backdrop-blur-md mb-6">
+                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-gold-400">Nutrition</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-heading text-white font-display drop-shadow-lg tracking-tight mb-6">
+                Food Services <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Team</span>
+            </h1>
+            <p class="text-slate-300 max-w-3xl mx-auto text-lg leading-relaxed font-lato">
+                Meet our dedicated food services staff who ensure nutritious meals for our students.
+            </p>
+        </div>
+    </header>
+    
+    <SubNav items={schoolSubNavItems} activeHref="/our-school/food-handlers" />
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 space-y-20">
+        <!-- Introduction -->
+        <section class="glass p-8 md:p-12">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl font-heading text-slate-900 mb-6">Nutrition & Food Services</h2>
+                    <p class="text-slate-600 leading-relaxed text-lg mb-4">
+                        Our Food Services team is committed to providing healthy, nutritious, and delicious meals 
+                        that support the physical and mental development of our students. We believe that proper 
+                        nutrition is fundamental to academic success and overall well-being.
+                    </p>
+                    <p class="text-slate-600 leading-relaxed text-lg mb-6">
+                        All meals are prepared in our modern, fully-equipped kitchen under strict hygiene 
+                        conditions. Our menu is carefully planned to meet the nutritional needs of growing 
+                        children and adolescents.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="px-4 py-2 bg-maroon-50 text-maroon-800 text-xs font-black uppercase tracking-widest border border-maroon-100 rounded-lg">
+                            Certified Staff
+                        </div>
+                        <div class="px-4 py-2 bg-slate-50 text-slate-600 text-xs font-black uppercase tracking-widest border border-slate-200 rounded-lg">
+                            Daily Fresh Meals
+                        </div>
+                        <div class="px-4 py-2 bg-slate-50 text-slate-600 text-xs font-black uppercase tracking-widest border border-slate-200 rounded-lg">
+                            HACCP Compliant
+                        </div>
+                    </div>
+                </div>
+                <div class="relative group">
+                    <div class="absolute -inset-4 bg-gradient-to-r from-maroon-800/10 to-gold-500/10 rounded-2xl blur-2xl group-hover:opacity-100 opacity-70 transition-all duration-500"></div>
+                    <div class="relative bg-slate-200 aspect-video overflow-hidden flex items-center justify-center rounded-xl border border-white/50 shadow-2xl">
+                        <div class="absolute inset-0 bg-maroon-900/10 mix-blend-overlay z-10 pointer-events-none"></div>
+                        <div class="text-slate-400 text-center relative z-20">
+                            <div class="text-6xl mb-4 group-hover:scale-110 transition-transform">🍽️</div>
+                            <div class="font-bold italic">School Kitchen</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Team Members -->
+        <section>
+            <div class="flex items-center gap-4 mb-12">
+                <div class="h-px flex-grow bg-slate-200"></div>
+                <h2 class="text-2xl font-heading text-slate-900 whitespace-nowrap px-4">Our Food Services Team</h2>
+                <div class="h-px flex-grow bg-slate-200"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {foodHandlers.map((handler, i) => (
+                    <div class="group bg-white border border-slate-100 p-8 shadow-sm hover:shadow-[0_20px_40px_-15px_rgba(128,0,0,0.1)] hover:border-maroon-800/20 transition-all animate-fade-in opacity-0 rounded-xl" style={`animation-delay: ${0.1 * i}s; animation-fill-mode: forwards;`}>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="text-3xl bg-slate-50 w-12 h-12 flex items-center justify-center rounded-full group-hover:bg-maroon-50 group-hover:scale-110 transition-all">👨‍🍳</div>
+                            <span class="px-3 py-1 bg-gold-50 text-gold-600 text-[9px] font-black uppercase tracking-widest border border-gold-100 rounded-full">{handler.experience}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 font-display mb-2 group-hover:text-maroon-800 transition-colors">{handler.name}</h3>
+                        <div class="text-sm font-black text-maroon-800 mb-4 uppercase tracking-wider">{handler.role}</div>
+                        <p class="text-slate-500 text-sm mb-4 leading-relaxed">{handler.responsibilities}</p>
+                        <div class="pt-4 border-t border-slate-50 space-y-2 text-xs">
+                            <div class="flex items-center gap-2 text-slate-500">
+                                <span class="text-gold-500">📞</span>
+                                <span>{handler.extension}</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-slate-500">
+                                <span class="text-gold-500">✉️</span>
+                                <a href={`mailto:${handler.contact}`} class="hover:text-maroon-800 transition-colors">{handler.contact}</a>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </section>
+        
+        <!-- Standards & Quality -->
+        <section class="glass p-8 md:p-12">
+            <h2 class="text-3xl font-heading text-slate-900 mb-10 text-center">Food Safety & Quality Standards</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                {standards.map((standard, i) => (
+                    <div class="group p-6 bg-white/50 border border-white/80 hover:shadow-[0_20px_40px_-15px_rgba(203,143,36,0.15)] hover:border-gold-500/20 rounded-xl transition-all animate-fade-in opacity-0" style={`animation-delay: ${0.1 * i}s; animation-fill-mode: forwards;`}>
+                        <div class="flex items-start gap-4">
+                            <div class="text-3xl mb-0 group-hover:scale-110 transition-transform">{standard.icon}</div>
+                            <div class="flex-grow">
+                                <h3 class="text-lg font-bold text-slate-900 mb-2 font-display">{standard.title}</h3>
+                                <p class="text-slate-600 text-sm leading-relaxed">{standard.description}</p>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </section>
+        
+        <!-- Menu Features -->
+        <section class="bg-slate-50 border border-slate-100 p-8 md:p-12">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-3xl font-heading text-slate-900 mb-8 text-center">Our Menu Commitment</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {menuFeatures.map((feature, i) => (
+                        <div class="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm border border-slate-100 hover:border-maroon-100 transition-colors">
+                            <span class="text-maroon-800 text-xl font-bold">✓</span>
+                            <span class="text-sm font-medium text-slate-700">{feature}</span>
+                        </div>
+                    ))}
+                </div>
+                
+                <div class="mt-12 p-6 glass text-center">
+                    <h3 class="text-xl font-bold text-slate-900 mb-4">Meal Times</h3>
+                    <div class="grid md:grid-cols-3 gap-6 text-sm">
+                        <div>
+                            <div class="font-bold text-slate-900 mb-1">Morning Break</div>
+                            <div class="text-slate-500">10:00 AM - 10:20 AM</div>
+                        </div>
+                        <div>
+                            <div class="font-bold text-slate-900 mb-1">Lunch</div>
+                            <div class="text-slate-500">12:30 PM - 1:15 PM</div>
+                        </div>
+                        <div>
+                            <div class="font-bold text-slate-900 mb-1">Afternoon Snack</div>
+                            <div class="text-slate-500">2:30 PM - 2:45 PM</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</Layout>
+
+<script>
+    document.addEventListener('astro:after-swap', () => {
+        // Initialize any page-specific scripts here
+    });
+</script>

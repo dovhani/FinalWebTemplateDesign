@@ -1,0 +1,251 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SecondaryNav from '../components/SecondaryNav.astro';
+import '../styles/enrolment.css';
+
+const currentYear = new Date().getFullYear();
+const prevYear = currentYear - 1;
+
+const grades = [
+    "Grade R", "Grade 1", "Grade 2", "Grade 3", "Grade 4", "Grade 5",
+    "Grade 6", "Grade 7", "Grade 8", "Grade 9", "Grade 10", "Grade 11", "Grade 12"
+];
+
+const processSteps = [
+    { number: 1, icon: "📝", title: "Application", description: "Complete the online application form with all required supporting documents." },
+    { number: 2, icon: "📅", title: "Assessment", description: "Schedule and attend an academic assessment if required for the grade." },
+    { number: 3, icon: "🤝", title: "Interview", description: "Parent and student interview with school leadership team." },
+    { number: 4, icon: "✅", title: "Acceptance", description: "Receive your official acceptance letter and full enrolment package." },
+    { number: 5, icon: "💳", title: "Registration", description: "Complete registration forms and process the registration fee payment." },
+    { number: 6, icon: "🎒", title: "Orientation", description: "Attend new student orientation programme before the school year begins." }
+];
+
+const requirements = [
+    { icon: "📄", title: "Application Form", description: "Completed and signed application form" },
+    { icon: "👶", title: "Birth Certificate", description: "Certified copy of learner's birth certificate" },
+    { icon: "🆔", title: "ID Documents", description: "Copies of parents/guardians' ID documents" },
+    { icon: "🏠", title: "Proof of Residence", description: "Utility bill or lease agreement (not older than 3 months)" },
+    { icon: "📚", title: "Academic Records", description: "Latest school report and transfer card" },
+    { icon: "💉", title: "Medical Information", description: "Immunization records and medical aid details" },
+    { icon: "📸", title: "Photographs", description: "4 recent passport-sized photographs" },
+    { icon: "📝", title: "Additional Forms", description: "Completed medical and indemnity forms" }
+];
+
+const faqs = [
+    { question: `What is the application deadline for ${currentYear}?`, answer: `Applications for the ${currentYear} academic year are accepted until November 30, ${prevYear}. Late applications may be considered if spaces are available.` },
+    { question: "When will I know if my child has been accepted?", answer: "Acceptance letters are typically sent within 2 weeks of completing the application and assessment process. For late applications, decisions are made within 5 working days." },
+    { question: "Are there any scholarships or bursaries available?", answer: `Yes, we offer academic, sports, and arts scholarships as well as need-based financial assistance. Applications for scholarships close on October 31, ${prevYear}.` },
+    { question: "What is the school's language policy?", answer: "English is the medium of instruction. We offer Afrikaans and isiZulu as additional language options. Support is available for English second language learners." },
+    { question: "Does the school offer boarding facilities?", answer: "Currently, we do not offer boarding facilities. We are a day school only, with a comprehensive aftercare program available until 5:30 PM." },
+    { question: "What are the school hours?", answer: "School starts at 7:30 AM and ends at 2:30 PM. Aftercare is available until 5:30 PM. Extracurricular activities are scheduled after school hours." }
+];
+---
+
+<Layout title="Enrolment - Tshikhuthula Secondary School" currentPage="enrolment" noNavbarPadding={true} showMainNav={true}>
+    <SecondaryNav currentPage="enrolment" />
+
+    <!-- ── Hero Header ── -->
+    <header class="enrolment-header">
+        <div class="enrolment-header-bg"></div>
+        <div class="enrolment-header-content">
+            <div class="enrolment-badge">Join Our Family</div>
+            <h1 class="text-5xl md:text-7xl font-heading text-white font-display drop-shadow-lg tracking-tight mb-6">
+                Admissions &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Enrolment</span>
+            </h1>
+            <p class="text-slate-300 max-w-3xl mx-auto page-header-tagline text-center">
+                Join our legacy of academic excellence. Review our admission requirements and begin your application for {currentYear} below.
+            </p>
+        </div>
+    </header>
+
+    <div class="enrolment-page-bg">
+        <div class="enrolment-sections">
+
+            <!-- ── Enrolment Process ── -->
+            <section class="process-section">
+                <div class="section-heading">
+                    <span class="section-heading-label">How It Works</span>
+                    <h2>Enrolment Process</h2>
+                    <div class="section-heading-rule"></div>
+                </div>
+                <div class="process-grid">
+                    {processSteps.map((step) => (
+                        <div class="process-card">
+                            <div class="process-step-num">{step.number}</div>
+                            <span class="process-icon-wrap">{step.icon}</span>
+                            <h3>{step.title}</h3>
+                            <p>{step.description}</p>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            <!-- ── Requirements ── -->
+            <section>
+                <div class="section-heading">
+                    <span class="section-heading-label">What You Need</span>
+                    <h2>Admission Requirements</h2>
+                    <div class="section-heading-rule"></div>
+                </div>
+                <div class="requirements-grid">
+                    {requirements.map(req => (
+                        <div class="req-card">
+                            <div class="req-icon-circle">{req.icon}</div>
+                            <h3>{req.title}</h3>
+                            <p>{req.description}</p>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            <!-- ── Application Form ── -->
+            <section>
+                <div class="form-section-card">
+                    <div class="section-heading" style="margin-bottom: 0.5rem;">
+                        <span class="section-heading-label">Apply Now</span>
+                        <h2>Online Application Form</h2>
+                        <div class="section-heading-rule"></div>
+                    </div>
+                    <p style="text-align:center; color:#64748b; font-size:0.875rem; margin-bottom:2rem;">
+                        Complete the form below to start your child's enrolment process.
+                    </p>
+
+                    <form id="modernEnrolmentForm" style="display:flex; flex-direction:column; gap:2.5rem;">
+                        <!-- Student Details -->
+                        <div>
+                            <div class="form-sub-header">
+                                <span class="form-sub-num">Section 01</span>
+                                <h3>Student Details</h3>
+                            </div>
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
+                                <div class="enrolment-field">
+                                    <label>Full Name *</label>
+                                    <input type="text" placeholder="Student's full name" required />
+                                </div>
+                                <div class="enrolment-field">
+                                    <label>Date of Birth *</label>
+                                    <input type="date" required />
+                                </div>
+                                <div class="enrolment-field">
+                                    <label>Grade Applying For *</label>
+                                    <select required>
+                                        <option value="">Select Grade</option>
+                                        {grades.map(grade => <option value={grade.toLowerCase()}>{grade}</option>)}
+                                    </select>
+                                </div>
+                                <div class="enrolment-field">
+                                    <label>Current School</label>
+                                    <input type="text" placeholder="If applicable" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Parent Details -->
+                        <div>
+                            <div class="form-sub-header">
+                                <span class="form-sub-num">Section 02</span>
+                                <h3>Parent / Guardian Details</h3>
+                            </div>
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
+                                <div class="enrolment-field">
+                                    <label>Full Name *</label>
+                                    <input type="text" placeholder="Parent's full name" required />
+                                </div>
+                                <div class="enrolment-field">
+                                    <label>Relationship *</label>
+                                    <select required>
+                                        <option value="">Select Relationship</option>
+                                        <option value="mother">Mother</option>
+                                        <option value="father">Father</option>
+                                        <option value="guardian">Guardian</option>
+                                    </select>
+                                </div>
+                                <div class="enrolment-field">
+                                    <label>Email Address *</label>
+                                    <input type="email" placeholder="your@email.com" required />
+                                </div>
+                                <div class="enrolment-field">
+                                    <label>Phone Number *</label>
+                                    <input type="tel" placeholder="+27 00 000 0000" required />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <button type="submit" class="enrolment-submit">Submit Application</button>
+                            <p class="form-privacy-note">Secured Submission &bull; Privacy Protected</p>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+
+
+            <!-- ── FAQ ── -->
+            <section class="faq-section">
+                <div class="section-heading">
+                    <span class="section-heading-label">Got Questions?</span>
+                    <h2>Frequently Asked Questions</h2>
+                    <div class="section-heading-rule"></div>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:0.75rem;">
+                    {faqs.map(faq => (
+                        <div class="faq-item">
+                            <button class="faq-toggle">
+                                <span class="faq-toggle-text">{faq.question}</span>
+                                <span class="faq-chevron">+</span>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-inner">{faq.answer}</div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+        </div>
+    </div>
+</Layout>
+
+<script>
+    function initEnrolment() {
+        // ── FAQ accordion ──
+        const items = document.querySelectorAll('.faq-item');
+        items.forEach(item => {
+            const toggle = item.querySelector('.faq-toggle') as HTMLElement;
+            const answer = item.querySelector('.faq-answer') as HTMLElement;
+            const chevron = item.querySelector('.faq-chevron') as HTMLElement;
+
+            toggle?.addEventListener('click', () => {
+                const isOpen = item.classList.contains('faq-open');
+
+                // Close all
+                items.forEach(i => {
+                    i.classList.remove('faq-open');
+                    const a = i.querySelector('.faq-answer') as HTMLElement;
+                    const c = i.querySelector('.faq-chevron') as HTMLElement;
+                    if (a) a.style.maxHeight = '0';
+                    if (c) c.textContent = '+';
+                });
+
+                // Open clicked if it was closed
+                if (!isOpen) {
+                    item.classList.add('faq-open');
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    chevron.textContent = '+'; // CSS rotation handles visual
+                }
+            });
+        });
+
+        // ── Form ──
+        const form = document.getElementById('modernEnrolmentForm') as HTMLFormElement;
+        form?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your application! We will contact you within 2 working days.');
+            form.reset();
+        });
+    }
+
+    initEnrolment();
+    document.addEventListener('astro:after-swap', initEnrolment);
+</script>

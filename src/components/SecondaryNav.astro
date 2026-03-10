@@ -1,0 +1,457 @@
+---
+const { currentPage = 'home' } = Astro.props;
+
+const menuItems = [
+    { key: 'home', title: 'Home', href: '/' },
+    { 
+        key: 'our-school', 
+        title: 'Our School', 
+        href: '#',
+        children: [
+            { key: 'school-overview', title: 'Our School Overview', href: '/our-school' },
+            { key: 'about', title: 'About Us', href: '/about' },
+            { key: 'curriculum', title: 'Curriculum', href: '/curriculum' },
+            { key: 'admission', title: 'Admission & Enrolment', href: '/enrolment' },
+            { key: 'student-life', title: 'Student Life', href: '/student-life' },
+            { key: 'sub-gallery', title: 'Gallery', href: '/gallery' },
+            { key: 'wall-of-fame', title: 'Wall of Fame', href: '/wall-of-fame' },
+            { key: 'policies', title: 'Policies & Documents', href: '/policies' },
+            { key: 'memories', title: 'Memories', href: '#' },
+        ]
+    },
+    { key: 'calendar-events', title: 'Calendar & Events', href: '/calendar' },
+    { key: 'enrol', title: 'Enrol Now', href: '/enrolment' }
+];
+
+const contactInfo = {
+    phone: "015 291 1234",
+    email: "info@tshikhuthula.co.za"
+};
+---
+
+<header id="secondary-header" class="fixed top-0 left-0 w-full z-[99999] font-lato transition-all duration-300 frosted-white-nav" style="margin: 0;">
+
+  <!-- Main Navigation Area -->
+  <div id="nav-outer" class="relative w-full flex justify-center z-[80] px-4 sm:px-6 transition-all duration-300">
+      <div id="nav-inner" class="w-full max-w-full relative transition-all duration-300">
+          <div id="nav-pill" class="bg-white/10 backdrop-blur-md shadow-lg flex items-center justify-start h-[120px] relative z-50 overflow-visible transition-all duration-300">
+        
+        <!-- Mobile Menu Toggle (Left) -->
+        <button
+          id="mobile-menu-toggle"
+          class="md:hidden w-10 h-10 flex items-center justify-center rounded-lg hover:bg-slate-50/50 transition-colors ml-6"
+          aria-label="Open Menu"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-slate-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+
+        <!-- Logo Section: centered vertically, left aligned -->
+        <div class="hidden md:block absolute top-1/2 left-[10px] -translate-y-1/2 h-[100px]">
+          <a href="/" class="flex items-center gap-4 transition-transform active:scale-95 h-full">
+            <div class="relative h-[100px] w-[100px] flex items-center justify-center p-2">
+              <img src="/assets/images/logo5.png" alt="School Logo" class="h-full w-auto object-contain" />
+            </div>
+            <div class="hidden xl:flex flex-col">
+              <span class="logo-name text-2xl font-black tracking-tight text-white transition-colors duration-300 font-lato">Tshikhuthula</span>
+              <span class="logo-tagline text-[10px] font-semibold tracking-widest text-white/80 uppercase transition-colors duration-300">Secondary School</span>
+            </div>
+          </a>
+        </div>
+
+
+        <!-- Mobile Logo (Center) - Absolutely positioned -->
+        <a href="/" class="md:hidden absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 transition-transform active:scale-95 h-16">
+          <img src="/assets/images/logo5.png" alt="School Logo" class="h-full w-auto object-contain" />
+          <span class="text-xs font-black tracking-tight text-slate-900 uppercase font-lato">Tshikhuthula</span>
+        </a>
+
+        <!-- Desktop Navigation (25% from Right edge) -->
+        <nav class="hidden md:flex absolute left-[45%] top-0 bottom-0 items-center gap-8 pr-[5%]">
+          {menuItems.map((item) => (
+            <div class="relative group h-full flex items-center">
+              <a
+                href={item.href}
+                class={`text-[11px] font-bold uppercase tracking-[0.28em] transition-all flex items-center gap-2 font-lato whitespace-nowrap ${currentPage === item.key ? 'text-maroon-800 border-b-2 border-maroon-800' : 'text-slate-600 hover:text-maroon-700'}`}
+              >
+                {item.title}
+                {item.children && (
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 opacity-30 group-hover:rotate-180 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7" />
+                  </svg>
+                )}
+              </a>
+
+              {item.children && (
+                <div class="absolute top-[calc(100%-8px)] right-0 w-56 bg-gradient-to-b from-emerald-50/95 to-emerald-100/95 backdrop-blur-md border border-emerald-200 shadow-2xl rounded-xl py-[90px] opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 submenu-dropdown">
+                  {item.children.map((child) => (
+                    <div class="submenu-link-wrapper -mx-6 my-[200px] px-6 py-2">
+                      <a
+                        href={child.href}
+                        class={`block px-0 ${child.title === 'Memories' ? 'py-[211px]' : 'py-[111px]'} text-[12px] font-bold uppercase tracking-wider text-slate-500 hover:text-maroon-800 transition-all font-lato text-center submenu-link`}
+                      >
+                        {child.title}
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </nav>
+
+        <!-- Spacer for Mobile Right -->
+        <div class="md:hidden w-10 h-10 mr-6"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation Overlay (Slide from left like target site) -->
+  <div id="mobile-nav" class="fixed inset-0 z-[150] invisible">
+    <div id="mobile-nav-overlay" class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
+    <div
+      id="mobile-nav-drawer"
+      class="absolute top-0 left-0 h-screen w-[85%] max-w-sm bg-white shadow-2xl -translate-x-full transition-transform duration-300 ease-out flex flex-col"
+      style="height: 100dvh;"
+    >
+      <div class="p-6 border-b border-slate-100 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <img src="/assets/images/logo5.png" alt="Logo" class="w-10 h-10 object-contain" />
+          <span class="font-black text-slate-900 text-sm uppercase tracking-wider">TSHIKHUTHULA</span>
+        </div>
+        <button id="mobile-menu-close" class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-900">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="flex-grow flex flex-col relative overflow-hidden" id="mobile-menu-content">
+        <!-- Root Menu -->
+        <div id="menu-root" class="h-full flex flex-col">
+          {menuItems.map((item) => (
+            <div class="flex-1 flex flex-col justify-center border-b border-slate-100 last:border-0">
+                {item.children ? (
+                  <div class="flex flex-col h-full justify-center">
+                    <button 
+                      data-submenu-id={`submenu-${item.key}`}
+                      class="menu-trigger w-full flex items-center justify-between px-6 py-5 text-xs font-black uppercase tracking-[0.2em] text-slate-700 hover:text-maroon-700 transition-colors font-lato"
+                    >
+                      {item.title}
+                      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </div>
+                ) : (
+                  <a 
+                    href={item.href} 
+                    class="flex items-center w-full px-6 py-5 text-xs font-black uppercase tracking-[0.2em] text-slate-700 hover:text-maroon-700 transition-colors font-lato"
+                  >
+                    {item.title}
+                  </a>
+                )}
+            </div>
+          ))}
+        </div>
+
+        <!-- Submenus (Hidden by default, slide in) -->
+        {menuItems.filter(i => i.children).map(item => (
+          <div id={`submenu-${item.key}`} class="hidden absolute inset-0 bg-white flex flex-col">
+            <div class="p-4 border-b border-slate-100 bg-slate-50 flex items-center gap-4">
+              <button class="submenu-back w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-900">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <div class="flex flex-col">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-primary-600 font-lato">{item.title}</span>
+                <a href={item.href} class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter hover:text-primary-600 underline">Visit Overview</a>
+              </div>
+            </div>
+            <div class="py-4">
+              {item.children?.map(child => (
+                <a 
+                  href={child.href}
+                  class="block px-8 py-4 text-xs font-black uppercase tracking-[0.2em] text-slate-600 hover:text-maroon-700 border-b border-slate-50 last:border-0 font-lato"
+                >
+                  {child.title}
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  /* Mobile menu toggle functionality */
+  #mobile-menu-toggle, #mobile-menu-close, .menu-trigger, .submenu-back {
+    cursor: pointer;
+  }
+  
+  /* Ensure proper fixed behavior */
+  #secondary-header {
+    position: fixed;
+    top: 0;
+    margin: 0;
+    width: 100%;
+  }
+  
+  /* Navbar background transitions */
+  #nav-pill {
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  }
+  
+  /* Scrolled state */
+  #secondary-header.nav-scrolled #nav-pill {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-radius: 0 !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Smooth transitions */
+  #secondary-header, #secondary-header nav a, #secondary-header .logo-name, #secondary-header .logo-tagline {
+    transition: all 0.4s ease;
+  }
+  
+  /* Links & Active States (Always visible on white) */
+  #secondary-header nav a {
+    color: #475569 !important; /* slate-600 */
+  }
+  #secondary-header nav a:hover {
+    color: #961107 !important; /* maroon-800 */
+  }
+  #secondary-header .logo-name {
+    color: #0f172a !important; /* slate-900 */
+  }
+  #secondary-header .logo-tagline {
+    color: rgba(15, 23, 42, 0.6) !important; /* slate-600 */
+  }
+  
+  /* Scrolled state: Slightly cleaner */
+  #secondary-header.nav-scrolled nav a {
+    color: #334155 !important;
+  }
+  
+  /* Logo colors in scrolled state */
+  #secondary-header.nav-scrolled .logo-name {
+    color: #0f172a !important;
+  }
+  #secondary-header.nav-scrolled .logo-tagline {
+    color: rgba(15, 23, 42, 0.6) !important;
+  }
+  
+  /* Semi-circle logo background stays maroon/orange */
+  #secondary-header #nav-pill .rounded-full {
+    background-color: #800000 !important; /* solid maroon */
+    border: 2px solid #FFA500; /* orange border */
+    transition: all 0.4s ease;
+  }
+  #secondary-header.nav-scrolled #nav-pill .rounded-full {
+    background-color: #800000 !important;
+    border-color: #FFA500 !important;
+  }
+  
+  /* Submenu dropdown: white background with clean shadow */
+  .submenu-dropdown {
+    background: #ffffff !important;
+    border: 1px solid #f1f5f9 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1) !important;
+    padding: 2rem 0 !important;
+  }
+  
+  /* Submenu links: slate text */
+  .submenu-link {
+    color: #64748b !important;
+    padding: 0.75rem 0 !important;
+  }
+  
+  /* Submenu links hover: light bg, maroon text */
+  .submenu-link:hover {
+      background-color: #f8fafc !important; 
+      color: #961107 !important; 
+  }
+  
+  /* Gradient shade on megamenu wrapper */
+  .submenu-dropdown .submenu-link-wrapper {
+      background: linear-gradient(180deg, rgba(34, 139, 34, 0.1) 0%, rgba(0, 100, 0, 0.05) 100%);
+      border-radius: 4px;
+      transition: all 0.3s ease;
+  }
+  
+  /* Hover effect on wrapper - full height coverage */
+  .submenu-dropdown .submenu-link-wrapper:hover {
+      background: linear-gradient(180deg, #FFA500 0%, #FFA500 100%) !important;
+  }
+  
+  .submenu-dropdown .submenu-link-wrapper:hover .submenu-link {
+      color: #800000 !important;
+  }
+  
+  /* Prevent body scroll when mobile menu is open */
+  body.mobile-menu-open {
+    overflow: hidden;
+  }
+
+  /* ── Full-height nav items in mobile drawer ── */
+  #mobile-menu-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    min-height: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #menu-root {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    min-height: 0;
+    height: 100%;
+  }
+
+  #menu-root > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+  }
+
+  #menu-root > div > div,
+  #menu-root > div > a {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  #menu-root > div > div button.menu-trigger {
+    height: 100%;
+    width: 100%;
+  }
+</style>
+
+<script>
+  // Mobile menu toggle functionality
+  const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+  const mobileMenuClose = document.getElementById('mobile-menu-close');
+  const mobileNav = document.getElementById('mobile-nav');
+  const body = document.body;
+  
+  // Set explicit height on the menu content area so flex children fill it
+  function updateMenuContentHeight() {
+    const drawer = document.getElementById('mobile-nav-drawer');
+    const content = document.getElementById('mobile-menu-content');
+    if (!drawer || !content) return;
+    const header = drawer.querySelector(':scope > div:first-child') as HTMLElement | null;
+    const headerH = header ? header.getBoundingClientRect().height : 0;
+    const drawerH = drawer.getBoundingClientRect().height || window.innerHeight;
+    const available = drawerH - headerH;
+    content.style.height = available + 'px';
+    content.style.minHeight = available + 'px';
+  }
+
+  if (mobileMenuToggle && mobileNav) {
+    mobileMenuToggle.addEventListener('click', () => {
+      mobileNav.classList.remove('invisible');
+      const overlay = document.getElementById('mobile-nav-overlay');
+      const drawer = document.getElementById('mobile-nav-drawer');
+      if (overlay) overlay.classList.remove('opacity-0');
+      if (drawer) drawer.classList.remove('-translate-x-full');
+      body.classList.add('mobile-menu-open');
+      // Set height after the drawer is visible so getBoundingClientRect works
+      requestAnimationFrame(() => updateMenuContentHeight());
+    });
+  }
+
+  window.addEventListener('resize', updateMenuContentHeight);
+  
+  if (mobileMenuClose && mobileNav) {
+    mobileMenuClose.addEventListener('click', () => {
+      const overlay = document.getElementById('mobile-nav-overlay');
+      const drawer = document.getElementById('mobile-nav-drawer');
+      if (overlay) overlay.classList.add('opacity-0');
+      if (drawer) drawer.classList.add('-translate-x-full');
+      setTimeout(() => {
+        mobileNav.classList.add('invisible');
+      }, 300);
+      body.classList.remove('mobile-menu-open');
+    });
+  }
+  
+  // Submenu toggle for mobile
+  const menuTriggers = document.querySelectorAll('.menu-trigger');
+  menuTriggers.forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const submenuId = trigger.getAttribute('data-submenu-id');
+      if (submenuId) {
+        const submenu = document.getElementById(submenuId);
+        if (submenu) {
+          submenu.classList.remove('hidden');
+          submenu.classList.add('flex');
+        }
+      }
+    });
+  });
+  
+  // Submenu back button
+  const submenuBacks = document.querySelectorAll('.submenu-back');
+  submenuBacks.forEach(back => {
+    back.addEventListener('click', () => {
+      const submenu = back.closest('div[id^="submenu-"]');
+      if (submenu) {
+        submenu.classList.add('hidden');
+        submenu.classList.remove('flex');
+      }
+    });
+  });
+  
+  // Scroll detection for navbar color change
+  function initScrollDetection() {
+    const header = document.getElementById('secondary-header');
+    const navContainer = document.getElementById('nav-container');
+    if (!header || !navContainer) return;
+    
+    // Find the hero section (if on home page)
+    const heroSection = document.querySelector('.hero-slider, [class*="hero"], section:first-of-type');
+    
+    if (!heroSection) {
+      // If no hero section found, apply scrolled state by default
+      header.classList.add('nav-scrolled');
+      return;
+    }
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Hero is visible - remove scrolled state
+          header.classList.remove('nav-scrolled');
+        } else {
+          // Hero is not visible - add scrolled state
+          header.classList.add('nav-scrolled');
+        }
+      });
+    }, {
+      threshold: 0,
+      rootMargin: '-1px 0px 0px 0px'
+    });
+    
+    observer.observe(heroSection);
+  }
+  
+  // Initialize scroll detection
+  initScrollDetection();
+  document.addEventListener('astro:after-swap', initScrollDetection);
+</script>

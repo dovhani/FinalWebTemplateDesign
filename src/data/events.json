@@ -1,0 +1,57 @@
+[
+  {
+    "event_id": 1,
+    "title": "Science Fair",
+    "description": "Annual school science exhibition showcasing student projects",
+    "event_date": "2023-12-20",
+    "start_time": "09:00 AM",
+    "end_time": "03:00 PM",
+    "category": "academic",
+    "event_type": "school_event",
+    "location": "School Auditorium"
+  },
+  {
+    "event_id": 2,
+    "title": "Basketball Tournament",
+    "description": "Inter-school basketball championship finals",
+    "event_date": "2023-12-23",
+    "start_time": "02:00 PM",
+    "end_time": "05:00 PM",
+    "category": "sports",
+    "event_type": "school_event",
+    "location": "School Gym"
+  },
+  {
+    "event_id": 3,
+    "title": "Parent-Teacher Meeting",
+    "description": "Quarterly parent-teacher conference",
+    "event_date": "2023-12-18",
+    "start_time": "04:00 PM",
+    "end_time": "07:00 PM",
+    "category": "parent",
+    "event_type": "parent_meeting",
+    "location": "Classrooms"
+  },
+  {
+    "event_id": 4,
+    "title": "Mid-term Exams",
+    "description": "Mid-term examinations for all grades",
+    "event_date": "2023-12-27",
+    "start_time": "08:30 AM",
+    "end_time": "02:30 PM",
+    "category": "academic",
+    "event_type": "exam",
+    "location": "Classrooms"
+  },
+  {
+    "event_id": 5,
+    "title": "Music Concert",
+    "description": "Annual school music concert",
+    "event_date": "2023-12-30",
+    "start_time": "06:00 PM",
+    "end_time": "09:00 PM",
+    "category": "cultural",
+    "event_type": "school_event",
+    "location": "Auditorium"
+  }
+]

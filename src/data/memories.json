@@ -1,0 +1,202 @@
+[
+    {
+        "id": 1,
+        "category": "school-trip",
+        "title": "Johannesburg Heritage Tour",
+        "description": "Grade 11 learners visited the Apartheid Museum, Constitutional Hill, and the Hector Pieterson Memorial — deepening their understanding of South African history.",
+        "year": "2024",
+        "date": "September 2024",
+        "image": "/assets/images/hero/slide1.png",
+        "participants": "Grade 11 — 94 learners"
+    },
+    {
+        "id": 2,
+        "category": "school-trip",
+        "title": "Polokwane Science Museum Visit",
+        "description": "Science club and Physical Sciences learners explored interactive exhibits on chemistry, physics, and engineering at the Polokwane Science Museum.",
+        "year": "2024",
+        "date": "March 2024",
+        "image": "/assets/images/hero/slide2.png",
+        "participants": "Grade 10 & 11 Science — 56 learners"
+    },
+    {
+        "id": 3,
+        "category": "school-trip",
+        "title": "Kruger National Park Eco-Trip",
+        "description": "Life Sciences learners ventured into the Kruger National Park for a hands-on ecological study trip, observing wildlife in its natural habitat.",
+        "year": "2023",
+        "date": "October 2023",
+        "image": "/assets/images/hero/slide3.png",
+        "participants": "Grade 12 Life Sciences — 38 learners"
+    },
+    {
+        "id": 4,
+        "category": "school-trip",
+        "title": "Cape Town Mathematics Olympiad Camp",
+        "description": "Our top Mathematics learners attended an Olympiad preparation camp at the University of Cape Town, engaging with leading academics.",
+        "year": "2022",
+        "date": "August 2022",
+        "image": "/assets/images/hero/slide4.png",
+        "participants": "Grade 12 Mathematics — 12 learners"
+    },
+    {
+        "id": 5,
+        "category": "district-visit",
+        "title": "District Director: Annual School Inspection",
+        "description": "The Vhembe District Director, accompanied by a team of subject advisors, conducted the annual quality assurance inspection and commended the school on its CAPS implementation.",
+        "year": "2024",
+        "date": "June 2024",
+        "image": "/assets/images/hero/slide5.png",
+        "participants": "School Management Team & HODs"
+    },
+    {
+        "id": 6,
+        "category": "district-visit",
+        "title": "MEC for Education School Visit",
+        "description": "The Member of the Executive Council for Education in Limpopo visited Tshikhuthula Secondary to assess infrastructure and learner wellbeing programmes.",
+        "year": "2024",
+        "date": "March 2024",
+        "image": "/assets/images/hero/slide1.png",
+        "participants": "Full School Assembly"
+    },
+    {
+        "id": 7,
+        "category": "district-visit",
+        "title": "Subject Advisors: Mathematics & Science Support",
+        "description": "A team of Vhembe District subject advisors delivered targeted support workshops for Mathematics and Physical Sciences educators ahead of the NSC examinations.",
+        "year": "2023",
+        "date": "July 2023",
+        "image": "/assets/images/hero/slide2.png",
+        "participants": "Mathematics & Science Department"
+    },
+    {
+        "id": 8,
+        "category": "district-visit",
+        "title": "District Sport Coordinator Visit",
+        "description": "The district sport coordinator visited to assess facilities and register learners for the inter-district athletics and soccer championships.",
+        "year": "2022",
+        "date": "February 2022",
+        "image": "/assets/images/hero/slide3.png",
+        "participants": "Sports Department & LRC"
+    },
+    {
+        "id": 9,
+        "category": "motivational-speaker",
+        "title": "Dr. Matodzi — Resilience & Academic Success",
+        "description": "Distinguished UCT alumni Dr. Matodzi delivered a powerful keynote on overcoming adversity, the value of education, and setting ambitious goals for the future.",
+        "year": "2024",
+        "date": "February 2024",
+        "image": "/assets/images/hero/slide4.png",
+        "participants": "Grade 10, 11 & 12"
+    },
+    {
+        "id": 10,
+        "category": "motivational-speaker",
+        "title": "Advocate Tshivhase — Law & Justice",
+        "description": "Practising advocate Tshivhase inspired learners about careers in law, social justice, and the importance of reading and critical thinking.",
+        "year": "2024",
+        "date": "August 2024",
+        "image": "/assets/images/hero/slide5.png",
+        "participants": "Grades 11 & 12"
+    },
+    {
+        "id": 11,
+        "category": "motivational-speaker",
+        "title": "Engineer Ramano — STEM Career Talk",
+        "description": "Civil engineer Ramano, a Tshikhuthula alumnus, returned to inspire the next generation about careers in engineering and the built environment.",
+        "year": "2023",
+        "date": "May 2023",
+        "image": "/assets/images/hero/slide1.png",
+        "participants": "Full School"
+    },
+    {
+        "id": 12,
+        "category": "motivational-speaker",
+        "title": "Youth Entrepreneurship Workshop",
+        "description": "SEDA-Limpopo facilitators ran a full-day youth entrepreneurship and financial literacy workshop for matric learners preparing for life after school.",
+        "year": "2022",
+        "date": "September 2022",
+        "image": "/assets/images/hero/slide2.png",
+        "participants": "Grade 12 — 120 learners"
+    },
+    {
+        "id": 13,
+        "category": "fun-day",
+        "title": "Heritage Day Celebration",
+        "description": "Learners and staff dressed in their cultural attire to celebrate Heritage Day with traditional food, dancing, poetry, and the school's annual braai.",
+        "year": "2024",
+        "date": "September 2024",
+        "image": "/assets/images/hero/slide3.png",
+        "participants": "Full School Community"
+    },
+    {
+        "id": 14,
+        "category": "fun-day",
+        "title": "Sports Day & Inter-House Athletics",
+        "description": "The annual inter-house athletics day saw houses compete in track and field events with a full day of fun, cheering, and celebration of school spirit.",
+        "year": "2024",
+        "date": "March 2024",
+        "image": "/assets/images/student_life/athlets.webp",
+        "participants": "Full School"
+    },
+    {
+        "id": 15,
+        "category": "fun-day",
+        "title": "Year-End Celebration & Fun Day",
+        "description": "The school marked the end of the academic year with a fun-filled celebration featuring games, music, competitions, and a farewell to the Grade 12 class.",
+        "year": "2023",
+        "date": "November 2023",
+        "image": "/assets/images/student_life/soccer.jpeg",
+        "participants": "Full School Community"
+    },
+    {
+        "id": 16,
+        "category": "fun-day",
+        "title": "Chess & Mind Games Tournament",
+        "description": "The chess club hosted an intra-school mind games tournament, drawing participation from over 60 learners across all grades in chess, draughts, and Scrabble.",
+        "year": "2022",
+        "date": "June 2022",
+        "image": "/assets/images/student_life/debate.jpeg",
+        "participants": "60+ learners"
+    },
+    {
+        "id": 17,
+        "category": "farewell-ceremony",
+        "title": "Farewell to Mr Tshilinde (Retirement)",
+        "description": "After 31 years of dedicated service as Head of Department for Mathematics, Mr Tshilinde was honoured in a touching farewell ceremony attended by staff, learners, SGB members, and family.",
+        "year": "2024",
+        "date": "December 2024",
+        "image": "/assets/images/staff/principal.jpg",
+        "participants": "Full School Community"
+    },
+    {
+        "id": 18,
+        "category": "farewell-ceremony",
+        "title": "Transfer Farewell: Mrs Nemukula",
+        "description": "Beloved English educator Mrs Nemukula was given a heartfelt farewell before her transfer to Vuwani Secondary School. Learners presented poems, songs, and a scrapbook of memories.",
+        "year": "2024",
+        "date": "June 2024",
+        "image": "/assets/images/hero/slide4.png",
+        "participants": "Staff & Grade 12"
+    },
+    {
+        "id": 19,
+        "category": "farewell-ceremony",
+        "title": "Retirement Honour: Ms Ravhuhali",
+        "description": "After 28 years of shaping young minds in Physical Sciences, Ms Ravhuhali retired to a standing ovation. The school governing body presented her with a lifetime achievement recognition.",
+        "year": "2023",
+        "date": "November 2023",
+        "image": "/assets/images/hero/slide5.png",
+        "participants": "Staff, SGB & Learners"
+    },
+    {
+        "id": 20,
+        "category": "farewell-ceremony",
+        "title": "Transfer Farewell: Mr Munyai",
+        "description": "Geography and Life Orientation educator Mr Munyai was celebrated before taking up a leadership role as Deputy Principal at Thohoyandou Secondary School.",
+        "year": "2022",
+        "date": "December 2022",
+        "image": "/assets/images/hero/slide1.png",
+        "participants": "Full Staff & Senior Grades"
+    }
+]

@@ -1,0 +1,149 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SecondaryNav from '../components/SecondaryNav.astro';
+import SubNav from '../components/SubNav.astro';
+import '../styles/gallery.css';
+
+const gallerySubNavItems = [
+    { title: 'Achievements', href: '/gallery/achievements' },
+    { title: 'Student Gallery', href: '/gallery/students-gallery' },
+    { title: 'Year Book', href: '/gallery/yearbook' }
+];
+
+const categories = [
+    { title: "Academic Excellence", image: "/assets/images/hero/slide1.png", href: "/gallery/academic" },
+    { title: "Athletics & Sports", image: "/assets/images/hero/slide2.png", href: "/gallery/sports" },
+    { title: "Cultural Arts", image: "/assets/images/hero/slide3.png", href: "/gallery/cultural" },
+    { title: "Graduation", image: "/assets/images/hero/slide4.png", href: "/gallery/graduation" },
+    { title: "Science Fair", image: "/assets/images/hero/slide5.png", href: "/gallery/science" },
+    { title: "Community Service", image: "/assets/images/hero/slide1.png", href: "/gallery/community" }
+];
+---
+
+<Layout title="Gallery - Tshikhuthula Secondary School" currentPage="gallery" noNavbarPadding={true} showMainNav={true}>
+    <SecondaryNav currentPage="gallery" />
+    
+    <!-- ── Header ── -->
+    <header class="gallery-header ws-reveal">
+        <div class="gallery-header-bg"></div>
+        <div class="gallery-header-content flex flex-col items-center justify-center">
+            <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-gold-500/30 bg-gold-500/10 backdrop-blur-md mb-6">
+                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-gold-400">Visual Journey</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-heading text-white font-display drop-shadow-lg tracking-tight mb-6">
+                School <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Gallery</span>
+            </h1>
+            <p class="text-slate-300 max-w-3xl mx-auto text-lg leading-relaxed font-lato text-center">
+                Explore our collection of memories, achievements, and the vibrant student life at Tshikhuthula Secondary School.
+            </p>
+        </div>
+    </header>
+    
+    <SubNav items={gallerySubNavItems} className="relative z-20" />
+
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-32 space-y-32">
+        
+        <!-- Masonry Grid Highlights -->
+        <section>
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8 mt-12">
+                <div>
+                    <span class="text-[10px] font-black uppercase tracking-[0.3em] text-gold-400 block mb-3">Our Moments</span>
+                    <h2 class="text-4xl md:text-5xl font-heading text-white font-light">Recent <em class="italic text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Highlights</em></h2>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    {["All", "Academic", "Sports", "Cultural"].map((filter, i) => (
+                        <button class={`text-[10px] font-black uppercase tracking-widest px-6 py-3 transition-all duration-300 ${i === 0 ? 'bg-primary-700 text-white shadow-lg border border-primary-600' : 'bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white border border-white/10'}`}>{filter}</button>
+                    ))}
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {categories.map((item, i) => (
+                    <a href={item.href} class="gallery-card block group cursor-pointer animate-fade-in opacity-0" style={`animation-delay: ${0.1 * i}s; animation-fill-mode: forwards;`}>
+                        <div class="relative overflow-hidden rounded-2xl aspect-[4/3] border border-slate-200/50 shadow-md hover:shadow-xl transition-shadow duration-500 bg-slate-50">
+                            <!-- Background Image -->
+                            <img src={item.image} alt={item.title} class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                            
+                            <!-- Detailed Overlay Effect -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/30 to-transparent opacity-70 group-hover:opacity-85 transition-opacity duration-500"></div>
+                            
+                            <!-- Border frame highlight -->
+                            <div class="absolute inset-4 rounded-xl border border-white/20 opacity-0 group-hover:opacity-100 transition-all duration-500 z-10 pointer-events-none scale-95 group-hover:scale-100"></div>
+    
+                            <!-- Content -->
+                            <div class="absolute inset-0 flex flex-col justify-end p-6 md:p-8 z-20">
+                                <div class="translate-y-2 group-hover:translate-y-0 transition-transform duration-500 hover:ease-out">
+                                    <span class="block w-8 h-1 bg-gold-500 mb-3 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 delay-100"></span>
+                                    <h3 class="text-xl md:text-2xl font-heading text-white font-medium mb-1 drop-shadow-md">{item.title}</h3>
+                                    <div class="flex items-center gap-2 text-gold-400 font-bold text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200 mt-2">
+                                        View Collection 
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                ))}
+            </div>
+        </section>
+        
+        <!-- Cinematic Video Section -->
+        <section class="relative rounded-3xl overflow-hidden glass-video animate-fade-in shadow-2xl border border-white/10">
+            <!-- Background Image -->
+            <div class="absolute inset-0">
+                <img src="/assets/images/hero/slide5.png" alt="Video Background" class="w-full h-full object-cover scale-105" />
+                <div class="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-900/80 to-slate-900/40 backdrop-blur-sm"></div>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 lg:min-h-[500px] relative z-10">
+                <!-- Text Content Left -->
+                <div class="flex flex-col justify-center p-10 lg:p-16 order-2 lg:order-1">
+                    <div class="inline-flex items-center gap-3 mb-6">
+                        <span class="w-10 h-px bg-gradient-to-r from-gold-500 to-transparent"></span>
+                        <span class="text-gold-400 font-bold text-[10px] uppercase tracking-[0.3em]">Featured Film</span>
+                    </div>
+                    
+                    <h3 class="text-4xl lg:text-5xl font-heading text-white mb-6 leading-tight drop-shadow-sm">Journey of <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 to-gold-600">Excellence</span></h3>
+                    
+                    <p class="text-slate-300 text-base md:text-lg leading-relaxed font-light mb-10 max-w-lg">
+                        Experience the vibrant atmosphere of Tshikhuthula Secondary School. From academic milestones to cultural festivals, these films capture the spirit and resilience of our community.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 items-start">
+                        <button class="px-8 py-3.5 bg-gradient-to-r from-gold-600 to-gold-500 text-slate-900 font-bold text-[10px] uppercase tracking-[0.2em] rounded-sm hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-3">
+                            Watch Now
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </button>
+                        <button class="px-8 py-3.5 bg-white/5 text-white border border-white/10 font-bold text-[10px] uppercase tracking-[0.2em] rounded-sm hover:bg-white/10 hover:border-white/30 transition-all duration-300 backdrop-blur-md flex items-center justify-center">
+                            Browse Archive
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Video Thumbnail Area Right -->
+                <div class="flex items-center justify-center p-10 lg:p-16 relative group cursor-pointer overflow-hidden min-h-[350px] order-1 lg:order-2">
+                    <div class="absolute inset-0 lg:inset-y-12 lg:inset-x-8 rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+                        <img src="/assets/images/hero/slide2.png" alt="Video Thumbnail" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                        <div class="absolute inset-0 bg-slate-900/30 group-hover:bg-transparent transition-colors duration-500"></div>
+                        
+                        <!-- Premium Play Button -->
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="relative w-20 h-20 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:bg-gold-500 group-hover:border-gold-400 group-hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] transition-all duration-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white ml-1 group-hover:text-slate-900 transition-colors duration-500" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+    </div>
+</Layout>

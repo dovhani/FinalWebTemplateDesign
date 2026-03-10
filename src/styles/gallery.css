@@ -1,0 +1,113 @@
+@reference "tailwindcss";
+
+/* gallery.css - Gallery page Premium Design styles */
+
+/* ── Page Header ── */
+.gallery-header {
+    background-color: #0c1222;
+    position: relative;
+    padding: 9rem 2rem 6rem;
+    overflow: hidden;
+    text-align: center;
+}
+
+/* Gold shimmer line at top of header */
+.gallery-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, #cb8f24 30%, #fbbf24 50%, #cb8f24 70%, transparent 100%);
+    opacity: 0.8;
+    z-index: 20;
+}
+
+.gallery-header-bg {
+    position: absolute;
+    inset: 0;
+    opacity: 0.35;
+    background-image: url('/assets/images/hero/slide1.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.gallery-header-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, #0f172a 0%, transparent 100%);
+}
+
+.gallery-header-content {
+    position: relative;
+    z-index: 10;
+    max-width: 56rem;
+    margin: 0 auto;
+}
+
+/* Fade-in Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Glassmorphism utility for sections */
+.glass-video {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Enhancing standard Astro transitions */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 0.4s;
+}
+
+/* Gallery subnav sits naturally below the header */
+.subnav-container {
+    position: relative;
+    z-index: 50;
+}
+
+/* Base styles for the gallery grid items */
+.gallery-card {
+    display: block;
+}
+
+.gallery-card img {
+    will-change: transform;
+}
+
+/* Hero Gold Divider Animation */
+@keyframes galleryDividerExpand {
+    0% {
+        width: 0;
+        opacity: 0;
+    }
+
+    100% {
+        width: clamp(100px, 25vw, 180px);
+        opacity: 1;
+    }
+}
+
+.gallery-hero-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #cb8f24, transparent);
+    width: 0;
+    opacity: 0;
+    animation: galleryDividerExpand 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
+    margin: 0 auto;
+}

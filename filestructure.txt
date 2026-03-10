@@ -1,0 +1,1887 @@
+Due to the character limit, I've provided you with:
+
+Complete database schema
+
+Enhanced database connection class
+
+Configuration system
+
+Helper functions
+
+Authentication system
+
+Admin login page
+
+Admin dashboard
+
+This is a production-ready system. The next steps would include:
+
+Events management CRUD
+
+Pending events approval interface
+
+User management
+
+Settings management
+
+Public-facing pages
+
+API endpoints
+
+Email notifications
+
+Export functionality
+
+Create admin/events.php (Complete Events Management)
+
+<?php
+// admin/events.php
+require_once '../includes/config.php';
+require_once '../includes/auth.php';
+
+// Require admin authentication
+Auth::requireAdmin();
+
+// =============================================
+// PAGINATION & FILTERING
+// =============================================
+$page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+$limit = 20;
+$offset = ($page - 1) * $limit;
+
+// Filter parameters
+$status = isset($_GET['status']) ? $_GET['status'] : '';
+$category = isset($_GET['category']) ? $_GET['category'] : '';
+$event_type = isset($_GET['event_type']) ? $_GET['event_type'] : '';
+$date_from = isset($_GET['date_from']) ? $_GET['date_from'] : '';
+$date_to = isset($_GET['date_to']) ? $_GET['date_to'] : '';
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+
+// Build WHERE clause
+$where = [];
+$params = [];
+
+if ($status && $status !== 'all') {
+    $where[] = 'ce.status = ?';
+    $params[] = $status;
+}
+
+if ($category && $category !== 'all') {
+    $where[] = 'ce.category = ?';
+    $params[] = $category;
+}
+
+if ($event_type && $event_type !== 'all') {
+    $where[] = 'ce.event_type = ?';
+    $params[] = $event_type;
+}
+
+if ($date_from) {
+    $where[] = 'ce.event_date >= ?';
+    $params[] = $date_from;
+}
+
+if ($date_to) {
+    $where[] = 'ce.event_date <= ?';
+    $params[] = $date_to;
+}
+
+if ($search) {
+    $where[] = '(ce.title LIKE ? OR ce.description LIKE ? OR ce.organizer_name LIKE ?)';
+    $params[] = "%$search%";
+    $params[] = "%$search%";
+    $params[] = "%$search%";
+}
+
+$where_clause = $where ? 'WHERE ' . implode(' AND ', $where) : '';
+
+// Get total count
+$count_sql = "SELECT COUNT(*) as total FROM calendar_events ce $where_clause";
+$count_result = db()->fetchOne($count_sql, $params);
+$total_events = $count_result['total'] ?? 0;
+$total_pages = ceil($total_events / $limit);
+
+// Get events with pagination
+$sql = "SELECT 
+            ce.*,
+            DATE_FORMAT(ce.event_date, '%Y-%m-%d') as event_date_formatted,
+            DATE_FORMAT(ce.created_at, '%b %d, %Y %H:%i') as created_formatted,
+            DATE_FORMAT(ce.approved_at, '%b %d, %Y %H:%i') as approved_formatted,
+            u.username as approver_username
+        FROM calendar_events ce
+        LEFT JOIN users u ON ce.approved_by = u.user_id
+        $where_clause
+        ORDER BY ce.event_date DESC, ce.created_at DESC
+        LIMIT ? OFFSET ?";
+
+$params[] = $limit;
+$params[] = $offset;
+$events = db()->fetchAll($sql, $params);
+
+// Get unique categories and event types for filters
+$categories = db()->fetchAll("SELECT DISTINCT category FROM calendar_events WHERE category IS NOT NULL ORDER BY category");
+$event_types = db()->fetchAll("SELECT DISTINCT event_type FROM calendar_events WHERE event_type IS NOT NULL ORDER BY event_type");
+
+// Get status counts for tabs
+$status_counts = db()->fetchAll("
+    SELECT 
+        status,
+        COUNT(*) as count
+    FROM calendar_events
+    GROUP BY status
+    ORDER BY FIELD(status, 'pending', 'approved', 'rejected', 'cancelled')
+");
+
+// Handle bulk actions
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bulk_action'])) {
+    $selected_events = $_POST['selected_events'] ?? [];
+    
+    if (!empty($selected_events)) {
+        $placeholders = implode(',', array_fill(0, count($selected_events), '?'));
+        
+        switch ($_POST['bulk_action']) {
+            case 'approve':
+                db()->update('calendar_events', 
+                    [
+                        'status' => 'approved',
+                        'approved_by' => Auth::id(),
+                        'approved_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s')
+                    ], 
+                    "event_id IN ($placeholders)", 
+                    $selected_events
+                );
+                $_SESSION['flash_message'] = 'Selected events approved successfully';
+                break;
+                
+            case 'reject':
+                db()->update('calendar_events', 
+                    [
+                        'status' => 'rejected',
+                        'updated_at' => date('Y-m-d H:i:s')
+                    ], 
+                    "event_id IN ($placeholders)", 
+                    $selected_events
+                );
+                $_SESSION['flash_message'] = 'Selected events rejected';
+                break;
+                
+            case 'delete':
+                // Delete event registrations first
+                db()->delete('event_registrations', "event_id IN ($placeholders)", $selected_events);
+                // Delete events
+                db()->delete('calendar_events', "event_id IN ($placeholders)", $selected_events);
+                $_SESSION['flash_message'] = 'Selected events deleted successfully';
+                break;
+        }
+        
+        redirect('events.php?' . http_build_query($_GET));
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Events - <?= Config::get('app.name') ?> Admin</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <!-- Date Range Picker -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
+    
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+            --dark-color: #343a40;
+            --light-color: #f8f9fa;
+        }
+        
+        .admin-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 2rem;
+            margin: -1.5rem -1.5rem 2rem -1.5rem;
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .status-pending {
+            background: rgba(255, 193, 7, 0.15);
+            color: #b78b00;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+        
+        .status-approved {
+            background: rgba(40, 167, 69, 0.15);
+            color: #1e7e34;
+            border: 1px solid rgba(40, 167, 69, 0.3);
+        }
+        
+        .status-rejected {
+            background: rgba(220, 53, 69, 0.15);
+            color: #c82333;
+            border: 1px solid rgba(220, 53, 69, 0.3);
+        }
+        
+        .status-cancelled {
+            background: rgba(108, 117, 125, 0.15);
+            color: #6c757d;
+            border: 1px solid rgba(108, 117, 125, 0.3);
+        }
+        
+        .event-title {
+            font-weight: 600;
+            color: var(--dark-color);
+            text-decoration: none;
+        }
+        
+        .event-title:hover {
+            color: var(--primary-color);
+        }
+        
+        .category-tag {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-right: 0.25rem;
+        }
+        
+        .table-actions {
+            white-space: nowrap;
+        }
+        
+        .table-actions .btn {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .bulk-actions {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border: 1px solid #e9ecef;
+        }
+        
+        .filter-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #e9ecef;
+        }
+        
+        .stats-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #e9ecef;
+            transition: transform 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .stats-number {
+            font-size: 1.75rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+        
+        .stats-label {
+            font-size: 0.875rem;
+            color: #6c757d;
+            margin-top: 0.25rem;
+        }
+        
+        .table th {
+            font-weight: 600;
+            color: #495057;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .table td {
+            vertical-align: middle;
+        }
+        
+        .dataTables_wrapper {
+            padding: 0;
+        }
+        
+        .dataTables_length,
+        .dataTables_filter {
+            margin-bottom: 1rem;
+        }
+        
+        .pagination .page-link {
+            border-radius: 6px;
+            margin: 0 2px;
+            border: 1px solid #dee2e6;
+            color: #495057;
+        }
+        
+        .pagination .page-item.active .page-link {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            color: #dee2e6;
+            margin-bottom: 1rem;
+        }
+        
+        .date-range-input {
+            background: white;
+            border: 1px solid #ced4da;
+            border-radius: 0.375rem;
+            padding: 0.375rem 0.75rem;
+        }
+    </style>
+</head>
+<body>
+    <?php include 'includes/sidebar.php'; ?>
+    
+    <div class="main-content">
+        <div class="admin-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1><i class="fas fa-calendar-week"></i> Manage Events</h1>
+                    <p class="mb-0">View, edit, and manage all calendar events</p>
+                </div>
+                <a href="add-event.php" class="btn btn-light">
+                    <i class="fas fa-plus-circle"></i> Add New Event
+                </a>
+            </div>
+        </div>
+        
+        <?php if (isset($_SESSION['flash_message'])): ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle"></i> <?= $_SESSION['flash_message'] ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <?php unset($_SESSION['flash_message']); ?>
+        <?php endif; ?>
+        
+        <!-- Quick Stats -->
+        <div class="row mb-4">
+            <?php foreach ($status_counts as $stat): ?>
+                <div class="col-md-3 col-sm-6 mb-3">
+                    <div class="stats-card">
+                        <div class="stats-number">
+                            <?= $stat['count'] ?>
+                        </div>
+                        <div class="stats-label">
+                            <?= ucfirst($stat['status']) ?> Events
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        
+        <!-- Filters -->
+        <div class="filter-card">
+            <form method="GET" action="" class="row g-3" id="filterForm">
+                <div class="col-md-3">
+                    <label class="form-label">Status</label>
+                    <select name="status" class="form-select" onchange="this.form.submit()">
+                        <option value="all" <?= $status === '' || $status === 'all' ? 'selected' : '' ?>>All Status</option>
+                        <option value="pending" <?= $status === 'pending' ? 'selected' : '' ?>>Pending</option>
+                        <option value="approved" <?= $status === 'approved' ? 'selected' : '' ?>>Approved</option>
+                        <option value="rejected" <?= $status === 'rejected' ? 'selected' : '' ?>>Rejected</option>
+                        <option value="cancelled" <?= $status === 'cancelled' ? 'selected' : '' ?>>Cancelled</option>
+                    </select>
+                </div>
+                
+                <div class="col-md-3">
+                    <label class="form-label">Category</label>
+                    <select name="category" class="form-select" onchange="this.form.submit()">
+                        <option value="all" <?= $category === '' || $category === 'all' ? 'selected' : '' ?>>All Categories</option>
+                        <?php foreach ($categories as $cat): ?>
+                            <option value="<?= $cat['category'] ?>" <?= $category === $cat['category'] ? 'selected' : '' ?>>
+                                <?= getCategoryName($cat['category']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                
+                <div class="col-md-3">
+                    <label class="form-label">Event Type</label>
+                    <select name="event_type" class="form-select" onchange="this.form.submit()">
+                        <option value="all" <?= $event_type === '' || $event_type === 'all' ? 'selected' : '' ?>>All Types</option>
+                        <?php foreach ($event_types as $type): ?>
+                            <option value="<?= $type['event_type'] ?>" <?= $event_type === $type['event_type'] ? 'selected' : '' ?>>
+                                <?= ucfirst(str_replace('_', ' ', $type['event_type'])) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                
+                <div class="col-md-3">
+                    <label class="form-label">Date Range</label>
+                    <input type="text" name="date_range" class="form-control date-range-input" 
+                           placeholder="Select date range" 
+                           data-start="<?= $date_from ?>" 
+                           data-end="<?= $date_to ?>">
+                    <input type="hidden" name="date_from" value="<?= $date_from ?>">
+                    <input type="hidden" name="date_to" value="<?= $date_to ?>">
+                </div>
+                
+                <div class="col-md-6">
+                    <label class="form-label">Search</label>
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Search events..." value="<?= htmlspecialchars($search) ?>">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <label class="form-label">Results per page</label>
+                    <select name="per_page" class="form-select" onchange="this.form.submit()">
+                        <option value="20" <?= $limit == 20 ? 'selected' : '' ?>>20</option>
+                        <option value="50" <?= $limit == 50 ? 'selected' : '' ?>>50</option>
+                        <option value="100" <?= $limit == 100 ? 'selected' : '' ?>>100</option>
+                    </select>
+                </div>
+                
+                <div class="col-md-3 d-flex align-items-end">
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-filter"></i> Apply Filters
+                        </button>
+                        <a href="events.php" class="btn btn-secondary">
+                            <i class="fas fa-redo"></i> Reset
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Bulk Actions -->
+        <form method="POST" action="" id="bulkForm" onsubmit="return confirmBulkAction()">
+            <div class="bulk-actions d-flex justify-content-between align-items-center">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="selectAll">
+                    <label class="form-check-label" for="selectAll">
+                        Select all <?= $total_events ?> events
+                    </label>
+                </div>
+                
+                <div class="d-flex gap-2">
+                    <select name="bulk_action" class="form-select form-select-sm" style="width: auto;">
+                        <option value="">Bulk Actions</option>
+                        <option value="approve">Approve Selected</option>
+                        <option value="reject">Reject Selected</option>
+                        <option value="delete">Delete Selected</option>
+                    </select>
+                    <button type="submit" class="btn btn-sm btn-primary">Apply</button>
+                </div>
+            </div>
+            
+            <!-- Events Table -->
+            <div class="table-responsive">
+                <table class="table table-hover" id="eventsTable">
+                    <thead>
+                        <tr>
+                            <th width="30">
+                                <input type="checkbox" id="toggleAll">
+                            </th>
+                            <th>Event</th>
+                            <th width="100">Date</th>
+                            <th width="120">Category</th>
+                            <th width="100">Status</th>
+                            <th width="150">Organizer</th>
+                            <th width="150">Created</th>
+                            <th width="120" class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (empty($events)): ?>
+                            <tr>
+                                <td colspan="8" class="text-center py-4">
+                                    <div class="empty-state">
+                                        <i class="fas fa-calendar-times"></i>
+                                        <h4 class="mt-3">No Events Found</h4>
+                                        <p class="text-muted">Try adjusting your filters or add a new event</p>
+                                        <a href="add-event.php" class="btn btn-primary mt-2">
+                                            <i class="fas fa-plus"></i> Add New Event
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php else: ?>
+                            <?php foreach ($events as $event): ?>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="selected_events[]" value="<?= $event['event_id'] ?>" class="event-checkbox">
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <a href="view-event.php?id=<?= $event['event_id'] ?>" class="event-title">
+                                                <?= htmlspecialchars($event['title']) ?>
+                                            </a>
+                                            <?php if ($event['is_featured']): ?>
+                                                <span class="badge bg-warning ms-2">Featured</span>
+                                            <?php endif; ?>
+                                        </div>
+                                        <small class="text-muted">
+                                            <?= truncateText(strip_tags($event['description']), 80) ?>
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <?= date('M d, Y', strtotime($event['event_date'])) ?>
+                                        <?php if ($event['start_time']): ?>
+                                            <br><small class="text-muted"><?= date('g:i A', strtotime($event['start_time'])) ?></small>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
+                                        <span class="category-tag" style="background-color: <?= getEventColor($event['category']) ?>20; color: <?= getEventColor($event['category']) ?>;">
+                                            <?= getCategoryName($event['category']) ?>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="status-badge status-<?= $event['status'] ?>">
+                                            <?= ucfirst($event['status']) ?>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div><?= htmlspecialchars($event['organizer_name']) ?></div>
+                                        <small class="text-muted"><?= $event['organizer_email'] ?></small>
+                                    </td>
+                                    <td>
+                                        <div><?= $event['created_formatted'] ?></div>
+                                        <?php if ($event['approved_at']): ?>
+                                            <small class="text-muted">Approved by <?= $event['approver_username'] ?? 'Admin' ?></small>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td class="table-actions text-end">
+                                        <div class="btn-group" role="group">
+                                            <a href="view-event.php?id=<?= $event['event_id'] ?>" class="btn btn-sm btn-outline-primary" title="View">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a href="edit-event.php?id=<?= $event['event_id'] ?>" class="btn btn-sm btn-outline-secondary" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <button type="button" class="btn btn-sm btn-outline-danger" 
+                                                    onclick="confirmDelete(<?= $event['event_id'] ?>)" title="Delete">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+        
+        <!-- Pagination -->
+        <?php if ($total_pages > 1): ?>
+            <nav aria-label="Events pagination">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item <?= $page <= 1 ? 'disabled' : '' ?>">
+                        <a class="page-link" href="?<?= buildPaginationUrl($page - 1) ?>">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    </li>
+                    
+                    <?php 
+                    $start_page = max(1, $page - 2);
+                    $end_page = min($total_pages, $page + 2);
+                    
+                    if ($start_page > 1): ?>
+                        <li class="page-item">
+                            <a class="page-link" href="?<?= buildPaginationUrl(1) ?>">1</a>
+                        </li>
+                        <?php if ($start_page > 2): ?>
+                            <li class="page-item disabled">
+                                <span class="page-link">...</span>
+                            </li>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                    
+                    <?php for ($i = $start_page; $i <= $end_page; $i++): ?>
+                        <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                            <a class="page-link" href="?<?= buildPaginationUrl($i) ?>">
+                                <?= $i ?>
+                            </a>
+                        </li>
+                    <?php endfor; ?>
+                    
+                    <?php if ($end_page < $total_pages): ?>
+                        <?php if ($end_page < $total_pages - 1): ?>
+                            <li class="page-item disabled">
+                                <span class="page-link">...</span>
+                            </li>
+                        <?php endif; ?>
+                        <li class="page-item">
+                            <a class="page-link" href="?<?= buildPaginationUrl($total_pages) ?>">
+                                <?= $total_pages ?>
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                    
+                    <li class="page-item <?= $page >= $total_pages ? 'disabled' : '' ?>">
+                        <a class="page-link" href="?<?= buildPaginationUrl($page + 1) ?>">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        <?php endif; ?>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this event? This action cannot be undone.</p>
+                    <p class="text-danger"><strong>Warning:</strong> All associated registrations will also be deleted.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="#" id="deleteConfirmBtn" class="btn btn-danger">Delete Event</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    
+    <script>
+        // Initialize DataTable
+        $(document).ready(function() {
+            $('#eventsTable').DataTable({
+                "paging": false,
+                "searching": false,
+                "info": false,
+                "ordering": true,
+                "order": [[1, 'asc']],
+                "columnDefs": [
+                    { "orderable": false, "targets": [0, 7] }
+                ]
+            });
+            
+            // Initialize date range picker
+            $('input[name="date_range"]').daterangepicker({
+                autoUpdateInput: false,
+                locale: {
+                    cancelLabel: 'Clear',
+                    format: 'YYYY-MM-DD'
+                }
+            });
+            
+            $('input[name="date_range"]').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('YYYY-MM-DD') + ' to ' + picker.endDate.format('YYYY-MM-DD'));
+                $('input[name="date_from"]').val(picker.startDate.format('YYYY-MM-DD'));
+                $('input[name="date_to"]').val(picker.endDate.format('YYYY-MM-DD'));
+                $('#filterForm').submit();
+            });
+            
+            $('input[name="date_range"]').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+                $('input[name="date_from"]').val('');
+                $('input[name="date_to"]').val('');
+                $('#filterForm').submit();
+            });
+            
+            // Set initial date range if exists
+            if ($('input[name="date_from"]').val() && $('input[name="date_to"]').val()) {
+                $('input[name="date_range"]').val(
+                    $('input[name="date_from"]').val() + ' to ' + $('input[name="date_to"]').val()
+                );
+            }
+        });
+        
+        // Bulk selection
+        document.getElementById('toggleAll').addEventListener('change', function() {
+            const checkboxes = document.querySelectorAll('.event-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+        });
+        
+        document.getElementById('selectAll').addEventListener('change', function() {
+            const checkboxes = document.querySelectorAll('.event-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+            document.getElementById('toggleAll').checked = this.checked;
+        });
+        
+        // Confirm bulk action
+        function confirmBulkAction() {
+            const selected = document.querySelectorAll('.event-checkbox:checked');
+            const action = document.querySelector('select[name="bulk_action"]').value;
+            
+            if (selected.length === 0) {
+                alert('Please select at least one event.');
+                return false;
+            }
+            
+            if (!action) {
+                alert('Please select a bulk action.');
+                return false;
+            }
+            
+            let message = '';
+            switch (action) {
+                case 'approve':
+                    message = `Approve ${selected.length} selected event(s)?`;
+                    break;
+                case 'reject':
+                    message = `Reject ${selected.length} selected event(s)?`;
+                    break;
+                case 'delete':
+                    message = `Delete ${selected.length} selected event(s)? This action cannot be undone.`;
+                    break;
+            }
+            
+            return confirm(message);
+        }
+        
+        // Delete confirmation
+        let deleteEventId = null;
+        
+        function confirmDelete(eventId) {
+            deleteEventId = eventId;
+            const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+            modal.show();
+        }
+        
+        document.getElementById('deleteConfirmBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (deleteEventId) {
+                window.location.href = `delete-event.php?id=${deleteEventId}`;
+            }
+        });
+        
+        // Auto-submit filter changes
+        document.querySelectorAll('#filterForm select').forEach(select => {
+            if (!select.hasAttribute('onchange')) {
+                select.addEventListener('change', function() {
+                    this.form.submit();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
+<?php
+function buildPaginationUrl($page) {
+    $params = $_GET;
+    $params['page'] = $page;
+    return http_build_query($params);
+}
+?>
+
+Create admin/add-event.php (Event Creation Form)
+
+<?php
+// admin/add-event.php
+require_once '../includes/config.php';
+require_once '../includes/auth.php';
+
+// Require admin authentication
+Auth::requireAdmin();
+
+// Initialize variables
+$errors = [];
+$eventData = [
+    'title' => '',
+    'description' => '',
+    'event_date' => date('Y-m-d'),
+    'start_time' => '',
+    'end_time' => '',
+    'category' => 'academic',
+    'event_type' => 'school_event',
+    'location' => '',
+    'room_number' => '',
+    'organizer_name' => Auth::user()['full_name'] ?? '',
+    'organizer_email' => Auth::user()['email'] ?? '',
+    'organizer_phone' => '',
+    'organizer_role' => '',
+    'max_participants' => '',
+    'requires_rsvp' => 0,
+    'rsvp_deadline' => '',
+    'color_code' => '#3788d8',
+    'is_featured' => 0
+];
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Validate and sanitize input
+    $eventData['title'] = trim($_POST['title'] ?? '');
+    $eventData['description'] = trim($_POST['description'] ?? '');
+    $eventData['event_date'] = $_POST['event_date'] ?? date('Y-m-d');
+    $eventData['start_time'] = $_POST['start_time'] ?? '';
+    $eventData['end_time'] = $_POST['end_time'] ?? '';
+    $eventData['category'] = $_POST['category'] ?? 'academic';
+    $eventData['event_type'] = $_POST['event_type'] ?? 'school_event';
+    $eventData['location'] = trim($_POST['location'] ?? '');
+    $eventData['room_number'] = trim($_POST['room_number'] ?? '');
+    $eventData['organizer_name'] = trim($_POST['organizer_name'] ?? '');
+    $eventData['organizer_email'] = trim($_POST['organizer_email'] ?? '');
+    $eventData['organizer_phone'] = trim($_POST['organizer_phone'] ?? '');
+    $eventData['organizer_role'] = trim($_POST['organizer_role'] ?? '');
+    $eventData['max_participants'] = $_POST['max_participants'] ? (int)$_POST['max_participants'] : null;
+    $eventData['requires_rsvp'] = isset($_POST['requires_rsvp']) ? 1 : 0;
+    $eventData['rsvp_deadline'] = $_POST['rsvp_deadline'] ?? '';
+    $eventData['color_code'] = $_POST['color_code'] ?? '#3788d8';
+    $eventData['is_featured'] = isset($_POST['is_featured']) ? 1 : 0;
+    $eventData['short_description'] = trim($_POST['short_description'] ?? '');
+    
+    // Generate slug
+    $slug = generateSlug($eventData['title'] . '-' . date('Y', strtotime($eventData['event_date'])));
+    
+    // Check if slug exists
+    $existing = db()->fetchOne("SELECT COUNT(*) as count FROM calendar_events WHERE slug = ?", [$slug]);
+    if ($existing['count'] > 0) {
+        $slug .= '-' . uniqid();
+    }
+    
+    // Validation
+    if (empty($eventData['title'])) {
+        $errors['title'] = 'Event title is required';
+    }
+    
+    if (empty($eventData['description'])) {
+        $errors['description'] = 'Event description is required';
+    }
+    
+    if (empty($eventData['event_date'])) {
+        $errors['event_date'] = 'Event date is required';
+    } elseif (strtotime($eventData['event_date']) < strtotime('today')) {
+        $errors['event_date'] = 'Event date cannot be in the past';
+    }
+    
+    if ($eventData['start_time'] && $eventData['end_time']) {
+        if (strtotime($eventData['end_time']) <= strtotime($eventData['start_time'])) {
+            $errors['end_time'] = 'End time must be after start time';
+        }
+    }
+    
+    if (empty($eventData['organizer_name'])) {
+        $errors['organizer_name'] = 'Organizer name is required';
+    }
+    
+    if (empty($eventData['organizer_email'])) {
+        $errors['organizer_email'] = 'Organizer email is required';
+    } elseif (!filter_var($eventData['organizer_email'], FILTER_VALIDATE_EMAIL)) {
+        $errors['organizer_email'] = 'Invalid email address';
+    }
+    
+    if ($eventData['requires_rsvp'] && $eventData['rsvp_deadline']) {
+        if (strtotime($eventData['rsvp_deadline']) > strtotime($eventData['event_date'])) {
+            $errors['rsvp_deadline'] = 'RSVP deadline cannot be after the event date';
+        }
+    }
+    
+    // If no errors, save event
+    if (empty($errors)) {
+        try {
+            db()->beginTransaction();
+            
+            // Prepare event data
+            $insertData = [
+                'title' => $eventData['title'],
+                'slug' => $slug,
+                'description' => $eventData['description'],
+                'short_description' => $eventData['short_description'] ?: substr($eventData['description'], 0, 200),
+                'event_date' => $eventData['event_date'],
+                'start_time' => $eventData['start_time'] ?: null,
+                'end_time' => $eventData['end_time'] ?: null,
+                'category' => $eventData['category'],
+                'event_type' => $eventData['event_type'],
+                'location' => $eventData['location'],
+                'room_number' => $eventData['room_number'],
+                'organizer_name' => $eventData['organizer_name'],
+                'organizer_email' => $eventData['organizer_email'],
+                'organizer_phone' => $eventData['organizer_phone'] ?: null,
+                'organizer_role' => $eventData['organizer_role'] ?: null,
+                'max_participants' => $eventData['max_participants'],
+                'requires_rsvp' => $eventData['requires_rsvp'],
+                'rsvp_deadline' => $eventData['requires_rsvp'] && $eventData['rsvp_deadline'] ? $eventData['rsvp_deadline'] . ' 23:59:59' : null,
+                'color_code' => $eventData['color_code'],
+                'is_featured' => $eventData['is_featured'],
+                'status' => 'approved', // Admin created events are auto-approved
+                'approved_by' => Auth::id(),
+                'approved_at' => date('Y-m-d H:i:s'),
+                'created_by' => Auth::id(),
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ];
+            
+            // Insert event
+            $eventId = db()->insert('calendar_events', $insertData);
+            
+            // Log activity
+            db()->insert('audit_log', [
+                'user_id' => Auth::id(),
+                'action_type' => 'CREATE_EVENT',
+                'table_name' => 'calendar_events',
+                'record_id' => $eventId,
+                'new_values' => json_encode($insertData),
+                'ip_address' => getClientIP(),
+                'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? ''
+            ]);
+            
+            db()->commit();
+            
+            // Redirect to events page with success message
+            $_SESSION['flash_message'] = 'Event created successfully!';
+            redirect('view-event.php?id=' . $eventId);
+            
+        } catch (Exception $e) {
+            db()->rollBack();
+            $errors['general'] = 'Error creating event: ' . $e->getMessage();
+            error_log("Event creation error: " . $e->getMessage());
+        }
+    }
+}
+
+// Get available locations
+$locations = db()->fetchAll("SELECT * FROM event_locations WHERE is_active = TRUE ORDER BY name");
+
+// Get categories from config
+$categories = Config::get('events.categories');
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Event - <?= Config::get('app.name') ?> Admin</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Color Picker -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+        }
+        
+        .admin-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 2rem;
+            margin: -1.5rem -1.5rem 2rem -1.5rem;
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .form-section {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #e9ecef;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            color: #495057;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-control, .form-select {
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            padding: 0.75rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .form-control.is-invalid {
+            border-color: #dc3545;
+        }
+        
+        .invalid-feedback {
+            font-size: 0.875rem;
+            color: #dc3545;
+        }
+        
+        .required:after {
+            content: " *";
+            color: #dc3545;
+        }
+        
+        .color-preview {
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 10px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .preview-card {
+            position: sticky;
+            top: 20px;
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+        }
+        
+        .preview-header {
+            padding: 1rem;
+            border-radius: 8px;
+            color: white;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .preview-date {
+            font-size: 2rem;
+            font-weight: bold;
+            line-height: 1;
+        }
+        
+        .preview-month {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            text-transform: uppercase;
+        }
+        
+        .preview-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .preview-desc {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .preview-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .preview-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-toolbar {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+            border: 1px solid #e9ecef;
+        }
+        
+        .character-count {
+            font-size: 0.75rem;
+            color: #6c757d;
+            text-align: right;
+            margin-top: 0.25rem;
+        }
+        
+        .character-count.warning {
+            color: #ffc107;
+        }
+        
+        .character-count.danger {
+            color: #dc3545;
+        }
+        
+        .error-alert {
+            border-left: 4px solid #dc3545;
+        }
+        
+        /* Color picker adjustments */
+        .pickr {
+            width: 100%;
+        }
+        
+        .pcr-button {
+            width: 100% !important;
+            height: 40px !important;
+            border-radius: 8px !important;
+            border: 1px solid #ced4da !important;
+        }
+        
+        @media (max-width: 768px) {
+            .preview-card {
+                margin-top: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <?php include 'includes/sidebar.php'; ?>
+    
+    <div class="main-content">
+        <div class="admin-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1><i class="fas fa-plus-circle"></i> Add New Event</h1>
+                    <p class="mb-0">Create a new event for the school calendar</p>
+                </div>
+                <a href="events.php" class="btn btn-light">
+                    <i class="fas fa-arrow-left"></i> Back to Events
+                </a>
+            </div>
+        </div>
+        
+        <?php if (!empty($errors['general'])): ?>
+            <div class="alert alert-danger error-alert">
+                <i class="fas fa-exclamation-triangle"></i> <?= $errors['general'] ?>
+            </div>
+        <?php endif; ?>
+        
+        <form method="POST" action="" id="eventForm">
+            <div class="row">
+                <!-- Main Form -->
+                <div class="col-lg-8">
+                    <!-- Basic Information -->
+                    <div class="form-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-info-circle"></i> Basic Information
+                        </h3>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <label for="title" class="form-label required">Event Title</label>
+                                <input type="text" 
+                                       id="title" 
+                                       name="title" 
+                                       class="form-control <?= isset($errors['title']) ? 'is-invalid' : '' ?>" 
+                                       value="<?= htmlspecialchars($eventData['title']) ?>"
+                                       placeholder="Enter event title"
+                                       required
+                                       maxlength="255">
+                                <?php if (isset($errors['title'])): ?>
+                                    <div class="invalid-feedback"><?= $errors['title'] ?></div>
+                                <?php endif; ?>
+                                <div class="character-count" id="titleCount">0/255</div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="color_code" class="form-label">Event Color</label>
+                                <div class="input-group">
+                                    <span class="input-group-text p-0 border-0">
+                                        <div class="color-preview" id="colorPreview" style="background-color: <?= $eventData['color_code'] ?>"></div>
+                                    </span>
+                                    <input type="text" 
+                                           id="color_code" 
+                                           name="color_code" 
+                                           class="form-control" 
+                                           value="<?= htmlspecialchars($eventData['color_code']) ?>"
+                                           placeholder="#3788d8">
+                                </div>
+                                <small class="text-muted">Color for calendar display</small>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="category" class="form-label required">Category</label>
+                                <select id="category" name="category" class="form-select" required>
+                                    <option value="">Select Category</option>
+                                    <?php foreach ($categories as $key => $cat): ?>
+                                        <option value="<?= $key ?>" <?= $eventData['category'] === $key ? 'selected' : '' ?>>
+                                            <?= $cat['name'] ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="event_type" class="form-label required">Event Type</label>
+                                <select id="event_type" name="event_type" class="form-select" required>
+                                    <option value="school_event" <?= $eventData['event_type'] === 'school_event' ? 'selected' : '' ?>>School Event</option>
+                                    <option value="public_holiday" <?= $eventData['event_type'] === 'public_holiday' ? 'selected' : '' ?>>Public Holiday</option>
+                                    <option value="exam_test" <?= $eventData['event_type'] === 'exam_test' ? 'selected' : '' ?>>Exam/Test</option>
+                                    <option value="parent_meeting" <?= $eventData['event_type'] === 'parent_meeting' ? 'selected' : '' ?>>Parent Meeting</option>
+                                    <option value="sports_event" <?= $eventData['event_type'] === 'sports_event' ? 'selected' : '' ?>>Sports Event</option>
+                                    <option value="cultural_event" <?= $eventData['event_type'] === 'cultural_event' ? 'selected' : '' ?>>Cultural Event</option>
+                                    <option value="workshop" <?= $eventData['event_type'] === 'workshop' ? 'selected' : '' ?>>Workshop</option>
+                                    <option value="other" <?= $eventData['event_type'] === 'other' ? 'selected' : '' ?>>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="short_description" class="form-label">Short Description</label>
+                            <textarea id="short_description" 
+                                      name="short_description" 
+                                      class="form-control" 
+                                      rows="2"
+                                      placeholder="Brief summary (optional, will be auto-generated if empty)"
+                                      maxlength="500"><?= htmlspecialchars($eventData['short_description']) ?></textarea>
+                            <div class="character-count" id="shortDescCount">0/500</div>
+                            <small class="text-muted">Displayed in event lists</small>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="description" class="form-label required">Full Description</label>
+                            <textarea id="description" 
+                                      name="description" 
+                                      class="form-control <?= isset($errors['description']) ? 'is-invalid' : '' ?>" 
+                                      rows="6"
+                                      placeholder="Detailed description of the event"
+                                      required><?= htmlspecialchars($eventData['description']) ?></textarea>
+                            <?php if (isset($errors['description'])): ?>
+                                <div class="invalid-feedback"><?= $errors['description'] ?></div>
+                            <?php endif; ?>
+                            <div class="character-count" id="descCount">0/5000</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Date & Time -->
+                    <div class="form-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-calendar-alt"></i> Date & Time
+                        </h3>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="event_date" class="form-label required">Event Date</label>
+                                <input type="date" 
+                                       id="event_date" 
+                                       name="event_date" 
+                                       class="form-control <?= isset($errors['event_date']) ? 'is-invalid' : '' ?>" 
+                                       value="<?= $eventData['event_date'] ?>"
+                                       required
+                                       min="<?= date('Y-m-d') ?>">
+                                <?php if (isset($errors['event_date'])): ?>
+                                    <div class="invalid-feedback"><?= $errors['event_date'] ?></div>
+                                <?php endif; ?>
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <label for="start_time" class="form-label">Start Time</label>
+                                <input type="time" 
+                                       id="start_time" 
+                                       name="start_time" 
+                                       class="form-control" 
+                                       value="<?= $eventData['start_time'] ?>">
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <label for="end_time" class="form-label">End Time</label>
+                                <input type="time" 
+                                       id="end_time" 
+                                       name="end_time" 
+                                       class="form-control <?= isset($errors['end_time']) ? 'is-invalid' : '' ?>" 
+                                       value="<?= $eventData['end_time'] ?>">
+                                <?php if (isset($errors['end_time'])): ?>
+                                    <div class="invalid-feedback"><?= $errors['end_time'] ?></div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        
+                        <div class="form-check form-switch mb-3">
+                            <input type="checkbox" 
+                                   class="form-check-input" 
+                                   id="all_day" 
+                                   name="all_day" 
+                                   <?= empty($eventData['start_time']) ? 'checked' : '' ?>>
+                            <label class="form-check-label" for="all_day">All-day event</label>
+                        </div>
+                    </div>
+                    
+                    <!-- Location & Venue -->
+                    <div class="form-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-map-marker-alt"></i> Location & Venue
+                        </h3>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <label for="location" class="form-label">Location</label>
+                                <select id="location" name="location" class="form-select">
+                                    <option value="">Select Location</option>
+                                    <?php foreach ($locations as $loc): ?>
+                                        <option value="<?= htmlspecialchars($loc['name']) ?>" <?= $eventData['location'] === $loc['name'] ? 'selected' : '' ?>>
+                                            <?= htmlspecialchars($loc['name']) ?> 
+                                            <?= $loc['building'] ? "({$loc['building']})" : '' ?>
+                                            <?= $loc['capacity'] ? " - Capacity: {$loc['capacity']}" : '' ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="room_number" class="form-label">Room Number</label>
+                                <input type="text" 
+                                       id="room_number" 
+                                       name="room_number" 
+                                       class="form-control" 
+                                       value="<?= htmlspecialchars($eventData['room_number']) ?>"
+                                       placeholder="e.g., 101, A-12">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input type="checkbox" 
+                                       class="form-check-input" 
+                                       id="requires_rsvp" 
+                                       name="requires_rsvp" 
+                                       <?= $eventData['requires_rsvp'] ? 'checked' : '' ?>>
+                                <label class="form-check-label" for="requires_rsvp">Requires RSVP/Registration</label>
+                            </div>
+                        </div>
+                        
+                        <div id="rsvpOptions" style="display: <?= $eventData['requires_rsvp'] ? 'block' : 'none' ?>;">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="max_participants" class="form-label">Maximum Participants</label>
+                                    <input type="number" 
+                                           id="max_participants" 
+                                           name="max_participants" 
+                                           class="form-control" 
+                                           value="<?= $eventData['max_participants'] ?>"
+                                           placeholder="Leave empty for unlimited"
+                                           min="1">
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label for="rsvp_deadline" class="form-label">RSVP Deadline</label>
+                                    <input type="date" 
+                                           id="rsvp_deadline" 
+                                           name="rsvp_deadline" 
+                                           class="form-control <?= isset($errors['rsvp_deadline']) ? 'is-invalid' : '' ?>" 
+                                           value="<?= $eventData['rsvp_deadline'] ?>"
+                                           min="<?= date('Y-m-d') ?>">
+                                    <?php if (isset($errors['rsvp_deadline'])): ?>
+                                        <div class="invalid-feedback"><?= $errors['rsvp_deadline'] ?></div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Organizer Information -->
+                    <div class="form-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-user"></i> Organizer Information
+                        </h3>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="organizer_name" class="form-label required">Organizer Name</label>
+                                <input type="text" 
+                                       id="organizer_name" 
+                                       name="organizer_name" 
+                                       class="form-control <?= isset($errors['organizer_name']) ? 'is-invalid' : '' ?>" 
+                                       value="<?= htmlspecialchars($eventData['organizer_name']) ?>"
+                                       required>
+                                <?php if (isset($errors['organizer_name'])): ?>
+                                    <div class="invalid-feedback"><?= $errors['organizer_name'] ?></div>
+                                <?php endif; ?>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="organizer_role" class="form-label">Organizer Role</label>
+                                <input type="text" 
+                                       id="organizer_role" 
+                                       name="organizer_role" 
+                                       class="form-control" 
+                                       value="<?= htmlspecialchars($eventData['organizer_role']) ?>"
+                                       placeholder="e.g., Teacher, Coordinator">
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="organizer_email" class="form-label required">Email Address</label>
+                                <input type="email" 
+                                       id="organizer_email" 
+                                       name="organizer_email" 
+                                       class="form-control <?= isset($errors['organizer_email']) ? 'is-invalid' : '' ?>" 
+                                       value="<?= htmlspecialchars($eventData['organizer_email']) ?>"
+                                       required>
+                                <?php if (isset($errors['organizer_email'])): ?>
+                                    <div class="invalid-feedback"><?= $errors['organizer_email'] ?></div>
+                                <?php endif; ?>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="organizer_phone" class="form-label">Phone Number</label>
+                                <input type="tel" 
+                                       id="organizer_phone" 
+                                       name="organizer_phone" 
+                                       class="form-control" 
+                                       value="<?= htmlspecialchars($eventData['organizer_phone']) ?>"
+                                       placeholder="+1 (555) 123-4567">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Options -->
+                    <div class="form-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-cog"></i> Additional Options
+                        </h3>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-check form-switch mb-3">
+                                    <input type="checkbox" 
+                                           class="form-check-input" 
+                                           id="is_featured" 
+                                           name="is_featured" 
+                                           <?= $eventData['is_featured'] ? 'checked' : '' ?>>
+                                    <label class="form-check-label" for="is_featured">
+                                        Featured Event
+                                        <small class="d-block text-muted">Display this event prominently</small>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-check form-switch mb-3">
+                                    <input type="checkbox" 
+                                           class="form-check-input" 
+                                           id="auto_approve" 
+                                           name="auto_approve" 
+                                           checked 
+                                           disabled>
+                                    <label class="form-check-label" for="auto_approve">
+                                        Auto-approve (Admin)
+                                        <small class="d-block text-muted">Events created by admins are auto-approved</small>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Preview & Sidebar -->
+                <div class="col-lg-4">
+                    <!-- Live Preview -->
+                    <div class="preview-card mb-4">
+                        <h4 class="mb-3">
+                            <i class="fas fa-eye"></i> Live Preview
+                        </h4>
+                        
+                        <div class="preview-header" id="previewHeader" style="background-color: <?= $eventData['color_code'] ?>;">
+                            <div class="preview-date" id="previewDate">
+                                <?= date('d', strtotime($eventData['event_date'])) ?>
+                            </div>
+                            <div class="preview-month" id="previewMonth">
+                                <?= strtoupper(date('M', strtotime($eventData['event_date']))) ?>
+                            </div>
+                        </div>
+                        
+                        <div class="preview-title" id="previewTitle">
+                            <?= htmlspecialchars($eventData['title']) ?: 'Event Title' ?>
+                        </div>
+                        
+                        <div class="preview-desc" id="previewDesc">
+                            <?= htmlspecialchars($eventData['short_description'] ?: substr($eventData['description'], 0, 150)) ?: 'Event description will appear here...' ?>
+                        </div>
+                        
+                        <div class="preview-meta">
+                            <div class="preview-meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span id="previewTime">
+                                    <?php if ($eventData['start_time']): ?>
+                                        <?= date('g:i A', strtotime($eventData['start_time'])) ?>
+                                        <?php if ($eventData['end_time']): ?>
+                                             - <?= date('g:i A', strtotime($eventData['end_time'])) ?>
+                                        <?php endif; ?>
+                                    <?php else: ?>
+                                        All Day
+                                    <?php endif; ?>
+                                </span>
+                            </div>
+                            
+                            <div class="preview-meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span id="previewLocation">
+                                    <?= htmlspecialchars($eventData['location']) ?: 'Location TBA' ?>
+                                </span>
+                            </div>
+                            
+                            <div class="preview-meta-item">
+                                <i class="fas fa-user"></i>
+                                <span id="previewOrganizer">
+                                    <?= htmlspecialchars($eventData['organizer_name']) ?: 'Organizer Name' ?>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Save Actions -->
+                    <div class="preview-card">
+                        <h4 class="mb-3">
+                            <i class="fas fa-save"></i> Save Event
+                        </h4>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" name="action" value="publish" class="btn btn-primary btn-lg">
+                                <i class="fas fa-check-circle"></i> Create Event
+                            </button>
+                            
+                            <button type="submit" name="action" value="draft" class="btn btn-outline-secondary">
+                                <i class="fas fa-save"></i> Save as Draft
+                            </button>
+                            
+                            <a href="events.php" class="btn btn-outline-danger">
+                                <i class="fas fa-times"></i> Cancel
+                            </a>
+                        </div>
+                        
+                        <hr>
+                        
+                        <div class="text-muted small">
+                            <p><i class="fas fa-info-circle"></i> <strong>Note:</strong></p>
+                            <ul class="mb-0 ps-3">
+                                <li>Events are auto-approved when created by admins</li>
+                                <li>All fields marked with * are required</li>
+                                <li>Changes are saved immediately on form submit</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
+    
+    <script>
+        // Initialize color picker
+        const pickr = Pickr.create({
+            el: '#color_code',
+            theme: 'classic',
+            default: '<?= $eventData['color_code'] ?>',
+            swatches: [
+                '#3788d8', '#1a5f7a', '#28a745', '#ff6b35',
+                '#ffc107', '#dc3545', '#6f42c1', '#6c757d'
+            ],
+            components: {
+                preview: true,
+                opacity: true,
+                hue: true,
+                interaction: {
+                    hex: true,
+                    rgba: true,
+                    hsva: true,
+                    input: true,
+                    clear: true,
+                    save: true
+                }
+            }
+        });
+
+        pickr.on('save', (color, instance) => {
+            const hexColor = color.toHEXA().toString();
+            document.getElementById('color_code').value = hexColor;
+            document.getElementById('colorPreview').style.backgroundColor = hexColor;
+            document.getElementById('previewHeader').style.backgroundColor = hexColor;
+        });
+
+        // Character counters
+        function setupCharacterCounter(textareaId, counterId, maxLength) {
+            const textarea = document.getElementById(textareaId);
+            const counter = document.getElementById(counterId);
+            
+            function updateCount() {
+                const length = textarea.value.length;
+                counter.textContent = `${length}/${maxLength}`;
+                
+                counter.classList.remove('warning', 'danger');
+                if (length > maxLength * 0.9) {
+                    counter.classList.add('danger');
+                } else if (length > maxLength * 0.75) {
+                    counter.classList.add('warning');
+                }
+            }
+            
+            textarea.addEventListener('input', updateCount);
+            updateCount();
+        }
+
+        setupCharacterCounter('title', 'titleCount', 255);
+        setupCharacterCounter('short_description', 'shortDescCount', 500);
+        setupCharacterCounter('description', 'descCount', 5000);
+
+        // Live preview updates
+        function updatePreview() {
+            // Title
+            const title = document.getElementById('title').value || 'Event Title';
+            document.getElementById('previewTitle').textContent = title;
+            
+            // Date
+            const dateInput = document.getElementById('event_date').value;
+            if (dateInput) {
+                const date = new Date(dateInput);
+                document.getElementById('previewDate').textContent = date.getDate();
+                document.getElementById('previewMonth').textContent = date.toLocaleString('default', { month: 'short' }).toUpperCase();
+            }
+            
+            // Time
+            const startTime = document.getElementById('start_time').value;
+            const endTime = document.getElementById('end_time').value;
+            const allDay = document.getElementById('all_day').checked;
+            
+            let timeText = 'All Day';
+            if (!allDay && startTime) {
+                const start = formatTime(startTime);
+                if (endTime) {
+                    const end = formatTime(endTime);
+                    timeText = `${start} - ${end}`;
+                } else {
+                    timeText = `From ${start}`;
+                }
+            }
+            document.getElementById('previewTime').textContent = timeText;
+            
+            // Location
+            const location = document.getElementById('location').value || 'Location TBA';
+            document.getElementById('previewLocation').textContent = location;
+            
+            // Organizer
+            const organizer = document.getElementById('organizer_name').value || 'Organizer Name';
+            document.getElementById('previewOrganizer').textContent = organizer;
+            
+            // Short description
+            const shortDesc = document.getElementById('short_description').value;
+            const fullDesc = document.getElementById('description').value;
+            const previewDesc = shortDesc || fullDesc.substring(0, 150) + (fullDesc.length > 150 ? '...' : '');
+            document.getElementById('previewDesc').textContent = previewDesc || 'Event description will appear here...';
+        }
+
+        function formatTime(timeString) {
+            const [hours, minutes] = timeString.split(':');
+            const hour = parseInt(hours);
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const displayHour = hour % 12 || 12;
+            return `${displayHour}:${minutes} ${ampm}`;
+        }
+
+        // Update preview on input
+        document.querySelectorAll('#eventForm input, #eventForm select, #eventForm textarea').forEach(element => {
+            element.addEventListener('input', updatePreview);
+            element.addEventListener('change', updatePreview);
+        });
+
+        // All-day event toggle
+        document.getElementById('all_day').addEventListener('change', function() {
+            const timeInputs = document.querySelectorAll('#start_time, #end_time');
+            timeInputs.forEach(input => {
+                input.disabled = this.checked;
+                if (this.checked) {
+                    input.value = '';
+                }
+            });
+            updatePreview();
+        });
+
+        // RSVP options toggle
+        document.getElementById('requires_rsvp').addEventListener('change', function() {
+            const rsvpOptions = document.getElementById('rsvpOptions');
+            rsvpOptions.style.display = this.checked ? 'block' : 'none';
+        });
+
+        // Form validation
+        document.getElementById('eventForm').addEventListener('submit', function(e) {
+            let valid = true;
+            
+            // Check required fields
+            const requiredFields = ['title', 'description', 'event_date', 'organizer_name', 'organizer_email'];
+            requiredFields.forEach(field => {
+                const element = document.getElementById(field);
+                if (!element.value.trim()) {
+                    element.classList.add('is-invalid');
+                    valid = false;
+                } else {
+                    element.classList.remove('is-invalid');
+                }
+            });
+            
+            // Check email format
+            const emailField = document.getElementById('organizer_email');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (emailField.value && !emailRegex.test(emailField.value)) {
+                emailField.classList.add('is-invalid');
+                valid = false;
+            }
+            
+            // Check date validity
+            const dateField = document.getElementById('event_date');
+            if (dateField.value) {
+                const eventDate = new Date(dateField.value);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                if (eventDate < today) {
+                    dateField.classList.add('is-invalid');
+                    valid = false;
+                }
+            }
+            
+            // Check time order
+            const startTime = document.getElementById('start_time').value;
+            const endTime = document.getElementById('end_time').value;
+            if (startTime && endTime && startTime >= endTime) {
+                document.getElementById('end_time').classList.add('is-invalid');
+                valid = false;
+            }
+            
+            if (!valid) {
+                e.preventDefault();
+                alert('Please fix the errors in the form before submitting.');
+            }
+        });
+
+        // Auto-generate short description if empty
+        document.getElementById('description').addEventListener('blur', function() {
+            const shortDescField = document.getElementById('short_description');
+            if (!shortDescField.value.trim() && this.value.trim()) {
+                shortDescField.value = this.value.substring(0, 200).trim() + (this.value.length > 200 ? '...' : '');
+                updatePreview();
+            }
+        });
+
+        // Initialize preview
+        document.addEventListener('DOMContentLoaded', updatePreview);
+    </script>
+</body>
+</html>
+
+structure looks like this:
+admin/edit-event.php - Edit existing events
+
+admin/view-event.php - Detailed event view
+
+admin/pending-events.php - Pending events approval interface
+
+admin/categories.php - Categories management
+
+admin/locations.php - Locations management
+
+admin/important-dates.php - Important dates management
+
+admin/users.php - User management
+
+admin/settings.php - System settings
+
+but main file structure islike the following ,before admin folder was added
+
+from this: PhpFinalWebTemplate/
+├── assets/
+│   └── images/
+│       └── logo5.png                    # Your school logo
+├── css/
+│   ├── common.css                       # Common styles for all pages
+│   ├── home.css                         # Home page specific styles
+│   ├── about.css                        # About page styles
+│   ├── our-school.css                   # Our School pages styles
+│   ├── calendar-events.css              # Calendar & Events styles
+│   ├── gallery.css                      # Gallery pages styles
+│   ├── enrolment.css                    # Enrolment page styles
+│   └── contact.css                      # Contact page styles
+├── js/
+│   └── main.js                          # Main JavaScript file
+├── includes/
+│   ├── navigation.php                   # Navigation functions (FIXED)
+│   ├── footer.php                       # Footer content
+│   └── database.php                     # Database connection (if needed)
+├── our-school/                          # "Our School" section
+│   ├── staff.php                        # Staff Directory
+│   ├── sgb.php                          # School Governing Body
+│   ├── food-handlers.php                # Food Handlers
+│   ├── ground-workers.php               # Ground Workers
+│   └── security.php                     # Security Team
+├── gallery/                             # "Gallery" section
+│   ├── achievements.php                 # Achievements gallery
+│   └── students-gallery.php             # Students gallery
+├── index.php                            # Home page
+├── about.php                            # About Us page
+├── our-school.php                       # Our School main page
+├── calendar-events.php                  # Calendar & Events page
+├── gallery.php                          # Gallery main page
+├── enrolment.php                        # Enrolment page
+├── contact.php                          # Contact Us page
+├── .htaccess                            # Apache configuration (optional)
+└── README.md                            # Project documentation

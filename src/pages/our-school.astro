@@ -1,0 +1,508 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SecondaryNav from '../components/SecondaryNav.astro';
+import SubNav from '../components/SubNav.astro';
+import '../styles/our-school.css';
+
+const schoolSubNavItems = [
+    { title: 'Staff', href: '/our-school/staff' },
+    { title: 'SGB', href: '/our-school/sgb' },
+    { title: 'Cooks', href: '/our-school/food-handlers' },
+    { title: 'Maintenance', href: '/our-school/ground-workers' },
+    { title: 'Security', href: '/our-school/security' }
+];
+
+const stats = [
+    { label: "Teaching Staff",        value: "23",  prefix: "", suffix: "",   svgPath: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" },
+    { label: "Support Staff",         value: "42",  prefix: "", suffix: "",   svgPath: "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" },
+    { label: "Years of Service",      value: "27",  prefix: "", suffix: "",   svgPath: "M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-7.714 2.143L11 21l-2.286-6.857L1 12l7.714-2.143L11 3z" },
+    { label: "Student-Teacher Ratio", value: "1:25",prefix: "", suffix: "",   svgPath: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" },
+];
+
+
+const departments = [
+    {
+        icon: "📚",
+        title: "Academic Department",
+        description: "Leading curriculum development and educational excellence across all grades.",
+        head: "To be updated",
+        staff: "To be updated"
+    },
+    {
+        icon: "🎨",
+        title: "Arts & Culture",
+        description: "Nurturing creativity through music, drama, visual arts, and cultural programs.",
+        head: "To be updated",
+        staff: "To be updated"
+    },
+    {
+        icon: "⚽",
+        title: "Sports & Recreation",
+        description: "Promoting physical wellness and competitive sports excellence.",
+        head: "To be updated",
+        staff: "To be updated"
+    },
+    {
+        icon: "🔬",
+        title: "Science & Technology",
+        description: "Preparing students for the future with STEM education and innovation.",
+        head: "To be updated",
+        staff: "To be updated"
+    }
+];
+---
+
+<Layout title="Our School - Tshikhuthula Secondary School" currentPage="our-school" noNavbarPadding={true} showMainNav={true}>
+    <SecondaryNav currentPage="our-school" />
+    <!-- ── Header ── -->
+    <header class="our-school-header ws-reveal">
+        <div class="our-school-header-bg"></div>
+        <div class="our-school-header-content flex flex-col items-center justify-center">
+            <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-gold-500/30 bg-gold-500/10 backdrop-blur-md mb-6">
+                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-gold-400">Welcome</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-heading text-white font-display drop-shadow-lg tracking-tight mb-6">
+                Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">School</span>
+            </h1>
+            <p class="text-slate-300 max-w-3xl mx-auto text-lg leading-relaxed font-lato text-center">
+                Discover our school community, facilities, and dedicated staff members.
+            </p>
+        </div>
+    </header>
+    
+    <SubNav items={schoolSubNavItems} />
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 space-y-20">
+        <!-- Stats Section -->
+        <section class="os-stats-bar">
+            {stats.map((stat, i) => (
+                <div
+                    class="os-stat-card animate-fade-in"
+                    style={`animation-delay: ${0.2 * i + 0.1}s; animation-fill-mode: forwards;`}
+                >
+                    <div class="os-stat-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d={stat.svgPath} />
+                        </svg>
+                    </div>
+                    <div class="os-stat-info">
+                        <div class="os-stat-number stat-number"
+                             data-target={stat.value}
+                             data-suffix={stat.suffix}>
+                            {stat.prefix}{stat.value}{stat.suffix}
+                        </div>
+                        <div class="os-stat-label">{stat.label}</div>
+                    </div>
+                    <div class="os-stat-divider"></div>
+                </div>
+            ))}
+        </section>
+
+        <style>
+            /* ── Our School Stats Bar – mirrors homepage hero-stats-bar ── */
+            .os-stats-bar {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                background: rgba(6, 11, 20, 0.82);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border: 1px solid rgba(255,255,255,0.08);
+                border-radius: 0;
+                overflow: hidden;
+            }
+            .os-stat-card {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 1.25rem;
+                padding: 1.5rem 1rem;
+                position: relative;
+                opacity: 0;
+                transition: background 0.3s ease;
+            }
+            .os-stat-card:hover { background: rgba(255,255,255,0.05); }
+            .os-stat-icon {
+                width: 2.5rem;
+                height: 2.5rem;
+                background: rgba(153, 27, 27, 0.15);
+                border: 1px solid rgba(153, 27, 27, 0.25);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #961107;
+                flex-shrink: 0;
+                transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+            }
+            .os-stat-card:hover .os-stat-icon {
+                transform: scale(1.1) rotate(-5deg);
+                border-color: #961107;
+                background: rgba(153, 27, 27, 0.25);
+                color: #fff;
+            }
+            .os-stat-icon svg { width: 1.1rem; height: 1.1rem; }
+            .os-stat-info {
+                display: flex;
+                flex-direction: column;
+                gap: 0.1rem;
+            }
+            .os-stat-number {
+                font-family: 'Outfit', sans-serif;
+                font-weight: 200;
+                font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+                color: #deb056;
+                line-height: 1;
+                text-shadow: 0 0 16px rgba(253,230,138,0.35);
+            }
+            .os-stat-label {
+                font-family: 'Lato', sans-serif;
+                font-weight: 800;
+                font-size: 0.52rem;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: rgba(255,255,255,0.60);
+                line-height: 1.2;
+                white-space: nowrap;
+            }
+            .os-stat-divider {
+                position: absolute;
+                right: 0; top: 25%; bottom: 25%;
+                width: 1px;
+                background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.1), transparent);
+            }
+            .os-stat-card:last-child .os-stat-divider { display: none; }
+            @media (max-width: 768px) {
+                .os-stats-bar { grid-template-columns: repeat(2, 1fr); }
+                .os-stat-card { padding: 1rem 0.5rem; gap: 0.75rem; }
+            }
+
+            /* ── Shared section helpers ── */
+            .os-section-eyebrow {
+                display: inline-block;
+                font-family: 'Lato', sans-serif;
+                font-weight: 800;
+                font-size: 0.6rem;
+                letter-spacing: 0.28em;
+                text-transform: uppercase;
+                color: #deb056;
+                margin-bottom: 0.75rem;
+            }
+            .os-section-heading {
+                font-family: 'Outfit', sans-serif;
+                font-weight: 400;
+                font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+                color: #f8fafc;
+                line-height: 1.15;
+                margin-bottom: 0.75rem;
+            }
+            .os-welcome-em { font-style: italic; color: #deb056; }
+            .os-section-rule {
+                width: 3rem; height: 2px;
+                background: linear-gradient(90deg, #961107, #deb056);
+                margin: 0 auto 1rem;
+            }
+            .os-section-sub {
+                font-family: 'Lato', sans-serif;
+                color: rgba(255,255,255,0.55);
+                font-size: 0.9rem;
+                max-width: 36rem;
+                margin: 0 auto;
+                line-height: 1.7;
+            }
+            .os-section-header { text-align: center; margin-bottom: 3rem; }
+
+            /* ── Welcome Section ── */
+            .os-welcome-section {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 4rem;
+                align-items: center;
+                background: rgba(6, 11, 20, 0.82);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border: 1px solid rgba(255,255,255,0.08);
+                padding: 3.5rem;
+            }
+            @media (max-width: 768px) {
+                .os-welcome-section { grid-template-columns: 1fr; padding: 2rem; gap: 2rem; }
+                .os-welcome-image-col {
+                    margin-right: 0 !important;
+                    margin-top: 0 !important;
+                    margin-bottom: 0 !important;
+                    height: 300px !important;
+                }
+            }
+            .os-welcome-heading {
+                font-family: 'Outfit', sans-serif;
+                font-weight: 900;
+                font-size: clamp(1.1rem, 2vw, 1.25rem);
+                letter-spacing: 0.15em;
+                text-transform: uppercase;
+                color: #f8fafc;
+                line-height: 1.3;
+                margin-bottom: 1.25rem;
+            }
+            .os-welcome-body {
+                font-family: 'Lato', sans-serif;
+                font-size: 1.15rem;
+                font-weight: 300;
+                color: rgba(255,255,255,0.75);
+                line-height: 1.6;
+                margin-bottom: 1rem;
+            }
+            .os-pillars { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 1.75rem; }
+            .os-pillar { display: flex; gap: 1rem; align-items: flex-start; }
+            .os-pillar-icon {
+                width: 2.5rem; height: 2.5rem;
+                background: rgba(153, 27, 27, 0.15);
+                border: 1px solid rgba(153, 27, 27, 0.30);
+                display: flex; align-items: center; justify-content: center;
+                color: #961107; flex-shrink: 0;
+                transition: background 0.3s ease, color 0.3s ease;
+            }
+            .os-pillar:hover .os-pillar-icon { background: rgba(153,27,27,0.30); color: #fff; }
+            .os-pillar-icon svg { width: 1rem; height: 1rem; }
+            .os-pillar-title {
+                font-family: 'Lato', sans-serif; font-weight: 800;
+                font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
+                color: #f8fafc; margin-bottom: 0.25rem;
+            }
+            .os-pillar-desc {
+                font-family: 'Lato', sans-serif; font-size: 0.82rem;
+                color: rgba(255,255,255,0.50); line-height: 1.6;
+            }
+            .os-welcome-image-frame {
+                position: absolute;
+                inset: 0;
+                overflow: hidden;
+                border: 1px solid rgba(255,255,255,0.10);
+                border-radius: 6px;
+                background: rgba(6,11,20,0.5);
+            }
+            .os-welcome-image-placeholder {
+                width: 100%; height: 100%;
+                display: flex; align-items: center; justify-content: center;
+                background: rgba(6,11,20,0.5);
+                color: rgba(255,255,255,0.25); font-style: italic; font-size: 0.9rem;
+            }
+            .os-welcome-img {
+                position: absolute; inset: 0; width: 100%; height: 100%;
+                object-fit: cover; opacity: 0;
+                transform: scale(1);
+                transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .os-welcome-image-frame:hover .os-welcome-img {
+                transform: scale(1.08) !important;
+            }
+            .os-welcome-image-overlay {
+                position: absolute; inset: 0;
+                background: linear-gradient(135deg, rgba(150,17,7,0.15), transparent 60%);
+                pointer-events: none;
+            }
+
+            /* ── Departments Section ── */
+            .os-dept-section {
+                background: rgba(6, 11, 20, 0.82);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border: 1px solid rgba(255,255,255,0.08);
+                padding: 3.5rem;
+            }
+            @media (max-width: 768px) { .os-dept-section { padding: 2rem; } }
+            .os-dept-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+            @media (max-width: 640px) { .os-dept-grid { grid-template-columns: 1fr; } }
+            .os-dept-card {
+                position: relative;
+                background: rgba(255,255,255,0.04);
+                border: 1px solid rgba(255,255,255,0.07);
+                padding: 2rem 1.75rem 1.75rem; overflow: hidden;
+                transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+            }
+            .os-dept-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(203,143,36,0.25); transform: translateY(-4px); }
+            .os-dept-top-bar {
+                position: absolute; top: 0; left: 0; right: 0; height: 3px;
+                background: linear-gradient(90deg, #961107, #deb056);
+                transform: scaleX(0); transform-origin: left; transition: transform 0.35s ease;
+            }
+            .os-dept-card:hover .os-dept-top-bar { transform: scaleX(1); }
+            .os-dept-icon { font-size: 2.25rem; margin-bottom: 1rem; display: block; }
+            .os-dept-title {
+                font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.1rem;
+                color: #f8fafc; margin-bottom: 0.5rem; letter-spacing: 0.03em;
+            }
+            .os-dept-desc {
+                font-family: 'Lato', sans-serif; font-size: 0.82rem;
+                color: rgba(255,255,255,0.50); line-height: 1.65; margin-bottom: 1.25rem;
+            }
+            .os-dept-meta { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 0.85rem; display: flex; flex-direction: column; gap: 0.4rem; }
+            .os-dept-meta-row { display: flex; justify-content: space-between; align-items: center; }
+            .os-dept-meta-key {
+                font-family: 'Lato', sans-serif; font-size: 0.55rem; font-weight: 900;
+                letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35);
+            }
+            .os-dept-meta-val { font-family: 'Lato', sans-serif; font-size: 0.78rem; font-weight: 600; color: #deb056; }
+
+            /* ── Personnel Section ── */
+            .os-personnel-section {
+                background: rgba(6, 11, 20, 0.82);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border: 1px solid rgba(255,255,255,0.08);
+                padding: 3.5rem;
+            }
+            @media (max-width: 768px) { .os-personnel-section { padding: 2rem; } }
+            .os-personnel-grid {
+                display: grid; grid-template-columns: repeat(5, 1fr);
+                gap: 1px; background: rgba(255,255,255,0.06);
+                border: 1px solid rgba(255,255,255,0.06);
+            }
+            @media (max-width: 900px) { .os-personnel-grid { grid-template-columns: repeat(3, 1fr); } }
+            @media (max-width: 500px)  { .os-personnel-grid { grid-template-columns: repeat(2, 1fr); } }
+            .os-personnel-card {
+                display: flex; flex-direction: column; align-items: center; justify-content: center;
+                padding: 2rem 1rem; background: rgba(6,11,20,0.60);
+                text-decoration: none; text-align: center; gap: 0.5rem;
+                position: relative; overflow: hidden; transition: background 0.3s ease;
+            }
+            .os-personnel-card::before {
+                content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+                background: linear-gradient(90deg, #961107, #deb056);
+                transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease;
+            }
+            .os-personnel-card:hover { background: rgba(150,17,7,0.12); }
+            .os-personnel-card:hover::before { transform: scaleX(1); }
+            .os-personnel-icon { font-size: 1.75rem; margin-bottom: 0.25rem; transition: transform 0.3s ease; }
+            .os-personnel-card:hover .os-personnel-icon { transform: scale(1.15) rotate(-5deg); }
+            .os-personnel-title {
+                font-family: 'Outfit', sans-serif; font-size: 0.65rem; font-weight: 800;
+                letter-spacing: 0.18em; text-transform: uppercase; color: #f8fafc;
+            }
+            .os-personnel-desc { font-family: 'Lato', sans-serif; font-size: 0.6rem; color: rgba(255,255,255,0.40); line-height: 1.4; }
+            .os-personnel-arrow {
+                font-size: 0.85rem; color: #deb056; margin-top: 0.25rem;
+                opacity: 0; transform: translateX(-4px);
+                transition: opacity 0.25s ease, transform 0.25s ease;
+            }
+            .os-personnel-card:hover .os-personnel-arrow { opacity: 1; transform: translateX(0); }
+        </style>
+        
+        <!-- Welcome Section -->
+        <section class="os-welcome-section">
+            <div class="os-welcome-text">
+                <!-- Eyebrow -->
+                <span class="os-section-eyebrow">Est. 1967 · Limpopo, South Africa</span>
+                <h2 class="os-welcome-heading">Welcome to<br/><em class="os-welcome-em">Tshikhuthula</em></h2>
+                <p class="os-welcome-body">
+                    A beacon of educational excellence in Limpopo since 1967. We are committed to nurturing young
+                    minds, shaping future leaders, and building a community of lifelong learners.
+                </p>
+                <p class="os-welcome-body">
+                    Our dedicated educators, comprehensive curriculum, and modern facilities create an environment
+                    where every student can thrive and reach their full potential.
+                </p>
+
+                <div class="os-pillars">
+                    <div class="os-pillar">
+                        <div class="os-pillar-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13M12 6.253v13m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                        </div>
+                        <div>
+                            <h3 class="os-pillar-title">Our Mission</h3>
+                            <p class="os-pillar-desc">Nurturing, inclusive learning environments that empower every student to achieve academic excellence.</p>
+                        </div>
+                    </div>
+                    <div class="os-pillar">
+                        <div class="os-pillar-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-7.714 2.143L11 21l-2.286-6.857L1 12l7.714-2.143L11 3z" /></svg>
+                        </div>
+                        <div>
+                            <h3 class="os-pillar-title">Our Vision</h3>
+                            <p class="os-pillar-desc">A premier institution recognised for developing innovative thinkers and compassionate leaders.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="os-welcome-image-col" style="position: relative; height: 100%; min-height: 400px; width: 100%;">
+                <div class="os-welcome-image-frame">
+                    <div class="os-welcome-image-placeholder">School Campus Image</div>
+                    <img src="/assets/images/backgrounds/face.jpg" alt="School Campus" class="os-welcome-img" style="opacity:1;" />
+                    <div class="os-welcome-image-overlay"></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Departments Section -->
+        <section class="os-dept-section">
+            <!-- Section header -->
+            <div class="os-section-header">
+                <span class="os-section-eyebrow">Our Departments</span>
+                <h2 class="os-section-heading">Faculties &amp; <em class="os-welcome-em">Specialisations</em></h2>
+                <div class="os-section-rule"></div>
+            </div>
+
+            <div class="os-dept-grid">
+                {departments.map((dept, i) => (
+                    <div class="os-dept-card animate-fade-in opacity-0" style={`animation-delay: ${0.1 * i}s; animation-fill-mode: forwards;`}>
+                        <div class="os-dept-top-bar"></div>
+                        <div class="os-dept-icon">{dept.icon}</div>
+                        <h3 class="os-dept-title">{dept.title}</h3>
+                        <p class="os-dept-desc">{dept.description}</p>
+                        <div class="os-dept-meta">
+                            <div class="os-dept-meta-row">
+                                <span class="os-dept-meta-key">Head of Dept</span>
+                                <span class="os-dept-meta-val">{dept.head}</span>
+                            </div>
+                            <div class="os-dept-meta-row">
+                                <span class="os-dept-meta-key">Staff</span>
+                                <span class="os-dept-meta-val">{dept.staff}</span>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </section>
+        
+        <!-- School Personnel -->
+        <section class="os-personnel-section">
+            <div class="os-section-header">
+                <span class="os-section-eyebrow">School Personnel</span>
+                <h2 class="os-section-heading">Meet Our <em class="os-welcome-em">Team</em></h2>
+                <div class="os-section-rule"></div>
+                <p class="os-section-sub">Access directories for every member of the dedicated team that keeps Tshikhuthula running every day.</p>
+            </div>
+
+            <div class="os-personnel-grid">
+                <a href="/our-school/staff" class="os-personnel-card">
+                    <div class="os-personnel-icon">👩‍🏫</div>
+                    <h3 class="os-personnel-title">Teaching Staff</h3>
+                    <p class="os-personnel-desc">Meet our qualified educators</p>
+                    <div class="os-personnel-arrow">→</div>
+                </a>
+                <a href="/our-school/sgb" class="os-personnel-card">
+                    <div class="os-personnel-icon">🤝</div>
+                    <h3 class="os-personnel-title">SGB Members</h3>
+                    <p class="os-personnel-desc">School Governing Body</p>
+                    <div class="os-personnel-arrow">→</div>
+                </a>
+                <a href="/our-school/food-handlers" class="os-personnel-card">
+                    <div class="os-personnel-icon">🍎</div>
+                    <h3 class="os-personnel-title">Food Handlers</h3>
+                    <p class="os-personnel-desc">Nutrition &amp; Food Services</p>
+                    <div class="os-personnel-arrow">→</div>
+                </a>
+                <a href="/our-school/ground-workers" class="os-personnel-card">
+                    <div class="os-personnel-icon">🌳</div>
+                    <h3 class="os-personnel-title">Ground Workers</h3>
+                    <p class="os-personnel-desc">Maintenance &amp; Facilities</p>
+                    <div class="os-personnel-arrow">→</div>
+                </a>
+                <a href="/our-school/security" class="os-personnel-card">
+                    <div class="os-personnel-icon">👮</div>
+                    <h3 class="os-personnel-title">Security Team</h3>
+                    <p class="os-personnel-desc">Safety &amp; Security</p>
+                    <div class="os-personnel-arrow">→</div>
+                </a>
+            </div>
+        </section>
+    </div>
+</Layout>

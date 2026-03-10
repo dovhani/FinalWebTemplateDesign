@@ -1,0 +1,225 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SecondaryNav from '../components/SecondaryNav.astro';
+import '../styles/policies.css';
+
+const generalPolicies = [
+    {
+        title: "Learner Code of Conduct",
+        size: "2.4 MB",
+        updated: "Jan 2024",
+        link: "#",
+        image: "/assets/images/documents/CodeOfConduct.jpg"
+    },
+    {
+        title: "School Uniform Policy",
+        size: "1.1 MB",
+        updated: "Jan 2024",
+        link: "#",
+        image: "/assets/images/documents/uniform.jpg"
+    },
+    {
+        title: "Anti-Bullying & Harassment Policy",
+        size: "1.8 MB",
+        updated: "Feb 2023",
+        link: "#",
+        image: "/assets/images/documents/bullying.jpg"
+    },
+    {
+        title: "Mobile Device Policy",
+        size: "845 KB",
+        updated: "Jan 2024",
+        link: "#",
+        image: "/assets/images/documents/mobile.png"
+    }
+];
+
+const academicPolicies = [
+    {
+        title: "Assessment & Examinations Policy",
+        size: "3.2 MB",
+        updated: "Mar 2023",
+        link: "#",
+        image: "/assets/images/documents/assesments.jpeg"
+    },
+    {
+        title: "Homework Policy",
+        size: "950 KB",
+        updated: "Jan 2024",
+        link: "#",
+        image: "/assets/images/documents/homework.jpeg"
+    },
+    {
+        title: "Academic Intervention Strategy",
+        size: "1.5 MB",
+        updated: "Apr 2023",
+        link: "#",
+        image: "/assets/images/documents/intervension.jpeg"
+    }
+];
+
+const forms = [
+    {
+        title: "Indemnity Form (Excursions/Tours)",
+        size: "500 KB",
+        updated: "Jan 2024",
+        link: "#",
+        image: "/assets/images/documents/indemnity.png"
+    },
+    {
+        title: "Subject Change Request Form",
+        size: "450 KB",
+        updated: "Feb 2024",
+        link: "#",
+        image: "/assets/images/documents/request.jpg"
+    },
+    {
+        title: "Medical Update Profile",
+        size: "620 KB",
+        updated: "Jan 2024",
+        link: "#",
+        image: "/assets/images/documents/medical.jpeg"
+    }
+];
+
+// Reusable SVG icons
+const pdfIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14h6M9 17h6M13 3v5a2 2 0 002 2h5" /></svg>`;
+const downloadIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>`;
+---
+
+<Layout title="Policies & Documents - Tshikhuthula Secondary School" currentPage="policies" noNavbarPadding={true} showMainNav={true}>
+    
+    <!-- ── Header ── -->
+    <header class="policies-header ws-reveal">
+        <div class="policies-header-bg"></div>
+        <div class="policies-header-content">
+            <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-gold-500/30 bg-gold-500/10 backdrop-blur-md mb-6">
+                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-gold-400">Official Documentation</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-heading text-white font-display drop-shadow-lg tracking-tight mb-6">
+                Policies & <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Documents</span>
+            </h1>
+            <p class="text-slate-300 max-w-2xl mx-auto page-header-tagline">
+                Access all official school policies, codes of conduct, academic guidelines, and administrative forms in downloadable PDF format.
+            </p>
+        </div>
+    </header>
+
+    <!-- ── General Policies ── -->
+    <section class="policies-section">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="ab-section-label mb-8 ws-reveal">
+                <span class="ab-label-eyebrow">Discipline & Conduct</span>
+                <h2 class="ab-label-heading">General Policies</h2>
+                <div class="ab-label-rule"></div>
+            </div>
+
+            <div class="doc-grid">
+                {generalPolicies.map((doc, i) => (
+                    <a href={doc.link} class={`doc-card doc-card--image ws-reveal delay-${i+1}`}>
+                        <div class="doc-card-thumb">
+                            <img src={doc.image} alt={doc.title} />
+                        </div>
+                        <div class="doc-card-body">
+                            <div class="doc-badge">
+                                <span set:html={downloadIcon} />
+                                Download Document
+                            </div>
+                            <div class="doc-content">
+                                <h3 class="doc-title">{doc.title}</h3>
+                                <p class="doc-desc">PDF &bull; {doc.size} &bull; Updated {doc.updated}</p>
+                            </div>
+                        </div>
+                    </a>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Academic Policies ── -->
+    <section class="policies-section bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="ab-section-label mb-8 ws-reveal">
+                <span class="ab-label-eyebrow">Teaching & Learning</span>
+                <h2 class="ab-label-heading">Academic Guidelines</h2>
+                <div class="ab-label-rule"></div>
+            </div>
+
+            <div class="doc-grid">
+                {academicPolicies.map((doc, i) => (
+                    <a href={doc.link} class={`doc-card doc-card--image ws-reveal delay-${i+1}`}>
+                        <div class="doc-card-thumb">
+                            <img src={doc.image} alt={doc.title} />
+                        </div>
+                        <div class="doc-card-body">
+                            <div class="doc-badge">
+                                <span set:html={downloadIcon} />
+                                Download Document
+                            </div>
+                            <div class="doc-content">
+                                <h3 class="doc-title">{doc.title}</h3>
+                                <p class="doc-desc">PDF &bull; {doc.size} &bull; Updated {doc.updated}</p>
+                            </div>
+                        </div>
+                    </a>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Administrative Forms ── -->
+    <section class="policies-section">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="ab-section-label mb-8 ws-reveal">
+                <span class="ab-label-eyebrow">For Parents & Guardians</span>
+                <h2 class="ab-label-heading">Administrative Forms</h2>
+                <div class="ab-label-rule"></div>
+            </div>
+
+            <div class="doc-grid">
+                {forms.map((doc, i) => (
+                    <a href={doc.link} class={`doc-card doc-card--image ws-reveal delay-${i+1}`}>
+                        <div class="doc-card-thumb">
+                            <img src={doc.image} alt={doc.title} />
+                        </div>
+                        <div class="doc-card-body">
+                            <div class="doc-badge doc-badge--maroon">
+                                <span set:html={downloadIcon} />
+                                Download Form
+                            </div>
+                            <div class="doc-content">
+                                <h3 class="doc-title">{doc.title}</h3>
+                                <p class="doc-desc">PDF &bull; {doc.size} &bull; Updated {doc.updated}</p>
+                            </div>
+                        </div>
+                    </a>
+                ))}
+            </div>
+            </div>
+        </div>
+    </section>
+
+</Layout>
+
+<script>
+    function initReveal() {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal-active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.ws-reveal').forEach(el => observer.observe(el));
+    }
+
+    document.addEventListener('DOMContentLoaded', initReveal);
+    document.addEventListener('astro:after-swap', initReveal);
+</script>

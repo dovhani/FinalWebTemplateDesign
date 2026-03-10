@@ -1,0 +1,276 @@
+/* curriculum.css - Curriculum Page Styles */
+
+/* Base Header */
+.curriculum-header {
+    position: relative;
+    padding: 9rem 1rem 6rem;
+    min-height: 55vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0c1222;
+    overflow: hidden;
+}
+
+/* Gold shimmer line at top of header */
+.curriculum-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, #cb8f24 30%, #fbbf24 50%, #cb8f24 70%, transparent 100%);
+    opacity: 0.8;
+    z-index: 20;
+}
+
+.curriculum-header-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('/assets/images/hero/slide3.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.2;
+    transform: scale(1.05);
+}
+
+.curriculum-header-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, #0f172a 0%, rgba(15, 23, 42, 0.8) 50%, #f8fafc 100%);
+}
+
+.curriculum-header-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    max-width: 64rem;
+    margin: 0 auto;
+}
+
+.curr-tagline {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.8;
+    max-width: 48rem;
+    margin: 1.5rem auto 0;
+}
+
+/* Phase Sections */
+.phase-section {
+    padding: 4rem 1rem;
+    background-color: #f8f7f5;
+}
+
+.phase-section.dark-section {
+    background-color: #0f172a;
+    color: white;
+}
+
+/* Stream Cards (FET Layout) */
+.stream-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.stream-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 2.5rem;
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 4px solid transparent;
+}
+
+.stream-card.science {
+    border-top-color: #0284c7;
+}
+
+.stream-card.commerce {
+    border-top-color: #cb8f24;
+}
+
+.stream-card.humanities {
+    border-top-color: #800000;
+}
+
+.stream-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.12);
+}
+
+.dark-section .stream-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+    border-top: 4px solid transparent;
+}
+
+.dark-section .stream-card.science {
+    border-top-color: #38bdf8;
+}
+
+.dark-section .stream-card.commerce {
+    border-top-color: #fcd34d;
+}
+
+.dark-section .stream-card.humanities {
+    border-top-color: #f87171;
+}
+
+
+.dark-section .stream-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.stream-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.dark-section .stream-title {
+    color: white;
+}
+
+.stream-desc {
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.dark-section .stream-desc {
+    color: #94a3b8;
+}
+
+.subject-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.subject-item {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.9rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.dark-section .subject-item {
+    border-bottom-color: rgba(255, 255, 255, 0.05);
+    color: #cbd5e1;
+}
+
+.subject-item:last-child {
+    border-bottom: none;
+}
+
+.subject-icon {
+    color: #cb8f24;
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+}
+
+/* Base Subjects Grid (GET Phase) */
+.base-subject-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+}
+
+.base-subject-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+}
+
+.base-subject-card:hover {
+    background: #800000;
+    color: white;
+    transform: translateY(-3px);
+}
+
+.base-subject-card h4 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* Animations reused from about */
+.ws-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ws-reveal.reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.delay-1 {
+    transition-delay: 0.1s;
+}
+
+.delay-2 {
+    transition-delay: 0.2s;
+}
+
+.delay-3 {
+    transition-delay: 0.3s;
+}
+
+/* Reused Section Labels */
+.ab-section-label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.ab-label-eyebrow {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: #cb8f24;
+}
+
+.ab-label-heading {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: #0f172a;
+    line-height: 1.1;
+}
+
+.dark-section .ab-label-heading {
+    color: white;
+}
+
+.ab-label-rule {
+    width: 3rem;
+    height: 4px;
+    background: #800000;
+    margin-top: 0.5rem;
+}

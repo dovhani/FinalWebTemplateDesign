@@ -1,0 +1,262 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SecondaryNav from '../../components/SecondaryNav.astro';
+import SubNav from '../../components/SubNav.astro';
+import '../../styles/our-school.css';
+
+const schoolSubNavItems = [
+    { title: 'Staff Directory', href: '/our-school/staff' },
+    { title: 'School Governing Body', href: '/our-school/sgb' },
+    { title: 'Food Handlers', href: '/our-school/food-handlers' },
+    { title: 'Ground Workers', href: '/our-school/ground-workers' },
+    { title: 'Security', href: '/our-school/security' }
+];
+
+const securityTeam = [
+    {
+        name: "Mr. Michael Nkosi",
+        role: "Head of Security",
+        experience: "20 years",
+        responsibilities: "Overall security management, team supervision, emergency response coordination",
+        contact: "security@tshikhuthula.co.za",
+        extension: "Ext. 301",
+        background: "Former SAPS, Security Management Diploma"
+    },
+    {
+        name: "Mr. Joseph Moyo",
+        role: "Security Officer",
+        experience: "12 years",
+        responsibilities: "Gate control, access management, patrols, incident response",
+        contact: "security@tshikhuthula.co.za",
+        extension: "Ext. 302",
+        background: "Security Certificate, First Aid Certified"
+    },
+    {
+        name: "Mr. Peter Baloyi",
+        role: "Security Officer",
+        experience: "8 years",
+        responsibilities: "Gate control, visitor management, perimeter monitoring",
+        contact: "security@tshikhuthula.co.za",
+        extension: "Ext. 303",
+        background: "Security Training, Crowd Control"
+    },
+    {
+        name: "Mr. Samuel Dube",
+        role: "Security Officer",
+        experience: "10 years",
+        responsibilities: "Patrols, CCTV monitoring, emergency response",
+        contact: "security@tshikhuthula.co.za",
+        extension: "Ext. 304",
+        background: "Security Management, Fire Fighting"
+    }
+];
+
+const securityMeasures = [
+    {
+        icon: "🚪",
+        title: "Controlled Access Points",
+        description: "All entry points are monitored with electronic gates, intercom systems, and 24/7 security personnel. Visitors must sign in and wear visitor badges."
+    },
+    {
+        icon: "📹",
+        title: "CCTV Surveillance",
+        description: "Comprehensive camera coverage throughout the campus with 24/7 recording and monitoring. Advanced analytics for suspicious activity detection."
+    },
+    {
+        icon: "🚨",
+        title: "Emergency Response",
+        description: "Trained security personnel on-site 24/7. Direct links to local police, ambulance, and fire services. Regular emergency drills conducted."
+    },
+    {
+        icon: "👥",
+        title: "Visitor Management",
+        description: "All visitors must register at the main gate. Pre-arranged appointments required for student pickups. Background checks for regular visitors."
+    },
+    {
+        icon: "🚗",
+        title: "Traffic & Parking Control",
+        description: "Designated drop-off and pick-up zones. Traffic flow management during peak hours. Secure parking for staff and visitors."
+    },
+    {
+        icon: "📱",
+        title: "Communication Systems",
+        description: "Two-way radios for all security staff. Emergency alert system for staff and parents. SMS notification system for emergencies."
+    }
+];
+
+const emergencyProcedures = [
+    {
+        situation: "Intruder on Campus",
+        procedure: "Lockdown immediately. All staff and students move to secure rooms. Security team responds and coordinates with police."
+    },
+    {
+        situation: "Fire Emergency",
+        procedure: "Fire alarm activation. Evacuate via designated routes to assembly points. Roll call by staff. Security assists with evacuation."
+    },
+    {
+        situation: "Medical Emergency",
+        procedure: "First aid administered by trained staff. Security calls emergency services. Parent/guardian notified immediately."
+    },
+    {
+        situation: "Severe Weather",
+        procedure: "Monitor weather alerts. Move to designated safe areas if necessary. Secure windows and outdoor items. Follow emergency broadcasts."
+    }
+];
+---
+
+<Layout title="Security - Tshikhuthula Secondary School" currentPage="our-school" noNavbarPadding={true} showMainNav={true}>
+    <SecondaryNav currentPage="our-school" />
+    <!-- ── Header ── -->
+    <header class="our-school-header ws-reveal">
+        <div class="our-school-header-bg"></div>
+        <div class="our-school-header-content">
+            <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-gold-500/30 bg-gold-500/10 backdrop-blur-md mb-6">
+                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-gold-400">Safety First</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-heading text-white font-display drop-shadow-lg tracking-tight mb-6">
+                School <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Security</span>
+            </h1>
+            <p class="text-slate-300 max-w-3xl mx-auto text-lg leading-relaxed font-lato">
+                Learn about our comprehensive security measures and dedicated security team.
+            </p>
+        </div>
+    </header>
+    
+    <SubNav items={schoolSubNavItems} activeHref="/our-school/security" />
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 space-y-20">
+        <!-- Introduction -->
+        <section class="glass p-8 md:p-12">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl font-heading text-slate-900 mb-6">Safe & Secure Learning Environment</h2>
+                    <p class="text-slate-600 leading-relaxed text-lg mb-4">
+                        The safety and security of our students, staff, and visitors is our top priority. 
+                        Our professional security team works around the clock to maintain a safe environment 
+                        where learning can flourish without concerns.
+                    </p>
+                    <p class="text-slate-600 leading-relaxed text-lg mb-6">
+                        We employ a multi-layered security approach combining physical security measures, 
+                        trained personnel, advanced technology, and comprehensive emergency procedures to 
+                        protect everyone on our campus.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="px-4 py-2 bg-maroon-50 text-maroon-800 text-xs font-black uppercase tracking-widest border border-maroon-100 rounded-lg">
+                            24/7 Security Coverage
+                        </div>
+                        <div class="px-4 py-2 bg-slate-50 text-slate-600 text-xs font-black uppercase tracking-widest border border-slate-200 rounded-lg">
+                            CCTV Monitoring
+                        </div>
+                        <div class="px-4 py-2 bg-slate-50 text-slate-600 text-xs font-black uppercase tracking-widest border border-slate-200 rounded-lg">
+                            Trained Professionals
+                        </div>
+                    </div>
+                </div>
+                <div class="relative group">
+                    <div class="absolute -inset-4 bg-gradient-to-r from-maroon-800/10 to-gold-500/10 rounded-2xl blur-2xl group-hover:opacity-100 opacity-70 transition-all duration-500"></div>
+                    <div class="relative bg-slate-200 aspect-video overflow-hidden flex items-center justify-center rounded-xl border border-white/50 shadow-2xl">
+                        <div class="absolute inset-0 bg-maroon-900/10 mix-blend-overlay z-10 pointer-events-none"></div>
+                        <div class="text-slate-400 text-center relative z-20">
+                            <div class="text-6xl mb-4 group-hover:scale-110 transition-transform">👮</div>
+                            <div class="font-bold italic">Security Team</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Security Team -->
+        <section>
+            <div class="flex items-center gap-4 mb-12">
+                <div class="h-px flex-grow bg-slate-200"></div>
+                <h2 class="text-2xl font-heading text-slate-900 whitespace-nowrap px-4">Our Security Team</h2>
+                <div class="h-px flex-grow bg-slate-200"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+                {securityTeam.map((member, i) => (
+                    <div class="group bg-white p-8 border border-slate-100 shadow-sm hover:shadow-[0_20px_40px_-15px_rgba(128,0,0,0.1)] hover:border-maroon-800/20 rounded-xl transition-all animate-fade-in opacity-0" style={`animation-delay: ${0.1 * i}s; animation-fill-mode: forwards;`}>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="text-3xl bg-slate-50 w-12 h-12 flex items-center justify-center rounded-full group-hover:bg-maroon-50 group-hover:scale-110 transition-all">👮</div>
+                            <span class="px-3 py-1 bg-gold-50 text-gold-600 border border-gold-100 rounded-full text-[9px] font-black uppercase tracking-widest">{member.experience}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 font-display mb-2 group-hover:text-maroon-800 transition-colors">{member.name}</h3>
+                        <div class="text-sm font-black text-maroon-800 mb-4 uppercase tracking-wider">{member.role}</div>
+                        <p class="text-slate-500 text-sm mb-4 leading-relaxed">{member.responsibilities}</p>
+                        <div class="pt-4 border-t border-slate-50 space-y-2 text-xs">
+                            <div class="flex items-center gap-2 text-slate-500">
+                                <span class="text-gold-500">📞</span>
+                                <span>{member.extension}</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-slate-500">
+                                <span class="text-gold-500">✉️</span>
+                                <a href={`mailto:${member.contact}`} class="hover:text-maroon-800 transition-colors">{member.contact}</a>
+                            </div>
+                            <div class="flex items-center gap-2 text-slate-500">
+                                <span class="text-gold-500">🎓</span>
+                                <span>{member.background}</span>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </section>
+        
+        <!-- Security Measures -->
+        <section class="glass p-8 md:p-12">
+            <h2 class="text-3xl font-heading text-slate-900 mb-10 text-center">Security Measures</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {securityMeasures.map((measure, i) => (
+                    <div class="group p-6 bg-white/50 hover:shadow-[0_20px_40px_-15px_rgba(203,143,36,0.15)] rounded-xl border border-white/80 hover:border-gold-500/20 transition-all animate-fade-in opacity-0" style={`animation-delay: ${0.1 * i}s; animation-fill-mode: forwards;`}>
+                        <div class="flex items-start gap-4">
+                            <div class="text-3xl mb-0 group-hover:scale-110 transition-transform">{measure.icon}</div>
+                            <div class="flex-grow">
+                                <h3 class="text-lg font-bold text-slate-900 mb-2 font-display">{measure.title}</h3>
+                                <p class="text-slate-600 text-sm leading-relaxed">{measure.description}</p>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </section>
+        
+        <!-- Emergency Procedures -->
+        <section class="bg-slate-50 border border-slate-100 p-8 md:p-12">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-3xl font-heading text-slate-900 mb-8 text-center">Emergency Procedures</h2>
+                <p class="text-slate-600 text-center mb-8">
+                    Our security team is trained in various emergency response procedures to ensure the safety of all students and staff.
+                </p>
+                <div class="space-y-4">
+                    {emergencyProcedures.map((proc, i) => (
+                        <div class="p-6 bg-white rounded-lg shadow-md">
+                            <h3 class="text-lg font-bold text-slate-900 mb-2 font-display">{proc.situation}</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">{proc.procedure}</p>
+                        </div>
+                    ))}
+                </div>
+                
+                <div class="mt-12 p-6 glass text-center">
+                    <h3 class="text-xl font-bold text-slate-900 mb-4">24/7 Security Contact</h3>
+                    <p class="text-slate-600 mb-6 text-sm">
+                        For immediate security concerns or emergencies, contact our security office directly.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="tel:0152911234" class="inline-flex items-center gap-2 px-8 py-3 bg-slate-900 text-white font-bold hover:bg-maroon-800 transition-all shadow-xl">
+                            📞 Call: Ext. 301
+                        </a>
+                        <a href="mailto:security@tshikhuthula.co.za" class="inline-flex items-center gap-2 px-8 py-3 bg-white border border-slate-200 text-slate-900 font-bold hover:bg-slate-50 transition-all">
+                            📧 Email Security
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</Layout>
+
+<script>
+    document.addEventListener('astro:after-swap', () => {
+        // Initialize any page-specific scripts here
+    });
+</script>

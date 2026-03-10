@@ -1,0 +1,658 @@
+/* ============================================================
+   enrolment.css – Premium Enrolment Page Styles
+   ============================================================ */
+
+/* ── Page background ── */
+.enrolment-page-bg {
+    background: linear-gradient(180deg, #f8f7f5 0%, #f1ede6 100%);
+    min-height: 100vh;
+}
+
+/* ── Hero Header ── */
+.enrolment-header {
+    position: relative;
+    padding: 9rem 2rem 6rem;
+    overflow: hidden;
+    text-align: center;
+    background: #0c1222;
+}
+
+.enrolment-header-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('/assets/images/documents/admission.jpeg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.12;
+    transform: scale(1.05);
+}
+
+.enrolment-header-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, rgba(12, 18, 34, 0.85) 0%, rgba(150, 17, 7, 0.25) 60%, rgba(12, 18, 34, 0.95) 100%);
+}
+
+/* Shimmer line across header */
+.enrolment-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, #cb8f24 30%, #fbbf24 50%, #cb8f24 70%, transparent 100%);
+    opacity: 0.8;
+}
+
+.enrolment-header-content {
+    position: relative;
+    z-index: 10;
+    max-width: 56rem;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.enrolment-header-content p {
+    text-align: center !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.enrolment-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 1.25rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(203, 143, 36, 0.35);
+    background: rgba(203, 143, 36, 0.1);
+    backdrop-filter: blur(8px);
+    margin-bottom: 1.5rem;
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #fbbf24;
+}
+
+/* ── Section Wrapper ── */
+.enrolment-sections {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 4rem 3rem 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+/* ── Section Heading ── */
+.section-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.section-heading-label {
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #961107;
+}
+
+.section-heading h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+}
+
+.section-heading-rule {
+    width: 3rem;
+    height: 2px;
+    background: linear-gradient(90deg, #cb8f24, #fbbf24);
+    border-radius: 2px;
+    margin-top: 0.25rem;
+}
+
+/* ── Process Steps ── */
+.process-section {
+    background: #0f172a;
+    border-radius: 1.25rem;
+    padding: 3rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.process-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 20% 50%, rgba(150, 17, 7, 0.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 50%, rgba(203, 143, 36, 0.1) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.process-section .section-heading h2 {
+    color: #f8fafc;
+}
+
+.process-section .section-heading-label {
+    color: #fbbf24;
+}
+
+.process-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    position: relative;
+}
+
+.process-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1rem;
+    padding: 2rem 1.5rem 1.75rem;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+}
+
+.process-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+    background: linear-gradient(135deg, rgba(203, 143, 36, 0.08) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.35s;
+}
+
+.process-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(203, 143, 36, 0.35);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(203, 143, 36, 0.2);
+}
+
+.process-card:hover::before {
+    opacity: 1;
+}
+
+.process-step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #961107, #7b0a02);
+    color: #fbbf24;
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 4px 12px rgba(150, 17, 7, 0.5);
+}
+
+.process-icon-wrap {
+    font-size: 1.8rem;
+    margin-bottom: 0.75rem;
+    display: block;
+    line-height: 1;
+}
+
+.process-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin: 0 0 0.5rem;
+    font-family: var(--font-heading);
+}
+
+.process-card p {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* ── Requirements ── */
+.requirements-section {
+    /* light section */
+}
+
+.requirements-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.req-card {
+    background: #fff;
+    border-radius: 1rem;
+    padding: 1.75rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.req-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #961107, #cb8f24);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.req-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    border-color: #cbd5e1;
+}
+
+.req-card:hover::after {
+    transform: scaleX(1);
+}
+
+.req-icon-circle {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(203, 143, 36, 0.2);
+}
+
+.req-card h3 {
+    font-size: 0.7rem;
+    font-weight: 900;
+    color: #0f172a;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0;
+}
+
+.req-card p {
+    font-size: 0.72rem;
+    color: #64748b;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* ── Application Form ── */
+.form-section-card {
+    background: #fff;
+    border-radius: 1.25rem;
+    padding: 3rem 2.5rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+    border: 1px solid #e2e8f0;
+    max-width: 56rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.form-section-card h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #0f172a;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-heading);
+}
+
+.form-section-card>p {
+    text-align: center;
+    color: #64748b;
+    font-size: 0.875rem;
+    margin-bottom: 2.5rem;
+}
+
+/* Form sub-section divider */
+.form-sub-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.75rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.form-sub-num {
+    font-size: 0.55rem;
+    font-weight: 900;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #961107;
+    white-space: nowrap;
+    padding: 0.3rem 0.75rem;
+    background: #fef2f2;
+    border-radius: 9999px;
+}
+
+.form-sub-header h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+    font-family: var(--font-heading);
+}
+
+/* Input fields */
+.enrolment-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.enrolment-field label {
+    font-size: 0.6rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #64748b;
+}
+
+.enrolment-field input,
+.enrolment-field select {
+    width: 100%;
+    padding: 0.75rem 0;
+    border: none;
+    border-bottom: 1.5px solid #e2e8f0;
+    background: transparent;
+    font-size: 0.9rem;
+    color: #0f172a;
+    font-family: var(--font-body);
+    transition: border-color 0.25s, box-shadow 0.25s;
+    outline: none;
+    border-radius: 0;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.enrolment-field input::placeholder {
+    color: #cbd5e1;
+    font-weight: 400;
+}
+
+.enrolment-field input:focus,
+.enrolment-field select:focus {
+    border-bottom-color: #961107;
+    box-shadow: 0 2px 0 0 rgba(150, 17, 7, 0.15);
+}
+
+/* Select arrow */
+.enrolment-field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.25rem center;
+    padding-right: 2rem;
+    cursor: pointer;
+}
+
+/* Submit button */
+.enrolment-submit {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #961107 0%, #7b0a02 100%);
+    color: #fff;
+    border: none;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 8px 24px rgba(150, 17, 7, 0.35);
+    margin-top: 1rem;
+}
+
+.enrolment-submit::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    right: -100%;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(203, 143, 36, 0.25), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.5s;
+}
+
+.enrolment-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 32px rgba(150, 17, 7, 0.45);
+    background: linear-gradient(135deg, #a5180f 0%, #961107 100%);
+}
+
+.enrolment-submit:hover::before {
+    left: 100%;
+}
+
+.form-privacy-note {
+    text-align: center;
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    margin-top: 0.75rem;
+}
+
+/* ── Fees Table ── */
+.fees-card {
+    background: #fff;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+}
+
+.fees-table-wrap {
+    overflow-x: auto;
+}
+
+.fees-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 500px;
+}
+
+.fees-table thead tr {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+.fees-table thead th {
+    padding: 1.1rem 1.5rem;
+    text-align: left;
+    font-size: 0.6rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #fbbf24;
+    border: none;
+}
+
+.fees-table tbody tr {
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.2s;
+}
+
+.fees-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.fees-table tbody tr:hover {
+    background: #fafafa;
+}
+
+.fees-table tbody td {
+    padding: 1rem 1.5rem;
+    font-size: 0.875rem;
+    color: #334155;
+}
+
+.fees-table tbody td:first-child {
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.fees-note-box {
+    padding: 1.25rem 1.5rem;
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    border-top: 1px solid #fde68a;
+    font-size: 0.75rem;
+    color: #92400e;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.fees-note-box::before {
+    content: '★';
+    color: #cb8f24;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+
+/* ── FAQ Accordion ── */
+.faq-section {
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.faq-item {
+    border-radius: 0.875rem;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 0.3s, border-color 0.3s;
+}
+
+.faq-item:hover,
+.faq-item.faq-open {
+    border-color: rgba(150, 17, 7, 0.25);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.faq-toggle {
+    width: 100%;
+    padding: 1.25rem 1.5rem;
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    text-align: left;
+    cursor: pointer;
+}
+
+.faq-toggle-text {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #0f172a;
+    font-family: var(--font-heading);
+    line-height: 1.4;
+}
+
+.faq-chevron {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #961107;
+    font-size: 1rem;
+    font-weight: 900;
+    transition: background 0.3s, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s;
+}
+
+.faq-item.faq-open .faq-chevron {
+    background: linear-gradient(135deg, #961107, #7b0a02);
+    color: #fbbf24;
+    transform: rotate(45deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-answer-inner {
+    padding: 0 1.5rem 1.5rem;
+    font-size: 0.875rem;
+    color: #475569;
+    line-height: 1.75;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 1rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+    .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .requirements-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .enrolment-header {
+        padding: 7rem 1.25rem 4rem;
+    }
+
+    .enrolment-sections {
+        padding: 2.5rem 1.25rem 3.5rem;
+        gap: 3rem;
+    }
+
+    .process-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .requirements-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .process-section,
+    .form-section-card {
+        padding: 2rem 1.25rem;
+    }
+}

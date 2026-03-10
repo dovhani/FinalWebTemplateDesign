@@ -1,0 +1,236 @@
+/* student-life.css - Student Life & Extracurriculars Styles */
+
+/* Header Area */
+.life-header {
+    background-color: #0c1222;
+    position: relative;
+    padding: 9rem 2rem 6rem;
+    overflow: hidden;
+    text-align: center;
+}
+
+/* Gold shimmer line at top of header */
+.life-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, #cb8f24 30%, #fbbf24 50%, #cb8f24 70%, transparent 100%);
+    opacity: 0.8;
+    z-index: 20;
+}
+
+.life-header-bg {
+    position: absolute;
+    inset: 0;
+    opacity: 0.15;
+    background-image: url('/assets/images/hero/slide2.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.life-header-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, #0f172a 0%, transparent 100%);
+}
+
+.life-header-content {
+    position: relative;
+    z-index: 10;
+    max-width: 56rem;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.life-header-tagline {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #cbd5e1;
+    max-width: 42rem;
+    margin: 0 auto;
+    text-align: center;
+}
+
+
+/* Category Sections */
+.activity-section {
+    padding: 5rem 1rem;
+    background-color: #f8f7f5;
+}
+
+.activity-section:nth-child(even) {
+    background-color: #ffffff;
+}
+
+.activity-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+}
+
+/* Featured Activity Cards */
+.activity-card {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.activity-card:hover {
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+    transform: translateY(-4px);
+}
+
+.activity-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.activity-card:hover img {
+    transform: scale(1.05);
+}
+
+.activity-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.4) 50%, rgba(15, 23, 42, 0.1) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+    transition: background 0.4s ease;
+}
+
+.activity-card:hover .activity-overlay {
+    background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(15, 23, 42, 0.3) 100%);
+}
+
+.activity-title {
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    transform: translateY(10px);
+    transition: transform 0.4s ease;
+}
+
+.activity-desc {
+    color: #cbd5e1;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.activity-card:hover .activity-title {
+    transform: translateY(0);
+}
+
+.activity-card:hover .activity-desc {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Mini Activity Tags */
+.activity-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s ease 0.1s;
+}
+
+.activity-card:hover .activity-tags {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.activity-tag {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Animations reused from about */
+.ws-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ws-reveal.reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.delay-1 {
+    transition-delay: 0.1s;
+}
+
+.delay-2 {
+    transition-delay: 0.2s;
+}
+
+.delay-3 {
+    transition-delay: 0.3s;
+}
+
+.delay-4 {
+    transition-delay: 0.4s;
+}
+
+/* Reused Section Labels */
+.ab-section-label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.ab-label-eyebrow {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: #cb8f24;
+}
+
+.ab-label-heading {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    color: #0f172a;
+    line-height: 1.1;
+}
+
+.ab-label-rule {
+    width: 3rem;
+    height: 4px;
+    background: #800000;
+    margin-top: 0.5rem;
+}

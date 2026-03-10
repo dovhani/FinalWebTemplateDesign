@@ -1,0 +1,247 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SecondaryNav from '../../components/SecondaryNav.astro';
+import SubNav from '../../components/SubNav.astro';
+import '../../styles/gallery.css';
+
+const gallerySubNavItems = [
+    { title: 'Achievements', href: '/gallery/achievements' },
+    { title: 'Student Gallery', href: '/gallery/students-gallery' },
+    { title: 'Year Book', href: '/gallery/yearbook' }
+];
+
+const achievements = [
+    { 
+        year: "2023", 
+        title: "🏆 District Science Fair Winners", 
+        description: "Our Grade 10 students won first place in the Regional Science Fair for their project on sustainable energy solutions.",
+        category: "Academic" 
+    },
+    { 
+        year: "2023", 
+        title: "🎓 98% Matric Pass Rate", 
+        description: "The Class of 2023 achieved an outstanding 98% pass rate, with record numbers of bachelor passes.",
+        category: "Academic"
+    },
+    {
+        year: "2023",
+        title: "⚽ Inter-House Sports Champions",
+        description: "Blue House emerged as the overall champions in our annual athletics and sports competition.",
+        category: "Sports"
+    }
+];
+---
+
+<Layout title="Achievements - Tshikhuthula Secondary School" currentPage="gallery" noNavbarPadding={true} showMainNav={true}>
+    <SecondaryNav currentPage="gallery" />
+    <!-- ── Header ── -->
+    <header class="gallery-header ws-reveal">
+        <div class="gallery-header-bg"></div>
+        <div class="gallery-header-content">
+            <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-gold-500/30 bg-gold-500/10 backdrop-blur-md mb-6">
+                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-gold-400">Milestones</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-heading text-white font-display drop-shadow-lg tracking-tight mb-6">
+                Achievements <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Gallery</span>
+            </h1>
+            <p class="text-slate-300 max-w-3xl mx-auto page-header-tagline">
+                Celebrating our students' successes, milestones, and outstanding accomplishments.
+            </p>
+        </div>
+    </header>
+    
+    <SubNav items={gallerySubNavItems} activeHref="/gallery/achievements" />
+
+    <style>
+        /* ── Achievements Page Theme ── */
+        .ach-section-eyebrow {
+            display: inline-block;
+            font-family: 'Lato', sans-serif;
+            font-weight: 800;
+            font-size: 0.6rem;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: #deb056;
+            margin-bottom: 0.75rem;
+        }
+        .ach-section-heading {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 400;
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            color: #0f172a;
+            line-height: 1.15;
+            margin-bottom: 0.75rem;
+        }
+        .ach-em { font-style: italic; color: #deb056; }
+        .ach-section-rule {
+            width: 3rem; height: 2px;
+            background: linear-gradient(90deg, #961107, #deb056);
+            margin: 0 auto 1rem;
+        }
+        .ach-section-header { text-align: center; margin-bottom: 3rem; }
+
+        /* ── Hall of Fame Section ── */
+        .ach-hof-section {
+            background: #ffffff;
+            border: 1px solid #f1f5f9;
+            padding: 3.5rem;
+        }
+        @media (max-width: 768px) { .ach-hof-section { padding: 2rem; } }
+
+        .ach-card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+        @media (max-width: 900px) { .ach-card-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 560px) { .ach-card-grid { grid-template-columns: 1fr; } }
+
+        .ach-card {
+            position: relative;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 2rem 1.75rem 1.75rem;
+            overflow: hidden;
+            transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .ach-card:hover {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            border-color: rgba(203,143,36,0.35);
+            transform: translateY(-4px);
+        }
+        .ach-card-top-bar {
+            position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, #961107, #deb056);
+            transform: scaleX(0); transform-origin: left;
+            transition: transform 0.35s ease;
+        }
+        .ach-card:hover .ach-card-top-bar { transform: scaleX(1); }
+
+        .ach-card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        .ach-card-year {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 200;
+            font-size: 1.4rem;
+            color: #961107;
+            line-height: 1;
+        }
+        .ach-card-category {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.55rem;
+            font-weight: 900;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #64748b;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 0.2rem 0.5rem;
+        }
+        .ach-card-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #0f172a;
+            margin-bottom: 0.65rem;
+            letter-spacing: 0.02em;
+            transition: color 0.3s ease;
+        }
+        .ach-card:hover .ach-card-title { color: #961107; }
+        .ach-card-desc {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.82rem;
+            color: #475569;
+            line-height: 1.65;
+        }
+
+        /* ── CTA Section ── */
+        .ach-cta-section {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 3.5rem;
+            text-align: center;
+        }
+        @media (max-width: 768px) { .ach-cta-section { padding: 2rem; } }
+        .ach-cta-heading {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 400;
+            font-size: clamp(1.4rem, 2.5vw, 2rem);
+            color: #0f172a;
+            margin-bottom: 1rem;
+        }
+        .ach-cta-body {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.95rem;
+            color: #475569;
+            max-width: 36rem;
+            margin: 0 auto 2rem;
+            line-height: 1.7;
+        }
+        .ach-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 2rem;
+            font-family: 'Lato', sans-serif;
+            font-weight: 800;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #ffffff;
+            border: 1px solid #961107;
+            background: #961107;
+            text-decoration: none;
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .ach-cta-btn:hover {
+            background: #ffffff;
+            border-color: #961107;
+            color: #961107;
+            box-shadow: 0 4px 14px 0 rgba(150, 17, 7, 0.2);
+        }
+    </style>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 space-y-20" style="padding-top: 3rem;">
+        <!-- Hall of Fame -->
+        <section class="ach-hof-section">
+            <div class="ach-section-header">
+                <span class="ach-section-eyebrow">Recognition</span>
+                <h2 class="ach-section-heading">Hall of <em class="ach-em">Fame</em></h2>
+                <div class="ach-section-rule"></div>
+            </div>
+
+            <div class="ach-card-grid">
+                {achievements.map((ach, i) => (
+                    <div class="ach-card animate-fade-in opacity-0" style={`animation-delay: ${0.1 * i}s; animation-fill-mode: forwards;`}>
+                        <div class="ach-card-top-bar"></div>
+                        <div class="ach-card-meta">
+                            <span class="ach-card-year">{ach.year}</span>
+                            <span class="ach-card-category">{ach.category}</span>
+                        </div>
+                        <h3 class="ach-card-title">{ach.title}</h3>
+                        <p class="ach-card-desc">{ach.description}</p>
+                    </div>
+                ))}
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="ach-cta-section">
+            <span class="ach-section-eyebrow">Our Commitment</span>
+            <h3 class="ach-cta-heading">Striving for <em class="ach-em">Excellence</em></h3>
+            <div class="ach-section-rule"></div>
+            <p class="ach-cta-body">
+                At Tshikhuthula Secondary School, we don't just teach; we inspire. These achievements are a 
+                testament to the hard work, resilience, and talent of our students and the unwavering support 
+                of our faculty.
+            </p>
+            <a href="/gallery/students-gallery" class="ach-cta-btn">
+                View Student Gallery &nbsp;→
+            </a>
+        </section>
+    </div>
+</Layout>

@@ -1,0 +1,90 @@
+📦PhpFinalWebTemplate
+ ┣ 📂admin
+ ┃ ┣ 📂includes
+ ┃ ┃ ┣ 📜header.php
+ ┃ ┃ ┗ 📜sidebar.php
+ ┃ ┣ 📜add-event.php
+ ┃ ┣ 📜categories.php
+ ┃ ┣ 📜dashboard.php
+ ┃ ┣ 📜edit-event.php
+ ┃ ┣ 📜events.php
+ ┃ ┣ 📜important-dates.php
+ ┃ ┣ 📜index.php
+ ┃ ┣ 📜locations.php
+ ┃ ┣ 📜login.php
+ ┃ ┣ 📜pending-events.php
+ ┃ ┣ 📜registrations.php
+ ┃ ┣ 📜reports.php
+ ┃ ┣ 📜settings.php
+ ┃ ┣ 📜users.php
+ ┃ ┗ 📜view-events.php
+ ┣ 📂api
+ ┃ ┣ 📜get-event.php
+ ┃ ┣ 📜get-events.php
+ ┃ ┣ 📜register.php
+ ┃ ┗ 📜subscribe.php
+ ┣ 📂assets
+ ┃ ┣ 📂documents
+ ┃ ┣ 📂images
+ ┃ ┃ ┗ 📜logo5.png
+ ┃ ┣ 📂sql
+ ┃ ┃ ┣ 📜database-schema-advanced.sql
+ ┃ ┃ ┗ 📜databsae-basic.sql
+ ┃ ┗ 📂uploads
+ ┃ ┃ ┣ 📂events
+ ┃ ┃ ┗ 📂users
+ ┣ 📂css
+ ┃ ┣ 📜about.css
+ ┃ ┣ 📜admin.css
+ ┃ ┣ 📜all-events.css
+ ┃ ┣ 📜calendar-events.css
+ ┃ ┣ 📜common.css
+ ┃ ┣ 📜contact.css
+ ┃ ┣ 📜enrolment.css
+ ┃ ┣ 📜gallery.css
+ ┃ ┣ 📜home.css
+ ┃ ┗ 📜our-school.css
+ ┣ 📂gallery
+ ┃ ┣ 📜achievements.php
+ ┃ ┗ 📜students-gallery.php
+ ┣ 📂includes
+ ┃ ┣ 📜auth.php
+ ┃ ┣ 📜config.php
+ ┃ ┣ 📜database.php
+ ┃ ┣ 📜footer.php
+ ┃ ┣ 📜functions.php
+ ┃ ┣ 📜helpers.php
+ ┃ ┣ 📜navigation.php
+ ┃ ┗ 📜session.php
+ ┣ 📂js
+ ┃ ┣ 📜admin.js
+ ┃ ┣ 📜calendar.js
+ ┃ ┗ 📜main.js
+ ┣ 📂logs
+ ┣ 📂our-school
+ ┃ ┣ 📜food-handlers.php
+ ┃ ┣ 📜ground-workers.php
+ ┃ ┣ 📜security.php
+ ┃ ┣ 📜sgb.php
+ ┃ ┗ 📜staff.php
+ ┣ 📜.htaccess
+ ┣ 📜about.php
+ ┣ 📜all-events.php
+ ┣ 📜calendar-events.php
+ ┣ 📜config.php
+ ┣ 📜contact.php
+ ┣ 📜download-calendar.php
+ ┣ 📜enrolment.php
+ ┣ 📜event-details.php
+ ┣ 📜export-events.php
+ ┣ 📜gallery.php
+ ┣ 📜index.php
+ ┣ 📜login.php
+ ┣ 📜logout.php
+ ┣ 📜my-events.php
+ ┣ 📜my-registration.php
+ ┣ 📜our-school.php
+ ┣ 📜README.MD
+ ┣ 📜register.php
+ ┣ 📜structure.php
+ ┗ 📜submit-event.php

@@ -1,0 +1,94 @@
+@reference "tailwindcss";
+
+/* Page Header Shared Style */
+.our-school-header {
+    background-color: #0f172a;
+    position: relative;
+    padding: 8rem 2rem 5rem;
+    overflow: hidden;
+    text-align: center;
+}
+
+.our-school-header-bg {
+    position: absolute;
+    inset: 0;
+    opacity: 0.35;
+    background-image: url('/assets/images/hero/slide5.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.our-school-header-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, #0f172a 0%, transparent 100%);
+}
+
+.our-school-header-content {
+    position: relative;
+    z-index: 10;
+    max-width: 56rem;
+    margin: 0 auto;
+}
+
+/* our-school.css - Our School page specific styles */
+/* Responsive adjustments for glassmorphism components */
+@media (max-width: 768px) {
+    .glass {
+        @apply p-6;
+    }
+
+    .glass p {
+        @apply text-sm;
+    }
+}
+
+/* Table responsiveness */
+@media (max-width: 640px) {
+    .overflow-x-auto {
+        @apply -mx-4 px-4;
+    }
+}
+
+/* Staff card hover effects */
+.group:hover .h-2 {
+    height: 0.25rem !important;
+}
+
+/* Quick links grid responsiveness */
+@media (max-width: 640px) {
+    .grid.grid-cols-2 {
+        @apply grid-cols-1;
+    }
+}
+
+/* Animation delays for staggered effects */
+.animate-fade-in {
+    animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Consistent spacing for sections */
+section {
+    @apply mb-8;
+}
+
+/* Ensure glass cards have proper contrast */
+.bg-white\/50 {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.bg-white\/40 {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Responsive typography */
+@media (max-width: 768px) {
+    .text-3xl {
+        @apply text-2xl;
+    }
+
+    .text-2xl {
+        @apply text-xl;
+    }
+}

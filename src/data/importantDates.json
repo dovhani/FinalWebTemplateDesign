@@ -1,0 +1,26 @@
+[
+    {
+        "event_title": "Spring Break",
+        "start_date": "2024-03-25",
+        "end_date": "2024-03-29",
+        "academic_year": 2024,
+        "applicable_grades": "All Grades",
+        "description": "Spring vacation"
+    },
+    {
+        "event_title": "Final Exams",
+        "start_date": "2024-05-20",
+        "end_date": "2024-05-31",
+        "academic_year": 2024,
+        "applicable_grades": "9-12",
+        "description": "End of year examinations"
+    },
+    {
+        "event_title": "Graduation Day",
+        "start_date": "2024-06-15",
+        "end_date": null,
+        "academic_year": 2024,
+        "applicable_grades": "12th Grade",
+        "description": "Graduation ceremony"
+    }
+]

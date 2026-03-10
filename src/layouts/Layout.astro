@@ -1,0 +1,115 @@
+---
+import Navigation from '../components/Navigation.astro';
+import SecondaryNav from '../components/SecondaryNav.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/common.css';
+import '../styles/global.css';
+
+interface Props {
+	title: string;
+	currentPage?: string;
+    style?: string;
+    noNavbarPadding?: boolean;
+    showMainNav?: boolean;
+}
+
+const { title, currentPage, style, noNavbarPadding = false, showMainNav = true } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		
+		<!-- Typography -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Cinzel+Decorative:wght@400;700;900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Manrope:wght@200..800&family=Inter:wght@100..900&family=Roboto:wght@100;300;400;700;900&family=Lato:wght@100;300;400;700;900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Cormorant+Garamond:ital,wght@0,300..900;1,300..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+
+        <!-- Cooper Hewitt Thin (open-source, Smithsonian) -->
+        <style>
+            @font-face {
+                font-family: 'Cooper Hewitt';
+                font-weight: 100;
+                font-style: normal;
+                font-display: swap;
+                src: url('https://cdn.jsdelivr.net/gh/cooperhewitt/cooperhewitt-typeface@master/fonts/web/CooperHewitt-Thin.woff2') format('woff2'),
+                     url('https://cdn.jsdelivr.net/gh/cooperhewitt/cooperhewitt-typeface@master/fonts/web/CooperHewitt-Thin.woff') format('woff');
+            }
+            @font-face {
+                font-family: 'Cooper Hewitt';
+                font-weight: 300;
+                font-style: normal;
+                font-display: swap;
+                src: url('https://cdn.jsdelivr.net/gh/cooperhewitt/cooperhewitt-typeface@master/fonts/web/CooperHewitt-Light.woff2') format('woff2'),
+                     url('https://cdn.jsdelivr.net/gh/cooperhewitt/cooperhewitt-typeface@master/fonts/web/CooperHewitt-Light.woff') format('woff');
+            }
+        </style>
+        {style && <link rel="stylesheet" href={`/styles/${style}`} />}
+	</head>
+	<body class="bg-slate-50 text-slate-900 selection:bg-primary-100 selection:text-primary-900 antialiased min-h-screen flex flex-col" data-page={currentPage}>
+		<!-- Dynamic Background -->
+		<div class="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-50 via-white to-slate-50"></div>
+		<div class="fixed inset-0 -z-10 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] animate-pulse-slow"></div>
+
+		{showMainNav && <Navigation currentPage={currentPage} />}
+		<div class={`flex-grow ${noNavbarPadding ? 'no-navbar-padding' : ''}`}>
+			<main class="main-content-wrapper">
+				<slot />
+			</main>
+		</div>
+		<Footer />
+
+        <!-- Back to Top Button -->
+        <button 
+            id="back-to-top" 
+            class="fixed bottom-8 right-8 z-[150] w-12 h-12 bg-primary-600 text-white rounded-full shadow-2xl flex items-center justify-center opacity-0 invisible translate-y-4 hover:bg-primary-700 transition-all duration-300 active:scale-95"
+            aria-label="Back to Top"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7" />
+            </svg>
+        </button>
+	</body>
+</html>
+
+<script>
+    const backToTop = document.getElementById('back-to-top');
+    
+    if (backToTop) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTop.classList.remove('opacity-0', 'invisible', 'translate-y-4');
+                backToTop.classList.add('opacity-100', 'visible', 'translate-y-0');
+            } else {
+                backToTop.classList.add('opacity-0', 'invisible', 'translate-y-4');
+                backToTop.classList.remove('opacity-100', 'visible', 'translate-y-0');
+            }
+        });
+
+        backToTop.onclick = () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        };
+    }
+</script>
+
+<style is:global>
+    body {
+        overflow-x: hidden;
+    }
+    /* Simple fade-in for pages */
+    main {
+        animation: fadeIn 0.5s ease-out;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>

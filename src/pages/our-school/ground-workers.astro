@@ -1,0 +1,256 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SecondaryNav from '../../components/SecondaryNav.astro';
+import SubNav from '../../components/SubNav.astro';
+import '../../styles/our-school.css';
+
+const schoolSubNavItems = [
+    { title: 'Staff Directory', href: '/our-school/staff' },
+    { title: 'School Governing Body', href: '/our-school/sgb' },
+    { title: 'Food Handlers', href: '/our-school/food-handlers' },
+    { title: 'Ground Workers', href: '/our-school/ground-workers' },
+    { title: 'Security', href: '/our-school/security' }
+];
+
+const groundWorkers = [
+    {
+        name: "Mr. Samuel Mahlangu",
+        role: "Head of Maintenance",
+        experience: "18 years",
+        responsibilities: "Overall facilities management, maintenance planning, team supervision",
+        contact: "maintenance@tshikhuthula.co.za",
+        extension: "Ext. 601"
+    },
+    {
+        name: "Mr. Joseph Khumalo",
+        role: "Electrician",
+        experience: "15 years",
+        responsibilities: "Electrical systems, lighting, power outlets, emergency systems",
+        contact: "electrical@tshikhuthula.co.za",
+        extension: "Ext. 602"
+    },
+    {
+        name: "Mr. Thomas Nkosi",
+        role: "Plumber",
+        experience: "12 years",
+        responsibilities: "Plumbing systems, water supply, drainage, maintenance",
+        contact: "plumbing@tshikhuthula.co.za",
+        extension: "Ext. 603"
+    },
+    {
+        name: "Mr. Peter Baloyi",
+        role: "General Maintenance",
+        experience: "10 years",
+        responsibilities: "General repairs, painting, carpentry, facility upkeep",
+        contact: "maintenance@tshikhuthula.co.za",
+        extension: "Ext. 604"
+    },
+    {
+        name: "Mr. David Moyo",
+        role: "Grounds Keeper",
+        experience: "8 years",
+        responsibilities: "Landscaping, lawn care, garden maintenance, outdoor areas",
+        contact: "grounds@tshikhuthula.co.za",
+        extension: "Ext. 605"
+    }
+];
+
+const maintenanceAreas = [
+    {
+        area: "Classroom Blocks",
+        frequency: "Daily checks, weekly deep cleaning",
+        responsible: "General Maintenance Team"
+    },
+    {
+        area: "Science Labs",
+        frequency: "Daily safety checks, monthly calibration",
+        responsible: "Specialized Maintenance"
+    },
+    {
+        area: "Sports Facilities",
+        frequency: "Weekly inspections, seasonal maintenance",
+        responsible: "Grounds & Sports Team"
+    },
+    {
+        area: "Electrical Systems",
+        frequency: "Monthly inspections, immediate repairs",
+        responsible: "Electrician"
+    },
+    {
+        area: "Plumbing & Water",
+        frequency: "Weekly checks, emergency response",
+        responsible: "Plumber"
+    },
+    {
+        area: "Building Exterior",
+        frequency: "Monthly inspections, seasonal upkeep",
+        responsible: "Maintenance Team"
+    }
+];
+
+const safetyInspections = [
+    "Fire extinguishers - Monthly",
+    "Emergency lighting - Quarterly",
+    "Building structure - Semi-annually",
+    "Play equipment - Weekly",
+    "Water quality - Monthly",
+    "Gas systems - Quarterly"
+];
+---
+
+<Layout title="Ground Workers - Tshikhuthula Secondary School" currentPage="our-school" noNavbarPadding={true} showMainNav={true}>
+    <SecondaryNav currentPage="our-school" />
+    <!-- ── Header ── -->
+    <header class="our-school-header ws-reveal">
+        <div class="our-school-header-bg"></div>
+        <div class="our-school-header-content">
+            <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-gold-500/30 bg-gold-500/10 backdrop-blur-md mb-6">
+                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-gold-400">Facilities</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-heading text-white font-display drop-shadow-lg tracking-tight mb-6">
+                Grounds & <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Maintenance</span>
+            </h1>
+            <p class="text-slate-300 max-w-3xl mx-auto text-lg leading-relaxed font-lato">
+                Our dedicated maintenance staff ensure a safe, clean, and well-maintained learning environment.
+            </p>
+        </div>
+    </header>
+    
+    <SubNav items={schoolSubNavItems} activeHref="/our-school/ground-workers" />
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 space-y-20">
+        <!-- Introduction -->
+        <section class="glass p-8 md:p-12">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl font-heading text-slate-900 mb-6">Facilities & Grounds Maintenance</h2>
+                    <p class="text-slate-600 leading-relaxed text-lg mb-4">
+                        Our Grounds and Maintenance team works tirelessly to maintain our school's 
+                        physical infrastructure and beautiful grounds. From classroom repairs to 
+                        landscaping, they ensure our students learn in a safe, clean, and inspiring environment.
+                    </p>
+                    <p class="text-slate-600 leading-relaxed text-lg mb-6">
+                        The team handles everything from routine maintenance to emergency repairs, 
+                        ensuring all facilities meet the highest standards of safety and functionality. 
+                        Their work directly contributes to the quality of our educational environment.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="px-4 py-2 bg-maroon-50 text-maroon-800 text-xs font-black uppercase tracking-widest border border-maroon-100 rounded-lg">
+                            24/7 Emergency Response
+                        </div>
+                        <div class="px-4 py-2 bg-slate-50 text-slate-600 text-xs font-black uppercase tracking-widest border border-slate-200 rounded-lg">
+                            Preventive Maintenance
+                        </div>
+                        <div class="px-4 py-2 bg-slate-50 text-slate-600 text-xs font-black uppercase tracking-widest border border-slate-200 rounded-lg">
+                            Certified Tradespeople
+                        </div>
+                    </div>
+                </div>
+                <div class="relative group">
+                    <div class="absolute -inset-4 bg-gradient-to-r from-maroon-800/10 to-gold-500/10 rounded-2xl blur-2xl group-hover:opacity-100 opacity-70 transition-all duration-500"></div>
+                    <div class="relative bg-slate-200 aspect-video overflow-hidden flex items-center justify-center rounded-xl border border-white/50 shadow-2xl">
+                        <div class="absolute inset-0 bg-maroon-900/10 mix-blend-overlay z-10 pointer-events-none"></div>
+                        <div class="text-slate-400 text-center relative z-20">
+                            <div class="text-6xl mb-4 group-hover:scale-110 transition-transform">🔧</div>
+                            <div class="font-bold italic">Maintenance Team</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Team Members -->
+        <section>
+            <div class="flex items-center gap-4 mb-12">
+                <div class="h-px flex-grow bg-slate-200"></div>
+                <h2 class="text-2xl font-heading text-slate-900 whitespace-nowrap px-4">Maintenance Staff</h2>
+                <div class="h-px flex-grow bg-slate-200"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {groundWorkers.map((worker, i) => (
+                    <div class="group bg-white border border-slate-100 p-8 shadow-sm hover:shadow-[0_20px_40px_-15px_rgba(128,0,0,0.1)] hover:border-maroon-800/20 transition-all animate-fade-in opacity-0 rounded-xl" style={`animation-delay: ${0.1 * i}s; animation-fill-mode: forwards;`}>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="text-3xl bg-slate-50 w-12 h-12 flex items-center justify-center rounded-full group-hover:bg-maroon-50 group-hover:scale-110 transition-all">🔧</div>
+                            <span class="px-3 py-1 bg-gold-50 text-gold-600 text-[9px] font-black uppercase tracking-widest border border-gold-100 rounded-full">{worker.experience}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 font-display mb-2 group-hover:text-maroon-800 transition-colors">{worker.name}</h3>
+                        <div class="text-sm font-black text-maroon-800 mb-4 uppercase tracking-wider">{worker.role}</div>
+                        <p class="text-slate-500 text-sm mb-4 leading-relaxed">{worker.responsibilities}</p>
+                        <div class="pt-4 border-t border-slate-50 space-y-2 text-xs">
+                            <div class="flex items-center gap-2 text-slate-500">
+                                <span class="text-gold-500">📞</span>
+                                <span>{worker.extension}</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-slate-500">
+                                <span class="text-gold-500">✉️</span>
+                                <a href={`mailto:${worker.contact}`} class="hover:text-maroon-800 transition-colors">{worker.contact}</a>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </section>
+        
+        <!-- Maintenance Areas -->
+        <section class="glass p-8 md:p-12">
+            <h2 class="text-3xl font-heading text-slate-900 mb-10 text-center">Maintenance Coverage</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="p-4 bg-slate-50 text-[9px] font-black uppercase tracking-widest text-slate-500 text-left border-b border-maroon-100">Area/Facility</th>
+                            <th class="p-4 bg-slate-50 text-[9px] font-black uppercase tracking-widest text-slate-500 text-left border-b border-maroon-100">Maintenance Frequency</th>
+                            <th class="p-4 bg-slate-50 text-[9px] font-black uppercase tracking-widest text-slate-500 text-left border-b border-maroon-100">Responsible</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm font-medium">
+                        {maintenanceAreas.map((area, i) => (
+                            <tr class="hover:bg-maroon-50/30 transition-colors">
+                                <td class="p-4 border-b border-slate-50 font-bold text-slate-700">{area.area}</td>
+                                <td class="p-4 border-b border-slate-50 text-slate-500">{area.frequency}</td>
+                                <td class="p-4 border-b border-slate-50 text-slate-500">{area.responsible}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <!-- Safety Inspections -->
+        <section class="bg-slate-50 border border-slate-100 p-8 md:p-12">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-3xl font-heading text-slate-900 mb-8 text-center">Safety Inspection Schedule</h2>
+                <p class="text-slate-600 text-center mb-8">
+                    Regular safety inspections ensure our facilities meet all regulatory requirements and maintain a safe environment for students and staff.
+                </p>
+                <div class="grid md:grid-cols-2 gap-4">
+                    {safetyInspections.map((inspection, i) => (
+                        <div class="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm">
+                            <div class="w-10 h-10 bg-primary-50 flex items-center justify-center text-primary-600 flex-shrink-0">
+                                <span class="text-lg">✓</span>
+                            </div>
+                            <span class="text-sm font-medium text-slate-700">{inspection}</span>
+                        </div>
+                    ))}
+                </div>
+                
+                <div class="mt-12 p-6 glass text-center">
+                    <h3 class="text-xl font-bold text-slate-900 mb-4">Report Maintenance Issues</h3>
+                    <p class="text-slate-600 mb-6 text-sm">
+                        Notice something that needs repair? Report it to our maintenance team and we'll address it promptly.
+                    </p>
+                    <a href="mailto:maintenance@tshikhuthula.co.za" class="inline-flex items-center gap-2 px-8 py-3 bg-slate-900 text-white font-bold hover:bg-primary-600 transition-all shadow-xl">
+                        📧 Report an Issue
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+</Layout>
+
+<script>
+    document.addEventListener('astro:after-swap', () => {
+        // Initialize any page-specific scripts here
+    });
+</script>

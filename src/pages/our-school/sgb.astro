@@ -1,0 +1,231 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SecondaryNav from '../../components/SecondaryNav.astro';
+import SubNav from '../../components/SubNav.astro';
+import '../../styles/our-school.css';
+
+const schoolSubNavItems = [
+    { title: 'Staff Directory', href: '/our-school/staff' },
+    { title: 'School Governing Body', href: '/our-school/sgb' },
+    { title: 'Food Handlers', href: '/our-school/food-handlers' },
+    { title: 'Ground Workers', href: '/our-school/ground-workers' },
+    { title: 'Security', href: '/our-school/security' }
+];
+
+const sgbMembers = [
+    {
+        name: "Mr. Thabo Mokoena",
+        role: "Chairperson",
+        term: "2022-2024",
+        contact: "sgb-chair@tshikhuthula.co.za",
+        portfolio: "Overall Governance & Strategic Planning"
+    },
+    {
+        name: "Mrs. Sarah Nkosi",
+        role: "Vice Chairperson",
+        term: "2022-2024",
+        contact: "sgb.vice@tshikhuthula.co.za",
+        portfolio: "Finance & Budget Committee"
+    },
+    {
+        name: "Mr. Joseph Baloyi",
+        role: "Secretary",
+        term: "2022-2024",
+        contact: "sgb.secretary@tshikhuthula.co.za",
+        portfolio: "Administration & Records"
+    },
+    {
+        name: "Mrs. Grace Mahlangu",
+        role: "Treasurer",
+        term: "2022-2024",
+        contact: "sgb.treasurer@tshikhuthula.co.za",
+        portfolio: "Financial Management"
+    },
+    {
+        name: "Mr. Peter Moyo",
+        role: "Member",
+        term: "2023-2025",
+        contact: "sgb.member1@tshikhuthula.co.za",
+        portfolio: "Infrastructure & Maintenance"
+    },
+    {
+        name: "Mrs. Nomsa Dlamini",
+        role: "Member",
+        term: "2023-2025",
+        contact: "sgb.member2@tshikhuthula.co.za",
+        portfolio: "Curriculum & Academic Affairs"
+    }
+];
+
+const committees = [
+    {
+        name: "Finance Committee",
+        purpose: "Oversight of school finances, budget preparation, and financial compliance",
+        members: "4 SGB members + Principal"
+    },
+    {
+        name: "Infrastructure Committee",
+        purpose: "Facilities maintenance, upgrades, and safety compliance",
+        members: "3 SGB members + Maintenance Head"
+    },
+    {
+        name: "Academic Committee",
+        purpose: "Curriculum oversight, academic performance, and educational quality",
+        members: "4 SGB members + Academic Head"
+    },
+    {
+        name: "Discipline Committee",
+        purpose: "Student discipline policies and code of conduct enforcement",
+        members: "3 SGB members + Deputy Principal"
+    }
+];
+---
+
+<Layout title="School Governing Body - Tshikhuthula Secondary School" currentPage="our-school" noNavbarPadding={true} showMainNav={true}>
+    <SecondaryNav currentPage="our-school" />
+    <!-- ── Header ── -->
+    <header class="our-school-header ws-reveal">
+        <div class="our-school-header-bg"></div>
+        <div class="our-school-header-content">
+            <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-gold-500/30 bg-gold-500/10 backdrop-blur-md mb-6">
+                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-gold-400">Leadership</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-heading text-white font-display drop-shadow-lg tracking-tight mb-6">
+                School Governing <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Body</span>
+            </h1>
+            <p class="text-slate-300 max-w-3xl mx-auto text-lg leading-relaxed font-lato">
+                Meet our dedicated SGB members who oversee school governance and strategic direction.
+            </p>
+        </div>
+    </header>
+    
+    <SubNav items={schoolSubNavItems} activeHref="/our-school/sgb" />
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 space-y-20">
+        <!-- Introduction -->
+        <section class="glass p-8 md:p-12">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl font-heading text-slate-900 mb-6">About the SGB</h2>
+                    <p class="text-slate-600 leading-relaxed text-lg mb-4">
+                        The School Governing Body (SGB) is the highest decision-making authority in our school. 
+                        Comprising elected parents, teachers, and community members, the SGB plays a crucial 
+                        role in shaping the school's future and ensuring quality education for all learners.
+                    </p>
+                    <p class="text-slate-600 leading-relaxed text-lg mb-6">
+                        Our SGB is responsible for setting school policies, approving budgets, overseeing 
+                        infrastructure development, and ensuring the school operates in the best interests 
+                        of our students and community.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="px-4 py-2 bg-maroon-50 text-maroon-800 text-xs font-black uppercase tracking-widest border border-maroon-100 rounded-lg">
+                            Elected Members
+                        </div>
+                        <div class="px-4 py-2 bg-slate-50 text-slate-600 text-xs font-black uppercase tracking-widest border border-slate-200 rounded-lg">
+                            2-Year Terms
+                        </div>
+                        <div class="px-4 py-2 bg-slate-50 text-slate-600 text-xs font-black uppercase tracking-widest border border-slate-200 rounded-lg">
+                            Monthly Meetings
+                        </div>
+                    </div>
+                </div>
+                <div class="relative group">
+                    <div class="absolute -inset-4 bg-gradient-to-r from-maroon-800/10 to-gold-500/10 rounded-2xl blur-2xl group-hover:opacity-100 opacity-70 transition-all duration-500"></div>
+                    <div class="relative bg-slate-200 aspect-square overflow-hidden flex items-center justify-center rounded-xl border border-white/50 shadow-2xl">
+                        <div class="absolute inset-0 bg-maroon-900/10 mix-blend-overlay z-10 pointer-events-none"></div>
+                        <div class="text-slate-400 text-center relative z-20">
+                            <div class="text-6xl mb-4 group-hover:scale-110 transition-transform">🤝</div>
+                            <div class="font-bold italic">SGB Meeting</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- SGB Members -->
+        <section>
+            <div class="flex items-center gap-4 mb-12">
+                <div class="h-px flex-grow bg-slate-200"></div>
+                <h2 class="text-2xl font-heading text-slate-900 whitespace-nowrap px-4">SGB Members</h2>
+                <div class="h-px flex-grow bg-slate-200"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {sgbMembers.map((member, i) => (
+                    <div class="group bg-white border border-slate-100 p-8 shadow-sm hover:shadow-[0_20px_40px_-15px_rgba(128,0,0,0.1)] hover:border-maroon-800/20 transition-all animate-fade-in opacity-0 rounded-xl" style={`animation-delay: ${0.1 * i}s; animation-fill-mode: forwards;`}>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="text-3xl bg-slate-50 w-12 h-12 flex items-center justify-center rounded-full group-hover:bg-maroon-50 group-hover:scale-110 transition-all">👤</div>
+                            <span class="px-3 py-1 bg-gold-50 text-gold-600 text-[9px] font-black uppercase tracking-widest border border-gold-100 rounded-full">{member.term}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 font-display mb-2 group-hover:text-maroon-800 transition-colors">{member.name}</h3>
+                        <div class="text-sm font-black text-maroon-800 mb-4 uppercase tracking-wider">{member.role}</div>
+                        <p class="text-slate-500 text-sm mb-4 leading-relaxed">{member.portfolio}</p>
+                        <div class="pt-4 border-t border-slate-50 space-y-2 text-xs">
+                            <div class="flex items-center gap-2 text-slate-500">
+                                <span class="text-gold-500">📧</span>
+                                <a href={`mailto:${member.contact}`} class="hover:text-maroon-800 transition-colors">{member.contact}</a>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </section>
+        
+        <!-- Committees -->
+        <section class="glass p-8 md:p-12">
+            <h2 class="text-3xl font-heading text-slate-900 mb-10 text-center">SGB Committees</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                {committees.map((committee, i) => (
+                    <div class="group p-6 bg-white/50 border border-white/80 hover:shadow-[0_20px_40px_-15px_rgba(203,143,36,0.15)] hover:border-gold-500/20 rounded-xl transition-all animate-fade-in opacity-0" style={`animation-delay: ${0.1 * i}s; animation-fill-mode: forwards;`}>
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-maroon-50 border border-maroon-100 flex items-center justify-center text-maroon-800 text-xl group-hover:scale-110 group-hover:bg-maroon-800 group-hover:text-white transition-all">📋</div>
+                            <div>
+                                <h3 class="text-lg font-bold text-slate-900 font-display group-hover:text-maroon-800 transition-colors">{committee.name}</h3>
+                                <p class="text-[10px] font-black uppercase tracking-widest text-slate-400">Committee</p>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">{committee.purpose}</p>
+                        <div class="text-xs text-slate-500">
+                            <span class="font-bold">Members:</span> {committee.members}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </section>
+        
+        <!-- Contact & Meetings -->
+        <section class="bg-slate-50 border border-slate-100 p-8 md:p-12">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl font-heading text-slate-900 mb-6">Get Involved</h2>
+                <p class="text-slate-600 leading-relaxed text-lg mb-8">
+                    SGB meetings are open to parents and community members. We encourage active 
+                    participation in school governance. Meeting dates are published in the school 
+                    calendar and announced in the newsletter.
+                </p>
+                <div class="grid md:grid-cols-3 gap-6 text-left">
+                    <div class="text-center">
+                        <div class="text-2xl mb-2">📅</div>
+                        <div class="font-bold text-slate-900 text-sm">Meeting Schedule</div>
+                        <div class="text-slate-500 text-xs mt-1">First Tuesday of each month</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl mb-2">⏰</div>
+                        <div class="font-bold text-slate-900 text-sm">Time</div>
+                        <div class="text-slate-500 text-xs mt-1">5:00 PM - 7:00 PM</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl mb-2">📍</div>
+                        <div class="font-bold text-slate-900 text-sm">Venue</div>
+                        <div class="text-slate-500 text-xs mt-1">School Administration Building</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</Layout>
+
+<script>
+    document.addEventListener('astro:after-swap', () => {
+        // Initialize any page-specific scripts here
+    });
+</script>

@@ -1,0 +1,264 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SecondaryNav from '../../components/SecondaryNav.astro';
+import SubNav from '../../components/SubNav.astro';
+import '../../styles/gallery.css';
+
+const gallerySubNavItems = [
+    { title: 'Achievements', href: '/gallery/achievements' },
+    { title: 'Student Gallery', href: '/gallery/students-gallery' },
+    { title: 'Year Book', href: '/gallery/yearbook' }
+];
+
+const studentWork = [
+    { title: "Art Project - Grade 9", student: "Thabo M.", type: "Visual Arts" },
+    { title: "Science Experiment", student: "Sarah K.", type: "Physics" },
+    { title: "Poetry Recital", student: "Zanele D.", type: "Cultural" },
+    { title: "Robotics Build", student: "Kevin P.", type: "Technology" },
+    { title: "Photography Project", student: "Lerato S.", type: "Arts" },
+    { title: "History Essay", student: "Johan v. W.", type: "Academic" }
+];
+---
+
+<Layout title="Student Gallery - Tshikhuthula Secondary School" currentPage="gallery" noNavbarPadding={true} showMainNav={true}>
+    <SecondaryNav currentPage="gallery" />
+    <!-- ── Header ── -->
+    <header class="gallery-header ws-reveal">
+        <div class="gallery-header-bg"></div>
+        <div class="gallery-header-content">
+            <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-gold-500/30 bg-gold-500/10 backdrop-blur-md mb-6">
+                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-gold-400">Showcase</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-heading text-white font-display drop-shadow-lg tracking-tight mb-6">
+                Student <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Gallery</span>
+            </h1>
+            <p class="text-slate-300 max-w-3xl mx-auto page-header-tagline">
+                Capture moments from classroom activities, events, and daily school life through our students' eyes.
+            </p>
+        </div>
+    </header>
+    
+    <SubNav items={gallerySubNavItems} activeHref="/gallery/students-gallery" />
+
+    <style>
+        /* ── Student Gallery Page Theme ── */
+        .sg-section-eyebrow {
+            display: inline-block;
+            font-family: 'Lato', sans-serif;
+            font-weight: 800;
+            font-size: 0.6rem;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: #deb056;
+            margin-bottom: 0.75rem;
+        }
+        .sg-section-heading {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 400;
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            color: #0f172a;
+            line-height: 1.15;
+            margin-bottom: 0.75rem;
+        }
+        .sg-em { font-style: italic; color: #deb056; }
+        .sg-section-rule {
+            width: 3rem; height: 2px;
+            background: linear-gradient(90deg, #961107, #deb056);
+            margin: 0 auto 1rem;
+        }
+        .sg-section-header { text-align: center; margin-bottom: 3rem; }
+
+        /* ── Showcase Grid Section ── */
+        .sg-showcase-section {
+            background: #ffffff;
+            border: 1px solid #f1f5f9;
+            padding: 3.5rem;
+        }
+        @media (max-width: 768px) { .sg-showcase-section { padding: 2rem; } }
+
+        .sg-card-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+        @media (max-width: 900px) { .sg-card-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 600px) { .sg-card-grid { grid-template-columns: repeat(2, 1fr); } }
+
+        .sg-card {
+            position: relative;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .sg-card:hover {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            border-color: rgba(203,143,36,0.35);
+            transform: translateY(-4px);
+        }
+        .sg-card-top-bar {
+            position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, #961107, #deb056);
+            transform: scaleX(0); transform-origin: left;
+            transition: transform 0.35s ease;
+        }
+        .sg-card:hover .sg-card-top-bar { transform: scaleX(1); }
+
+        .sg-card-thumbnail {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.7rem;
+            color: #64748b;
+            font-style: italic;
+            text-align: center;
+            padding: 1rem;
+            transition: background 0.3s ease;
+        }
+        .sg-card:hover .sg-card-thumbnail { background: #f1f5f9; }
+
+        .sg-card-info { padding: 1rem; }
+        .sg-card-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.82rem;
+            color: #0f172a;
+            margin-bottom: 0.3rem;
+            transition: color 0.3s ease;
+        }
+        .sg-card:hover .sg-card-title { color: #961107; }
+        .sg-card-student {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 900;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #961107;
+            margin-bottom: 0.2rem;
+        }
+        .sg-card-type {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.55rem;
+            font-weight: 900;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #64748b;
+        }
+
+        /* ── Submit Work CTA Section ── */
+        .sg-cta-section {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 3.5rem;
+        }
+        @media (max-width: 768px) { .sg-cta-section { padding: 2rem; } }
+
+        .sg-cta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        @media (max-width: 768px) { .sg-cta-grid { grid-template-columns: 1fr; gap: 2rem; } }
+
+        .sg-cta-body {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.92rem;
+            color: #475569;
+            line-height: 1.7;
+            margin-bottom: 1.75rem;
+        }
+        .sg-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 2rem;
+            font-family: 'Lato', sans-serif;
+            font-weight: 800;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #ffffff;
+            border: 1px solid #961107;
+            background: #961107;
+            text-decoration: none;
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .sg-cta-btn:hover {
+            background: #ffffff;
+            border-color: #961107;
+            color: #961107;
+            box-shadow: 0 4px 14px 0 rgba(150, 17, 7, 0.2);
+        }
+        .sg-upload-placeholder {
+            aspect-ratio: 16/9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed #cbd5e1;
+            background: #ffffff;
+            gap: 0.75rem;
+        }
+        .sg-upload-icon { font-size: 2.5rem; opacity: 0.5; }
+        .sg-upload-label {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 900;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #64748b;
+        }
+    </style>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 space-y-20" style="padding-top: 3rem;">
+
+        <!-- Showcase Grid -->
+        <section class="sg-showcase-section">
+            <div class="sg-section-header">
+                <span class="sg-section-eyebrow">Student Work</span>
+                <h2 class="sg-section-heading">Showcase of <em class="sg-em">Talent</em></h2>
+                <div class="sg-section-rule"></div>
+            </div>
+
+            <div class="sg-card-grid">
+                {studentWork.map((work, i) => (
+                    <div class="sg-card animate-fade-in opacity-0" style={`animation-delay: ${0.1 * i}s; animation-fill-mode: forwards;`}>
+                        <div class="sg-card-top-bar"></div>
+                        <div class="sg-card-thumbnail">{work.title}</div>
+                        <div class="sg-card-info">
+                            <h3 class="sg-card-title">{work.title}</h3>
+                            <p class="sg-card-student">{work.student}</p>
+                            <div class="sg-card-type">{work.type}</div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </section>
+
+        <!-- Submit Work CTA -->
+        <section class="sg-cta-section">
+            <div class="sg-cta-grid">
+                <div>
+                    <span class="sg-section-eyebrow">Get Involved</span>
+                    <h2 class="sg-section-heading">Submit Your <em class="sg-em">Work</em></h2>
+                    <div class="sg-section-rule" style="margin: 0 0 1.5rem;"></div>
+                    <p class="sg-cta-body">
+                        Are you a student at TSS? We'd love to showcase your projects, art, or photos of school life 
+                        right here in the Student Gallery. Share your journey with our community!
+                    </p>
+                    <a href="/contact" class="sg-cta-btn">Contact a Teacher &nbsp;→</a>
+                </div>
+                <div class="sg-upload-placeholder">
+                    <div class="sg-upload-icon">📤</div>
+                    <div class="sg-upload-label">Join the Showcase</div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</Layout>
