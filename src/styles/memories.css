@@ -1,4 +1,4 @@
-/* memories.css — Tshikhuthula Memories Page */
+/* memories.css — Lotsha Memories Page */
 
 /* ════════════════════════════════════════
    HEADER
@@ -25,7 +25,7 @@
 .mem-header-bg {
     position: absolute;
     inset: 0;
-    background-image: url('/assets/images/hero/slide3.png');
+    background-image: url('https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_auto,w_1440,c_fill/v1773823793/slide3_liwnis.avif');
     background-size: cover;
     background-position: center 30%;
     opacity: 0.12;
@@ -36,7 +36,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at 50% 0%, rgba(150, 17, 7, 0.2) 0%, transparent 60%),
+    background: radial-gradient(ellipse at 50% 0%, rgba(84, 55, 23, 0.2) 0%, transparent 60%),
         linear-gradient(to bottom, rgba(12, 18, 34, 0.2) 0%, rgba(12, 18, 34, 0.96) 100%);
 }
 
@@ -50,17 +50,20 @@
 .mem-badge {
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
+    justify-content: center;
     padding: 0.45rem 1.25rem;
-    border: 1px solid rgba(203, 143, 36, 0.4);
+    border-radius: 9999px;
+    border: 1px solid rgba(203, 143, 36, 0.35);
     background: rgba(203, 143, 36, 0.1);
-    border-radius: 999px;
-    font-family: 'Lato', sans-serif;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     font-size: 0.6rem;
     font-weight: 900;
-    letter-spacing: 0.32em;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: #fbbf24;
+    color: #cb8f24;
+    /* Layout */
+    gap: 0.6rem;
     margin-bottom: 1.75rem;
 }
 
@@ -71,7 +74,7 @@
 }
 
 .mem-title {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     font-size: clamp(2.5rem, 6vw, 4.5rem);
     font-weight: 900;
     color: #fff;
@@ -137,10 +140,10 @@
    ════════════════════════════════════════ */
 .mem-filter-bar {
     background: #fff;
-    border: 1px solid #e2e8f0;
-    border-radius: 1.25rem;
-    padding: 1.75rem 2rem;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    border: 1px solid #f1f5f9;
+    border-radius: 2rem;
+    padding: 2rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
@@ -228,15 +231,15 @@
 }
 
 .mem-cat-tab.active {
-    background: #961107;
-    border-color: #961107;
+    background: #543717;
+    border-color: #543717;
     color: #fff;
 }
 
 /* Category-specific active colors via CSS variable */
 .mem-cat-tab[data-cat="school-trip"].active {
-    background: #961107;
-    border-color: #961107;
+    background: #543717;
+    border-color: #543717;
 }
 
 .mem-cat-tab[data-cat="district-visit"].active {
@@ -294,10 +297,10 @@
 .mem-card {
     background: #fff;
     border: 1px solid #f1f5f9;
-    border-radius: 1.25rem;
+    border-radius: 2rem;
     overflow: hidden;
     position: relative;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
     display: flex;
     flex-direction: column;
 
@@ -305,9 +308,9 @@
     opacity: 0;
     transform: translateY(24px);
     transition:
-        opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-        box-shadow 0.3s ease;
+        opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.4s ease;
 }
 
 .mem-card.mem-card-visible {
@@ -316,8 +319,9 @@
 }
 
 .mem-card:hover {
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
-    transform: translateY(-5px);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.08);
+    transform: translateY(-8px);
+    border-color: rgba(203, 143, 36, 0.2);
 }
 
 /* Image section */
@@ -365,15 +369,20 @@
     position: absolute;
     top: 0.85rem;
     right: 0.85rem;
-    background: rgba(15, 23, 42, 0.7);
-    color: #fbbf24;
-    font-family: 'Lato', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.35rem 1rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(203, 143, 36, 0.35);
+    background: rgba(203, 143, 36, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     font-size: 0.6rem;
     font-weight: 900;
-    letter-spacing: 0.15em;
-    padding: 0.3rem 0.65rem;
-    border-radius: 0.4rem;
-    backdrop-filter: blur(4px);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #cb8f24;
     z-index: 2;
 }
 
@@ -401,12 +410,12 @@
     font-weight: 800;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--cat-color, #961107);
+    color: var(--cat-color, #543717);
     opacity: 0.85;
 }
 
 .mem-card-title {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     font-size: 1.05rem;
     font-weight: 700;
     color: #0f172a;
@@ -416,7 +425,7 @@
 }
 
 .mem-card:hover .mem-card-title {
-    color: var(--cat-color, #961107);
+    color: var(--cat-color, #543717);
 }
 
 .mem-card-desc {
@@ -447,7 +456,7 @@
 .mem-card-participants svg {
     width: 0.85rem;
     height: 0.85rem;
-    color: var(--cat-color, #961107);
+    color: var(--cat-color, #543717);
     flex-shrink: 0;
 }
 
@@ -458,7 +467,7 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: var(--cat-color, #961107);
+    background: var(--cat-color, #543717);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
@@ -490,7 +499,7 @@
 }
 
 .mem-empty h3 {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     font-size: 1.3rem;
     font-weight: 700;
     color: #475569;

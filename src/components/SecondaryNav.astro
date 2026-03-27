@@ -42,7 +42,7 @@ const contactInfo = {
           class="md:hidden w-10 h-10 flex items-center justify-center rounded-lg hover:bg-slate-50/50 transition-colors ml-6"
           aria-label="Open Menu"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-slate-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-[#543717]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
@@ -51,11 +51,11 @@ const contactInfo = {
         <div class="hidden md:block absolute top-1/2 left-[10px] -translate-y-1/2 h-[100px]">
           <a href="/" class="flex items-center gap-4 transition-transform active:scale-95 h-full">
             <div class="relative h-[100px] w-[100px] flex items-center justify-center p-2">
-              <img src="/assets/images/logo5.png" alt="School Logo" class="h-full w-auto object-contain" />
+              <img src="https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_auto,w_200/v1773824905/lotsha_logo_beq05b.png" alt="School Logo" class="h-full w-auto object-contain" / loading="lazy">
             </div>
             <div class="hidden xl:flex flex-col">
-              <span class="logo-name text-2xl font-black tracking-tight text-white transition-colors duration-300 font-lato">Tshikhuthula</span>
-              <span class="logo-tagline text-[10px] font-semibold tracking-widest text-white/80 uppercase transition-colors duration-300">Secondary School</span>
+              <span class="logo-name text-2xl font-black tracking-tight text-gold-500 transition-colors duration-300 font-lato">Lotsha</span>
+              <span class="logo-tagline text-[10px] font-semibold tracking-widest text-[#543717] uppercase transition-colors duration-300">Secondary School</span>
             </div>
           </a>
         </div>
@@ -63,8 +63,8 @@ const contactInfo = {
 
         <!-- Mobile Logo (Center) - Absolutely positioned -->
         <a href="/" class="md:hidden absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 transition-transform active:scale-95 h-16">
-          <img src="/assets/images/logo5.png" alt="School Logo" class="h-full w-auto object-contain" />
-          <span class="text-xs font-black tracking-tight text-slate-900 uppercase font-lato">Tshikhuthula</span>
+          <img src="https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_auto,w_200/v1773824905/lotsha_logo_beq05b.png" alt="School Logo" class="h-full w-auto object-contain" / loading="lazy">
+          <span class="logo-name text-[18px] font-black tracking-tight text-gold-500 uppercase font-lato">Lotsha</span>
         </a>
 
         <!-- Desktop Navigation (25% from Right edge) -->
@@ -117,8 +117,8 @@ const contactInfo = {
     >
       <div class="p-6 border-b border-slate-100 flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <img src="/assets/images/logo5.png" alt="Logo" class="w-10 h-10 object-contain" />
-          <span class="font-black text-slate-900 text-sm uppercase tracking-wider">TSHIKHUTHULA</span>
+          <img src="https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_auto,w_200/v1773824905/lotsha_logo_beq05b.png" alt="Logo" class="w-10 h-10 object-contain" / loading="lazy">
+          <span class="font-black text-[#543717] text-[18px] uppercase tracking-wider font-lato">Lotsha</span>
         </div>
         <button id="mobile-menu-close" class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-900">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -228,13 +228,13 @@ const contactInfo = {
     color: #475569 !important; /* slate-600 */
   }
   #secondary-header nav a:hover {
-    color: #961107 !important; /* maroon-800 */
+    color: #543717 !important; /* maroon-800 */
   }
   #secondary-header .logo-name {
-    color: #0f172a !important; /* slate-900 */
+    color: #cb8f24 !important; /* mustard/gold */
   }
   #secondary-header .logo-tagline {
-    color: rgba(15, 23, 42, 0.6) !important; /* slate-600 */
+    color: #543717 !important; /* logo brown */
   }
   
   /* Scrolled state: Slightly cleaner */
@@ -244,20 +244,20 @@ const contactInfo = {
   
   /* Logo colors in scrolled state */
   #secondary-header.nav-scrolled .logo-name {
-    color: #0f172a !important;
+    color: #cb8f24 !important;
   }
   #secondary-header.nav-scrolled .logo-tagline {
-    color: rgba(15, 23, 42, 0.6) !important;
+    color: #543717 !important;
   }
   
   /* Semi-circle logo background stays maroon/orange */
   #secondary-header #nav-pill .rounded-full {
-    background-color: #800000 !important; /* solid maroon */
+    background-color: #543717 !important; /* solid maroon */
     border: 2px solid #FFA500; /* orange border */
     transition: all 0.4s ease;
   }
   #secondary-header.nav-scrolled #nav-pill .rounded-full {
-    background-color: #800000 !important;
+    background-color: #543717 !important;
     border-color: #FFA500 !important;
   }
   
@@ -279,7 +279,7 @@ const contactInfo = {
   /* Submenu links hover: light bg, maroon text */
   .submenu-link:hover {
       background-color: #f8fafc !important; 
-      color: #961107 !important; 
+      color: #543717 !important; 
   }
   
   /* Gradient shade on megamenu wrapper */
@@ -295,7 +295,7 @@ const contactInfo = {
   }
   
   .submenu-dropdown .submenu-link-wrapper:hover .submenu-link {
-      color: #800000 !important;
+      color: #543717 !important;
   }
   
   /* Prevent body scroll when mobile menu is open */

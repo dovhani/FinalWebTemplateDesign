@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ScrollReveal from '../components/ScrollReveal.astro';
 import SecondaryNav from '../components/SecondaryNav.astro';
 import '../styles/wall-of-fame.css';
 
@@ -8,10 +9,10 @@ const topAchievers = [
         name: "Mukovhe Mudau",
         year: "Class of 2023",
         image: "/assets/images/gallery/grid6.jpg",
-        badge: "Top Matriculant",
-        achievements: "Achieved 7 Distinctions including 98% in Mathematics and 95% in Physical Sciences.",
+        badge: "Top Grade 7",
+        achievements: "Awarded top Grade 7 academic honours, achieving an outstanding 92% average across all Primary subjects.",
         stats: [
-            { label: "Distinctions", value: "7" },
+            { label: "Top Subject", value: "Maths" },
             { label: "Avg", value: "92%" }
         ]
     },
@@ -19,10 +20,10 @@ const topAchievers = [
         name: "Tshedza Ndou",
         year: "Class of 2022",
         image: "/assets/images/gallery/grid5.jpg",
-        badge: "Provincial Top 10",
-        achievements: "Ranked 3rd in the Limpopo Province for the National Senior Certificate Examinations.",
+        badge: "Maths Olympiad",
+        achievements: "Ranked 3rd in the Limpopo Provincial Primary Mathematics Olympiad.",
         stats: [
-            { label: "Distinctions", value: "7" },
+            { label: "Medals", value: "2 Gold" },
             { label: "Avg", value: "94%" }
         ]
     },
@@ -30,54 +31,55 @@ const topAchievers = [
         name: "Rofhiwa Mulaudzi",
         year: "Class of 2021",
         image: "/assets/images/gallery/grid4.jpg",
-        badge: "Dux Scholar",
-        achievements: "Awarded a full scholarship to study Medicine at the University of Cape Town.",
+        badge: "Science Fair Hero",
+        achievements: "Awarded 1st place in the District Primary Science Fair for a renewable energy project.",
         stats: [
-            { label: "Distinctions", value: "6" },
+            { label: "Awards", value: "3" },
             { label: "Avg", value: "89%" }
         ]
     }
 ];
 
-const notableAlumni = [
+const youngStars = [
     {
-        name: "Dr. Nndwakhulu Netshisaulu",
-        year: "Class of 2005",
+        name: "Ndalamo Mokoena",
+        year: "Grade 7 | 2023",
         image: "/assets/images/gallery/grid2.jpg",
-        role: "Cardiothoracic Surgeon",
-        bio: "Leading surgeon at a major national hospital, recognized for pioneering research in minimally invasive heart surgery."
+        role: "Head Boy Excellence",
+        bio: "Awarded top honours for exemplary leadership and academics. Currently excelling in high school with a full scholarship."
     },
     {
-        name: "Grace Ramabulana",
-        year: "Class of 2010",
+        name: "Athi Magona",
+        year: "Grade 6 | 2023",
         image: "/assets/images/gallery/grid1.jpg",
-        role: "Tech Entrepreneur",
-        bio: "Founder of a highly successful ed-tech startup providing digital learning resources to rural communities."
+        role: "Regional Spelling Bee Winner",
+        bio: "Placed 1st in the Limpopo Provincial Spelling Bee, showcasing outstanding linguistic skills."
     },
     {
-        name: "David Mphaphuli",
-        year: "Class of 2012",
+        name: "Khanya Venter",
+        year: "Grade 7 | 2022",
         image: "/assets/images/gallery/grid3.jpg",
-        role: "Chartered Accountant",
-        bio: "Director at a top 4 international accounting firm, and active mentor to our current Commerce students."
+        role: "Junior Chess Champion",
+        bio: "Undefeated in the district chess tournament, securing the school's first-ever gold medal in strategy games."
     }
 ];
 ---
 
-<Layout title="Wall of Fame - Tshikhuthula Secondary School" currentPage="wall-of-fame" noNavbarPadding={true} showMainNav={true}>
+<Layout title="Wall of Fame - Lotsha Primary School"
+    description="Celebrating Lotsha Primary School highest achievers - our Wall of Fame honours outstanding learners in academics, sports, and culture." currentPage="wall-of-fame" noNavbarPadding={true} showMainNav={true}>
     
     <!-- ── Header ── -->
     <header class="fame-header ws-reveal">
         <div class="fame-header-bg"></div>
         <div class="fame-header-content">
             <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-gold-500/30 bg-gold-500/10 backdrop-blur-md mb-6">
-                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-gold-400">Celebrating Excellence</span>
+                <span class="page-eyebrow">Celebrating Excellence</span>
             </div>
             <h1 class="text-5xl md:text-7xl font-heading text-white font-display drop-shadow-lg tracking-tight mb-6">
                 Wall of <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Fame</span>
             </h1>
             <p class="text-slate-300 max-w-2xl mx-auto font-lato text-lg leading-relaxed">
-                Honoring the extraordinary achievements of our learners. From academic brilliance to professional success, we celebrate those who embody the spirit of Tshikhuthula.
+                Honoring the extraordinary achievements of our learners. From academic brilliance to professional success, we celebrate those who embody the spirit of Lotsha.
             </p>
         </div>
     </header>
@@ -92,10 +94,10 @@ const notableAlumni = [
                 
                 <!-- Filter Buttons -->
                 <div class="flex flex-wrap justify-center gap-2 mb-8" id="achiever-filters">
-                    <button class="filter-btn active text-[10px] font-black uppercase tracking-widest px-6 py-3 transition-all duration-300 bg-primary-700 text-white shadow-lg border border-primary-600 rounded-full" data-filter="all">All</button>
-                    <button class="filter-btn text-[10px] font-black uppercase tracking-widest px-6 py-3 transition-all duration-300 bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-900 border border-slate-200 rounded-full" data-filter="Class of 2023">2023</button>
-                    <button class="filter-btn text-[10px] font-black uppercase tracking-widest px-6 py-3 transition-all duration-300 bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-900 border border-slate-200 rounded-full" data-filter="Class of 2022">2022</button>
-                    <button class="filter-btn text-[10px] font-black uppercase tracking-widest px-6 py-3 transition-all duration-300 bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-900 border border-slate-200 rounded-full" data-filter="Class of 2021">2021</button>
+                    <button class="filter-btn active text-[10px] font-black uppercase tracking-widest px-6 py-3 transition-all duration-300 bg-[#543717] text-white shadow-lg border border-[#543717] rounded-full" data-filter="all">All</button>
+                    <button class="filter-btn text-[10px] font-black uppercase tracking-widest px-6 py-3 transition-all duration-300 bg-white text-slate-500 hover:bg-[#cb8f24] hover:text-white border border-slate-200 hover:border-[#cb8f24] rounded-full" data-filter="Class of 2023">2023</button>
+                    <button class="filter-btn text-[10px] font-black uppercase tracking-widest px-6 py-3 transition-all duration-300 bg-white text-slate-500 hover:bg-[#cb8f24] hover:text-white border border-slate-200 hover:border-[#cb8f24] rounded-full" data-filter="Class of 2022">2022</button>
+                    <button class="filter-btn text-[10px] font-black uppercase tracking-widest px-6 py-3 transition-all duration-300 bg-white text-slate-500 hover:bg-[#cb8f24] hover:text-white border border-slate-200 hover:border-[#cb8f24] rounded-full" data-filter="Class of 2021">2021</button>
                 </div>
             </div>
 
@@ -104,7 +106,7 @@ const notableAlumni = [
                     <div class={`achiever-card ws-reveal delay-${i+1}`} data-year={achiever.year}>
                         <div class="achiever-badge">{achiever.badge}</div>
                         <div class="achiever-image-container">
-                            <img src={achiever.image} alt={achiever.name} class="achiever-image" />
+                            <img src={achiever.image} alt={achiever.name} class="achiever-image" loading="lazy" decoding="async" />
                         </div>
                         <div class="achiever-content">
                             <h3 class="achiever-name">{achiever.name}</h3>
@@ -126,26 +128,26 @@ const notableAlumni = [
         </div>
     </section>
 
-    <!-- ── Notable Alumni ── -->
+    <!-- ── Young Champions ── -->
     <section class="fame-section bg-white pb-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="ab-section-label items-end text-right mb-10 ws-reveal">
-                <span class="ab-label-eyebrow">Beyond Tshikhuthula</span>
-                <h2 class="ab-label-heading">Notable Alumni</h2>
+                <span class="ab-label-eyebrow">Beyond Expectations</span>
+                <h2 class="ab-label-heading">Young Champions</h2>
                 <div class="ab-label-rule ml-auto"></div>
             </div>
 
             <div class="fame-grid mt-12">
-                {notableAlumni.map((alumni, i) => (
-                    <div class={`achiever-card border-none ws-reveal delay-${i+1}`} style="border-top: 4px solid #800000;">
-                        <div class="achiever-badge bg-maroon-800">{alumni.role}</div>
+                {youngStars.map((star, i) => (
+                    <div class={`achiever-card ws-reveal delay-${i+1}`}>
+                        <div class="achiever-badge">{star.role}</div>
                         <div class="achiever-image-container" style="aspect-ratio: 4/3;">
-                            <img src={alumni.image} alt={alumni.name} class="achiever-image" style="object-position: center 20%;" />
+                            <img src={star.image} alt={star.name} class="achiever-image" style="object-position: center 20%;" loading="lazy" decoding="async" />
                         </div>
                         <div class="achiever-content">
-                            <h3 class="achiever-name">{alumni.name}</h3>
-                            <p class="achiever-class text-maroon-800">{alumni.year}</p>
-                            <p class="achiever-desc leading-relaxed">{alumni.bio}</p>
+                            <h3 class="achiever-name">{star.name}</h3>
+                            <p class="achiever-class">{star.year}</p>
+                            <p class="achiever-desc leading-relaxed">{star.bio}</p>
                         </div>
                     </div>
                 ))}
@@ -155,67 +157,41 @@ const notableAlumni = [
 
 </Layout>
 
+
+<ScrollReveal />
+
 <script>
-    function initReveal() {
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('reveal-active');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.ws-reveal').forEach(el => observer.observe(el));
-    }
-
-    document.addEventListener('DOMContentLoaded', initReveal);
-    document.addEventListener('astro:after-swap', initReveal);
-
-    // Filtering Logic for Top Achievers
-    function initFilters() {
+    document.addEventListener('DOMContentLoaded', () => {
         const filterBtns = document.querySelectorAll('.filter-btn');
-        const cards = document.querySelectorAll('.achiever-card[data-year]');
-
-        if (!filterBtns.length || !cards.length) return;
+        const achieverCards = document.querySelectorAll('#achievers-grid .achiever-card');
 
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                // Update active button styles
+                // Update active button styling
                 filterBtns.forEach(b => {
-                    b.classList.remove('active', 'bg-primary-700', 'text-white', 'shadow-lg', 'border-primary-600');
-                    b.classList.add('bg-slate-100', 'text-slate-500', 'border-slate-200');
+                    b.classList.remove('active', 'bg-[#543717]', 'text-white', 'shadow-lg', 'border-[#543717]');
+                    b.classList.add('bg-white', 'text-slate-500', 'border-slate-200');
                 });
                 
-                btn.classList.add('active', 'bg-primary-700', 'text-white', 'shadow-lg', 'border-primary-600');
-                btn.classList.remove('bg-slate-100', 'text-slate-500', 'border-slate-200');
+                btn.classList.add('active', 'bg-[#543717]', 'text-white', 'shadow-lg', 'border-[#543717]');
+                btn.classList.remove('bg-white', 'text-slate-500', 'border-slate-200');
 
                 // Filter cards
                 const filterValue = btn.getAttribute('data-filter');
                 
-                cards.forEach(card => {
-                    // Reset animation for re-triggering
-                    card.classList.remove('reveal-active');
-                    
+                achieverCards.forEach(card => {
                     if (filterValue === 'all' || card.getAttribute('data-year') === filterValue) {
-                        card.style.display = 'flex'; // Use flex as it matches the original CSS layout for these cards
-                        // Small timeout to allow display:block to apply before re-adding animation class
+                        (card as HTMLElement).style.display = 'block';
+                        // Re-trigger animation cleanly
                         setTimeout(() => {
                             card.classList.add('reveal-active');
                         }, 50);
                     } else {
-                        card.style.display = 'none';
+                        (card as HTMLElement).style.display = 'none';
+                        card.classList.remove('reveal-active');
                     }
                 });
             });
         });
-    }
-
-    document.addEventListener('DOMContentLoaded', initFilters);
-    document.addEventListener('astro:after-swap', initFilters);
+    });
 </script>

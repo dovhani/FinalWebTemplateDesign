@@ -98,19 +98,20 @@ const safetyInspections = [
 ];
 ---
 
-<Layout title="Ground Workers - Tshikhuthula Secondary School" currentPage="our-school" noNavbarPadding={true} showMainNav={true}>
+<Layout title="Ground Workers - Lotsha Primary School"
+    description="Meet the Lotsha Primary School grounds and maintenance team who keep our school environment safe and beautiful." currentPage="our-school" noNavbarPadding={true} showMainNav={true}>
     <SecondaryNav currentPage="our-school" />
     <!-- ── Header ── -->
     <header class="our-school-header ws-reveal">
         <div class="our-school-header-bg"></div>
         <div class="our-school-header-content">
             <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-gold-500/30 bg-gold-500/10 backdrop-blur-md mb-6">
-                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-gold-400">Facilities</span>
+                <span class="page-eyebrow">Facilities</span>
             </div>
             <h1 class="text-5xl md:text-7xl font-heading text-white font-display drop-shadow-lg tracking-tight mb-6">
                 Grounds & <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Maintenance</span>
             </h1>
-            <p class="text-slate-300 max-w-3xl mx-auto text-lg leading-relaxed font-lato">
+            <p class="page-tagline">
                 Our dedicated maintenance staff ensure a safe, clean, and well-maintained learning environment.
             </p>
         </div>
@@ -169,7 +170,7 @@ const safetyInspections = [
             
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {groundWorkers.map((worker, i) => (
-                    <div class="group bg-white border border-slate-100 p-8 shadow-sm hover:shadow-[0_20px_40px_-15px_rgba(128,0,0,0.1)] hover:border-maroon-800/20 transition-all animate-fade-in opacity-0 rounded-xl" style={`animation-delay: ${0.1 * i}s; animation-fill-mode: forwards;`}>
+                    <div class="group bg-white border border-slate-100 p-8 shadow-sm hover:shadow-[0_20px_40px_-15px_rgba(84,55,23,0.1)] hover:border-maroon-800/20 transition-all animate-fade-in opacity-0 rounded-xl" style={`animation-delay: ${0.1 * i}s; animation-fill-mode: forwards;`}>
                         <div class="flex items-center justify-between mb-4">
                             <div class="text-3xl bg-slate-50 w-12 h-12 flex items-center justify-center rounded-full group-hover:bg-maroon-50 group-hover:scale-110 transition-all">🔧</div>
                             <span class="px-3 py-1 bg-gold-50 text-gold-600 text-[9px] font-black uppercase tracking-widest border border-gold-100 rounded-full">{worker.experience}</span>

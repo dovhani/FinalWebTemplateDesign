@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ScrollReveal from '../components/ScrollReveal.astro';
 import SecondaryNav from '../components/SecondaryNav.astro';
 import '../styles/student-life.css';
 
@@ -25,7 +26,7 @@ const sports = [
     {
         title: "Volleyball",
         image: "/assets/images/student_life/volley.jpg",
-        desc: "A fast-growing sport at Tshikhuthula with professional courts and dedicated coaching staffs.",
+        desc: "A fast-growing sport at Lotsha with professional courts and dedicated coaching staffs.",
         tags: ["Boys & Girls", "Social & League"]
     }
 ];
@@ -73,20 +74,21 @@ const leadership = [
 ];
 ---
 
-<Layout title="Student Life - Tshikhuthula Secondary School" currentPage="student-life" noNavbarPadding={true} showMainNav={true}>
+<Layout title="Student Life - Lotsha Primary School"
+    description="Explore student life at Lotsha Primary School - sports, arts, clubs, cultural activities, and all the ways learners grow beyond the classroom." currentPage="student-life" noNavbarPadding={true} showMainNav={true}>
     
     <!-- ── Header ── -->
     <header class="life-header ws-reveal">
         <div class="life-header-bg"></div>
         <div class="life-header-content">
             <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-gold-500/30 bg-gold-500/10 backdrop-blur-md mb-6">
-                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-gold-400">Beyond the Classroom</span>
+                <span class="page-eyebrow">Beyond the Classroom</span>
             </div>
             <h1 class="text-5xl md:text-7xl font-heading text-white font-display drop-shadow-lg tracking-tight mb-6">
                 Student <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Life</span>
             </h1>
             <p class="life-header-tagline">
-                At Tshikhuthula Secondary School, education extends far beyond academics. We believe in holistic development, fostering talents in sports, arts, and leadership.
+                At Lotsha Primary School, education extends far beyond academics. We believe in holistic development, fostering talents in sports, arts, and leadership.
             </p>
         </div>
     </header>
@@ -103,7 +105,7 @@ const leadership = [
             <div class="activity-grid">
                 {sports.map((sport, i) => (
                     <div class={`activity-card ws-reveal delay-${(i % 4) + 1}`}>
-                        <img src={sport.image} alt={sport.title} />
+                        <img src={sport.image} alt={sport.title} loading="lazy" decoding="async" />
                         <div class="activity-overlay">
                             <h3 class="activity-title">{sport.title}</h3>
                             <p class="activity-desc">{sport.desc}</p>
@@ -129,7 +131,7 @@ const leadership = [
             <div class="activity-grid" style="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));">
                 {culture.map((item, i) => (
                     <div class={`activity-card ws-reveal delay-${(i % 4) + 1}`}>
-                        <img src={item.image} alt={item.title} />
+                        <img src={item.image} alt={item.title} loading="lazy" decoding="async" />
                         <div class="activity-overlay">
                             <h3 class="activity-title">{item.title}</h3>
                             <p class="activity-desc">{item.desc}</p>
@@ -155,7 +157,7 @@ const leadership = [
             <div class="activity-grid">
                 {leadership.map((club, i) => (
                     <div class={`activity-card ws-reveal delay-${(i % 4) + 1}`}>
-                        <img src={club.image} alt={club.title} />
+                        <img src={club.image} alt={club.title} loading="lazy" decoding="async" />
                         <div class="activity-overlay">
                             <h3 class="activity-title">{club.title}</h3>
                             <p class="activity-desc">{club.desc}</p>
@@ -168,7 +170,7 @@ const leadership = [
             </div>
             
             <!-- Call to action block -->
-            <div class="mt-20 p-10 bg-maroon-900 rounded-3xl text-center ws-reveal text-white shadow-2xl relative overflow-hidden">
+            <div class="mt-20 p-10 md:p-16 bg-maroon-900 rounded-[2rem] text-center ws-reveal text-white shadow-2xl relative overflow-hidden">
                 <div class="absolute inset-0 bg-gradient-to-r from-maroon-900 via-maroon-800 to-maroon-900"></div>
                 <div class="relative z-10">
                     <h3 class="text-3xl font-heading mb-4 text-gold-400">Join a Society Today</h3>
@@ -183,25 +185,6 @@ const leadership = [
 
 </Layout>
 
-<script>
-    function initReveal() {
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('reveal-active');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
+<ScrollReveal />
 
-        document.querySelectorAll('.ws-reveal').forEach(el => observer.observe(el));
-    }
-
-    document.addEventListener('DOMContentLoaded', initReveal);
-    document.addEventListener('astro:after-swap', initReveal);
-</script>

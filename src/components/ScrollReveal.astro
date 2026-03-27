@@ -1,0 +1,42 @@
+---
+// ScrollReveal.astro
+// Shared scroll-reveal component. Import this once per page instead of
+// copy-pasting the IntersectionObserver block. Astro will deduplicate it
+// into a single JS chunk in the final build, eliminating the duplicate
+// module warning from Lighthouse.
+
+export interface Props {
+    selector?: string;  // CSS selector for elements to reveal (default .ws-reveal)
+    threshold?: number;
+    rootMargin?: string;
+    activeClass?: string;
+}
+
+const {
+    selector = '.ws-reveal',
+    threshold = 0.1,
+    rootMargin = '0px 0px -50px 0px',
+    activeClass = 'reveal-active'
+} = Astro.props;
+---
+
+<script define:vars={{ selector, threshold, rootMargin, activeClass }}>
+    function initReveal() {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add(activeClass);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold, rootMargin }
+        );
+        document.querySelectorAll(selector).forEach(el => observer.observe(el));
+    }
+
+    // Run on first load and after Astro view transitions
+    document.addEventListener('DOMContentLoaded', initReveal);
+    document.addEventListener('astro:after-swap', initReveal);
+</script>

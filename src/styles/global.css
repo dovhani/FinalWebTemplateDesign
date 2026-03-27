@@ -1,13 +1,24 @@
 @import "tailwindcss";
 
 :root {
-    --font-heading: 'Outfit', sans-serif;
-    --font-display: 'Outfit', sans-serif;
-    --font-body: 'Outfit', sans-serif;
-    --font-lato: 'Outfit', sans-serif;
-    --font-bodoni: 'Outfit', sans-serif;
-    --font-cormorant: 'Outfit', sans-serif;
+    --font-heading: 'Quicksand', sans-serif;
+    --font-display: 'Quicksand', sans-serif;
+    --font-body: 'Quicksand', sans-serif;
+    --font-lato: 'Quicksand', sans-serif;
+    --font-bodoni: 'Quicksand', sans-serif;
+    --font-cormorant: 'Quicksand', sans-serif;
     --nav-height: 120px;
+
+    /* Theme Brand Variables - Standardized Brown */
+    --brand-primary: var(--color-maroon-800);
+    --brand-primary-hover: var(--color-maroon-900);
+    --brand-light: var(--color-maroon-50);
+    --brand-border: var(--color-maroon-200);
+    --brand-rgb: 84, 55, 23;
+
+    /* Standardized padding for all buttons */
+    --btn-padding-desktop: 0.875rem 2rem;
+    --btn-padding-mobile: 0.75rem 1.5rem;
 }
 
 /* Ensure border-box for all elements */
@@ -17,13 +28,61 @@
     box-sizing: border-box;
 }
 
+/* ── Global Typography Normalizations ── */
+.page-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.45rem 1.25rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(203, 143, 36, 0.35);
+    background: rgba(203, 143, 36, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #cb8f24;
+    width: max-content;
+    margin-bottom: 1.5rem;
+}
+
+.page-tagline {
+    font-family: var(--font-body);
+    font-size: 16px;
+    color: #475569;
+    line-height: 1.8;
+    max-width: 48rem;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.page-section {
+    position: relative;
+    z-index: 10;
+    padding: 5rem 1rem;
+}
+
+@media (min-width: 768px) {
+    .page-section {
+        padding: 8rem 2rem;
+    }
+}
+
 @theme {
-    --font-heading: 'Outfit', sans-serif;
-    --font-display: 'Outfit', sans-serif;
-    --font-body: 'Outfit', sans-serif;
-    --font-lato: 'Outfit', sans-serif;
-    --font-bodoni: 'Outfit', sans-serif;
-    --font-cormorant: 'Outfit', sans-serif;
+    --font-heading: 'Quicksand', sans-serif;
+    --font-display: 'Quicksand', sans-serif;
+    --font-body: 'Quicksand', sans-serif;
+    --font-lato: 'Quicksand', sans-serif;
+    --font-bodoni: 'Quicksand', sans-serif;
+    --font-cormorant: 'Quicksand', sans-serif;
+
+    /* Tailwind Brand Tokens */
+    --color-brand-primary: var(--brand-primary);
+    --color-brand-primary-hover: var(--brand-primary-hover);
+    --color-brand-light: var(--brand-light);
+    --color-brand-border: var(--brand-border);
 
     --color-primary-50: #eff6ff;
     --color-primary-100: #dbeafe;
@@ -47,22 +106,42 @@
     --color-gold-800: #92400e;
     --color-gold-900: #78350f;
 
-    --color-maroon-50: #fef2f2;
-    --color-maroon-100: #fee2e2;
-    --color-maroon-200: #fecaca;
-    --color-maroon-300: #fca5a5;
-    --color-maroon-400: #f87171;
-    --color-maroon-500: #ef4444;
-    --color-maroon-600: #dc2626;
-    --color-maroon-700: #a5180f;
-    --color-maroon-800: #961107;
-    --color-maroon-900: #7b0a02;
+    --color-maroon-50: #f9f5f0;
+    --color-maroon-100: #f0e6d8;
+    --color-maroon-200: #dcc8ac;
+    --color-maroon-300: #c4a47c;
+    --color-maroon-400: #a87f50;
+    --color-maroon-500: #7a5a2e;
+    --color-maroon-600: #6b4d24;
+    --color-maroon-700: #5e3f1a;
+    --color-maroon-800: #543717;
+    --color-maroon-900: #3a2610;
 }
 
 html {
     font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
     scroll-behavior: smooth;
     overflow-x: hidden;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Accessibility: Mobile Touch Targets */
+@media (max-width: 768px) {
+    button, 
+    a[role="button"],
+    input[type="submit"],
+    a[class*="btn"],
+    .subnav-link,
+    .page-btn-primary {
+        min-height: 48px; /* Lighthouse recommends 48px minimum */
+        min-width: 48px;
+    }
 }
 
 /* Main content wrapper - provides spacing for fixed navbar */
@@ -76,7 +155,7 @@ body[data-page="home"] .main-content-wrapper {
     margin-top: 0;
 }
 
-.main-content-wrapper.no-navbar-padding {
+.no-navbar-padding .main-content-wrapper {
     margin-top: 0;
 }
 
@@ -276,7 +355,7 @@ body {
     font-weight: 900;
     letter-spacing: 0.35em;
     text-transform: uppercase;
-    color: #961107;
+    color: #543717;
 }
 
 .page-section-heading h2 {
@@ -315,7 +394,7 @@ body {
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #961107, #cb8f24);
+    background: linear-gradient(90deg, #543717, #cb8f24);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
@@ -330,32 +409,23 @@ body {
     transform: scaleX(1);
 }
 
-/* ── Dark section (navy, accent) ── */
+/* ── Light section (formerly dark section) ── */
 .page-dark-section {
-    background: #0f172a;
+    background: #fff;
     border-radius: 1.25rem;
     padding: 3rem 2.5rem;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-}
-
-.page-dark-section::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 20% 50%, rgba(150, 17, 7, 0.18) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 50%, rgba(203, 143, 36, 0.1) 0%, transparent 60%);
-    pointer-events: none;
-    border-radius: inherit;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e2e8f0;
 }
 
 .page-dark-section .page-section-heading h2 {
-    color: #f8fafc;
+    color: var(--brand-primary);
 }
 
 .page-dark-section .page-section-label {
-    color: #fbbf24;
+    color: #64748b;
 }
 
 /* ── Maroon CTA button ── */
@@ -364,7 +434,7 @@ body {
     align-items: center;
     gap: 0.5rem;
     padding: 0.875rem 2rem;
-    background: linear-gradient(135deg, #961107 0%, #7b0a02 100%);
+    background: linear-gradient(135deg, #543717 0%, #3a2610 100%);
     color: #fff;
     border: none;
     border-radius: 0.75rem;
@@ -375,14 +445,35 @@ body {
     cursor: pointer;
     text-decoration: none;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 8px 24px rgba(150, 17, 7, 0.3);
+    box-shadow: 0 8px 24px rgba(84, 55, 23, 0.3);
 }
 
 .page-btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 14px 32px rgba(150, 17, 7, 0.45);
-    background: linear-gradient(135deg, #a5180f 0%, #961107 100%);
+    box-shadow: 0 14px 32px rgba(84, 55, 23, 0.45);
+    background: linear-gradient(135deg, #5e3f1a 0%, #543717 100%);
 }
+
+/* ── Standard Reveal Animations (Site-Wide) ── */
+.ws-reveal {
+  opacity: 0;
+  transform: translateY(30px) skewY(1deg);
+  transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, opacity;
+}
+
+.ws-reveal.reveal-active {
+  opacity: 1;
+  transform: translateY(0) skewY(0deg);
+}
+
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+.delay-5 { transition-delay: 0.5s; }
+.delay-6 { transition-delay: 0.6s; }
 
 /* ── Shimmer header top line (enrolment style) ── */
 .header-shimmer-line::before {

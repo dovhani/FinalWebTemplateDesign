@@ -38,15 +38,25 @@
 }
 
 .ab-label-eyebrow {
-  font-family: 'Lato', sans-serif;
-  font-size: 0.70rem;
-  font-weight: 800;
-  letter-spacing: 0.38em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 1.25rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(203, 143, 36, 0.35);
+  background: rgba(203, 143, 36, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: 0.6rem;
+  font-weight: 900;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
+  color: #cb8f24;
+  width: max-content;
 }
 
 .ab-label-heading {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Quicksand', sans-serif;
   font-size: clamp(2.8rem, 6vw, 4.5rem);
   font-weight: 800;
   color: #0f172a;
@@ -58,7 +68,7 @@
 .ab-label-rule {
   width: 3.5rem;
   height: 2px;
-  background: linear-gradient(90deg, #961107, #cb8f24);
+  background: linear-gradient(90deg, #543717, #cb8f24);
   margin-top: 0.5rem;
   border-radius: 2px;
 }
@@ -76,7 +86,7 @@
 .ab-header-bg {
   position: absolute;
   inset: 0;
-  background-image: url("/assets/images/backgrounds/heritagebg.jpg");
+  background-image: url("https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_auto,w_1440,c_fill/v1773823666/heritagebg_ljjz0b.avif");
   background-size: cover;
   background-position: center;
   z-index: 1;
@@ -98,7 +108,7 @@
 }
 
 .ab-mission-banner {
-  background: linear-gradient(135deg, #7b0a02 0%, #961107 50%, #a5180f 100%);
+  background: linear-gradient(135deg, #3a2610 0%, #543717 50%, #5e3f1a 100%);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -211,7 +221,7 @@
   width: 0.75rem;
   height: 0.75rem;
   background: #fff;
-  border: 2px solid #961107;
+  border: 2px solid #543717;
   border-radius: 999px;
   transform: translateX(-50%);
   z-index: 5;
@@ -221,7 +231,7 @@
   font-family: 'Bodoni Moda', serif;
   font-size: 2.8rem;
   font-weight: 200;
-  color: #961107;
+  color: #543717;
   opacity: 0.15;
   line-height: 0.8;
   margin-bottom: 0.5rem;
@@ -279,6 +289,9 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
+  background: #ffffff;
+  padding: 2rem 2rem;  /* matches lg:px-8 */
+  border-radius: 1.5rem;
 }
 
 @media (max-width: 1024px) {
@@ -287,6 +300,10 @@
   .ab-facility-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .ab-facility-grid {
+    padding: 1.5rem 1.5rem; /* sm:px-6 */
+  }
 }
 
 @media (max-width: 640px) {
@@ -294,6 +311,11 @@
   .ab-grid,
   .ab-facility-grid {
     grid-template-columns: 1fr;
+  }
+
+  .ab-facility-grid {
+    grid-template-columns: 1fr;
+    padding: 1rem 1rem; /* px-4 */
   }
 }
 
@@ -310,14 +332,14 @@
 
 .ab-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 56px rgba(153, 27, 27, 0.08);
+  box-shadow: 0 20px 56px rgba(var(--brand-rgb), 0.08);
   border-color: #fee2e2;
 }
 
 .ab-card-icon {
   width: 2.5rem;
   height: 2.5rem;
-  color: #961107;
+  color: #543717;
   margin-bottom: 2rem;
   transition: transform 0.4s ease;
 }
@@ -353,7 +375,7 @@
 .ab-card-rule {
   width: 2rem;
   height: 2px;
-  background: #961107;
+  background: #543717;
   margin-top: 1.5rem;
   transition: width 0.4s ease;
 }
@@ -382,7 +404,7 @@
   width: 3.5rem;
   height: 3.5rem;
   flex-shrink: 0;
-  color: #961107;
+  color: #543717;
   background: #fff7ed;
   display: flex;
   align-items: center;
@@ -393,7 +415,7 @@
 }
 
 .ab-facility-card:hover .ab-facility-icon-side {
-  background: #961107;
+  background: #543717;
   color: #fff;
   transform: rotate(-10deg);
 }

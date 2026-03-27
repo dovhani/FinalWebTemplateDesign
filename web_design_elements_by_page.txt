@@ -1,0 +1,572 @@
+================================================================================
+  LOTSHA WEB TEMPLATE — WEB DESIGN ELEMENTS ORGANISED BY PAGE
+  Generated: 2026-03-24
+  Format: Plain Text Technical Reference (.txt)
+================================================================================
+
+NOTATION KEY
+  [SHARED]    = Component shared across all pages (from Layout.astro)
+  [SECTION]   = A distinct section / block within the page
+  [SUB]       = A sub-component nested inside the parent section/component
+  [PATTERN]   = A repeating UI pattern (card, row, item, etc.)
+  [INTERACTIVE] = Requires user interaction (click, form, toggle, etc.)
+
+================================================================================
+  PART 1 — SHARED LAYOUT (Present on EVERY page)
+================================================================================
+
+  Source: src/layouts/Layout.astro
+
+  Every page on this site is wrapped inside Layout.astro, which always
+  renders the following components before and after the page-specific content:
+
+  [SHARED] 1.  Navigation (Primary Nav Bar)
+               Source: src/components/Navigation.astro
+               Purpose: Site-wide top navigation with logo, links, and a
+                        responsive hamburger menu toggle on mobile.
+               [SUB]   1a. School Logo / Brand Mark
+               [SUB]   1b. Desktop Navigation Link List
+               [SUB]   1c. Mobile Hamburger Menu Button
+               [SUB]   1d. Dropdown Sub-menus (for pages with children)
+
+  [SHARED] 2.  SecondaryNav (Secondary Navigation Bar)
+               Source: src/components/SecondaryNav.astro
+               Purpose: Secondary bar rendered on interior pages, providing
+                        section-level wayfinding (e.g., Our School group).
+               [SUB]   2a. Section Link Items
+
+  [SHARED] 3.  Footer
+               Source: src/components/Footer.astro
+               Purpose: Closing section on every page. Contains supplementary
+                        links, copyright, contact details, and social icons.
+               [SUB]   3a. School Logo / Contact Info Block
+               [SUB]   3b. Quick Links Column
+               [SUB]   3c. Social Media Icon Links
+               [SUB]   3d. Copyright Bar
+
+  [SHARED] 4.  Back-to-Top Button
+               Source: Inline in Layout.astro
+               Purpose: Fixed floating button (bottom-right). Appears after
+                        500px of scroll; smoothly returns the user to the top.
+
+  [SHARED] 5.  Page Fade-In Animation
+               Source: Inline CSS in Layout.astro
+               Purpose: A 0.5s fade + slide-up animation applied to the <main>
+                        element on every page load, giving a polished feel.
+
+  [SHARED] 6.  JSON-LD Structured Data (Schema.org)
+               Source: Inline in Layout.astro
+               Purpose: SEO / search engine machine-readable school metadata
+                        (type, name, address, phone, logo, founding date).
+
+================================================================================
+  PART 2 — HOME PAGE  (src/pages/index.astro)
+================================================================================
+
+  Route: /
+  Layout: Layout.astro (includes Navigation, Footer, Back-to-Top)
+  Extra CSS: src/styles/home.css
+
+  Components used on this page:
+  -----------------------------------------------------------------------
+
+  1.  Hero Section
+      Source: src/components/home/Hero.astro
+      Purpose: Full-screen above-the-fold opener. Creates the critical first
+               impression with imagery, headline, logo, and stats.
+
+      [SUB]   1a. Hero Image Slider
+                  An auto-advancing slideshow (12s interval) of background
+                  photos. Slides are lazy-loaded after first display for
+                  performance. Controlled by JS in index.astro.
+              [PATTERN] Slide Item (image + overlay)
+
+      [SUB]   1b. Hero Brand / Logo Block
+                  School crest image + "LOTSHA" text mark styled in gold.
+
+      [SUB]   1c. Hero Headline & Tagline
+                  Primary H1 text and a supporting description paragraph.
+
+      [SUB]   1d. Hero CTA (Call-To-Action) Buttons
+                  Two buttons: "Enrol Now" and "Our School", driving
+                  traffic to key conversion pages.
+
+      [SUB]   1e. Stats Bar
+                  A dark glassmorphism bar anchored at the bottom of the
+                  hero displaying 4 animated school statistics.
+              [PATTERN] Stat Card (icon + animated number + label)
+                        Numbers count up from 0 using IntersectionObserver
+                        and requestAnimationFrame (easeOutExpo easing).
+
+  -----------------------------------------------------------------------
+
+  2.  Welcome Section
+      Source: src/components/home/Welcome.astro
+      Purpose: Mission-driven intro block that follows the Hero. Humanises
+               the school and transitions from impact to context.
+
+      [SUB]   2a. Section Heading / Title Block
+                  Eyebrow label, H2 heading, decorative rule.
+      [SUB]   2b. Welcome Body Text
+                  Narrative paragraphs describing the school.
+      [SUB]   2c. Feature Pillar Items
+                  3 icon + heading + description rows (Mission, Vision, Values).
+      [SUB]   2d. Scroll Reveal Animation (.ws-reveal)
+                  Elements stagger-fade-in as they enter the viewport.
+
+  -----------------------------------------------------------------------
+
+  3.  Highlights Section
+      Source: src/components/home/Highlights.astro
+      Purpose: Grid of featured achievements, programmes, or announcements.
+               Guides users deeper into important site content.
+
+      [SUB]   3a. Section Heading / Title Block
+      [PATTERN] Highlight Card (icon + title + description + link arrow)
+                Cards use .sh-reveal stagger animation on scroll entry.
+
+  -----------------------------------------------------------------------
+
+  4.  News & Events Section
+      Source: src/components/home/NewsEvents.astro
+      Purpose: Feed of recent news articles and upcoming school events.
+               Keeps the homepage dynamic and encourages return visits.
+
+      [SUB]   4a. Section Heading / Title Block
+      [PATTERN] News Article Card (date badge + category tag + title + excerpt)
+      [PATTERN] Upcoming Event Row (date + event name + location)
+
+  -----------------------------------------------------------------------
+
+  Additional Interactive Scripts (inline in index.astro):
+  - Hero Slider Controller (initHeroSlider)
+  - Stat Counter Animation (initStats)
+  - Scroll Reveal Observers (initWelcomeReveal) for .ws-reveal and .sh-reveal
+  - Stats Bar Height Observer (ResizeObserver for CSS variable)
+
+================================================================================
+  PART 3 — ABOUT US PAGE  (src/pages/about.astro)
+================================================================================
+
+  Route: /about
+  Layout: Layout.astro (noNavbarPadding = true)
+  Components imported: ScrollReveal
+
+  Sections on this page:
+  -----------------------------------------------------------------------
+
+  1.  Page Header (Hero Banner)
+      Purpose: Full-width dark header with gradient text headline ("Our Story
+               & Spirit"), eyebrow label, and tagline paragraph.
+      [SUB]   1a. Eyebrow Badge ("Our Heritage")
+      [SUB]   1b. H1 Heading with Gradient Accent
+      [SUB]   1c. Intro Tagline Paragraph
+      [INTERACTIVE] Scroll Reveal (.ws-reveal)
+
+  2.  Mission & Vision Banner
+      Purpose: Side-by-side panel presenting the school's Mission and Vision
+               statements with icon labels and a vertical divider.
+      [SUB]   2a. Mission Item (icon + label + text)
+      [SUB]   2b. Vertical Divider
+      [SUB]   2c. Vision Item (icon + label + text)
+
+  3.  History Timeline Section
+      Purpose: Alternating left-right timeline showing 6 key milestones from
+               1967 to 2024. Communicates institutional legacy.
+      [SUB]   3a. Section Heading Block (eyebrow, H2, rule)
+      [PATTERN] Timeline Item (year badge + title + description + dot marker)
+                Items alternate left/right on desktop, stack on mobile.
+
+  4.  Core Values Section (Cards Grid)
+      Purpose: 3-card grid presenting the school's core pillars:
+               Academic Rigor, Integrity, Mutual Respect.
+      [SUB]   4a. Section Heading Block
+      [PATTERN] Value Card (SVG icon + title + description + bottom rule)
+                Staggered Scroll Reveal on card entry.
+
+  5.  Facilities Section
+      Purpose: 4-item horizontal facility listing for STEM Lab, IT Hub,
+               Media Centre, and Sports Arena.
+      [SUB]   5a. Section Heading Block (right-aligned)
+      [PATTERN] Facility Card (icon side-panel + title + description)
+
+  6.  School Fact Sheet
+      Purpose: 3-column reference table with official school data:
+               School Info, Classification, and Location.
+      [SUB]   6a. Section Heading Block
+      [PATTERN] Fact Sheet Card (icon header + labeled data rows)
+                - Card 1: NatEmis, Quintile, Exam Dept, Specialisation, Address
+                - Card 2: Phase, Sector
+                - Card 3: Suburb, City, Province
+
+  Utility Components:
+  - ScrollReveal (src/components/ScrollReveal.astro)
+    Manages all .ws-reveal fade-in entrance animations site-wide.
+
+================================================================================
+  PART 4 — OUR SCHOOL PAGE  (src/pages/our-school.astro)
+================================================================================
+
+  Route: /our-school
+  Layout: Layout.astro (noNavbarPadding = true)
+  Components imported: SecondaryNav, SubNav
+
+  Sections on this page:
+  -----------------------------------------------------------------------
+
+  1.  Secondary Navigation Bar
+      Source: src/components/SecondaryNav.astro
+      Purpose: Provides top-level section navigation (Our School group).
+
+  2.  Page Header (Hero Banner)
+      Purpose: Dark hero header with background image, eyebrow badge,
+               H1 heading, and tagline.
+
+  3.  SubNav (Section Sub-Navigation)
+      Source: src/components/SubNav.astro
+      Purpose: Horizontal pill-link bar linking to all sub-pages:
+               Staff | SGB | Cooks | Maintenance | Security
+
+  4.  Stats Bar
+      Purpose: 4-column dark glassmorphism bar showing school statistics:
+               Teaching Staff / Support Staff / Years of Service /
+               Student-Teacher Ratio. Mirrors homepage hero stats bar.
+      [PATTERN] Stat Card (icon + number + label + vertical divider)
+
+  5.  Welcome (About) Section
+      Purpose: Two-column layout — left text column with mission/vision
+               pillars, right side with a school campus image.
+      [SUB]   5a. Text Column (eyebrow, heading, body text)
+      [SUB]   5b. Mission Pillar (icon + title + description)
+      [SUB]   5c. Vision Pillar (icon + title + description)
+      [SUB]   5d. Image Frame with hover zoom + gradient overlay
+
+  6.  Departments Section
+      Purpose: 2x2 card grid presenting the 4 main school departments.
+      [PATTERN] Department Card
+                [SUB] Top Accent Bar (animates to full width on hover)
+                [SUB] Emoji Icon
+                [SUB] Title + Description
+                [SUB] Meta Row (Head of Dept + Staff count)
+
+  7.  Personnel Directory Section
+      Purpose: 5-cell personnel grid linking to each staff sub-page.
+      [PATTERN] Personnel Card (emoji icon + title + description + hover arrow)
+                Links to: Teaching Staff / SGB / Food Handlers /
+                          Ground Workers / Security Team
+
+================================================================================
+  PART 5 — OUR SCHOOL SUB-PAGES
+================================================================================
+
+  All sub-pages share this structure:
+    - Layout.astro wrapper
+    - SecondaryNav component
+    - Page Header (Hero Banner with background image)
+    - SubNav component (linking all 5 sub-pages with active state)
+    - A grid of profile cards unique to each sub-page
+    - Footer
+
+  -----------------------------------------------------------------------
+  5A. STAFF DIRECTORY  (src/pages/our-school/staff.astro)
+  Route: /our-school/staff
+  -----------------------------------------------------------------------
+
+  1.  SecondaryNav
+  2.  Page Header — "Teaching Staff"
+  3.  SubNav (active: Staff Directory)
+  4.  Staff Cards Grid (3 columns on desktop, 1 on mobile)
+      [PATTERN] Staff Profile Card
+                [SUB] a. Overlapping Avatar (image floats above card top)
+                [SUB] b. Job Title Badge (gold, uppercase)
+                [SUB] c. Staff Name (H1)
+                [SUB] d. Position Label
+                [SUB] e. "Profile" CTA Button (triggers modal)
+  5.  Staff Detail Modal [INTERACTIVE]
+      Triggered by clicking any staff card. Full-screen overlay.
+      [SUB]   5a. Backdrop (blurred overlay, click to close)
+      [SUB]   5b. Modal Container (65vw, slide-in animation)
+      [SUB]   5c. Left Panel — Full staff image (object-fit: cover)
+      [SUB]   5d. Right Panel — Staff details:
+                  - Title badge
+                  - Name (H3, large)
+                  - Position label
+                  - Academic Background block
+                  - Contact Grid (Email + Phone + Office Location)
+                  - Watermark ("Lotsha" text, decorative)
+      [SUB]   5e. Close Button (X, top-right corner)
+                  Also closes on Escape key or backdrop click.
+
+  -----------------------------------------------------------------------
+  5B. SGB PAGE  (src/pages/our-school/sgb.astro)
+  Route: /our-school/sgb
+  -----------------------------------------------------------------------
+
+  Same structure as Staff Directory (Header + SubNav + Profile Cards Grid).
+  Grid displays School Governing Body members.
+  [PATTERN] SGB Member Profile Card (avatar + name + role + Profile button)
+  [INTERACTIVE] SGB Detail Modal (same structure as Staff modal)
+
+  -----------------------------------------------------------------------
+  5C. SECURITY PAGE  (src/pages/our-school/security.astro)
+  Route: /our-school/security
+  -----------------------------------------------------------------------
+
+  Same structure as Staff Directory.
+  [PATTERN] Security Staff Profile Card
+  [INTERACTIVE] Security Staff Modal
+
+  -----------------------------------------------------------------------
+  5D. GROUND WORKERS PAGE  (src/pages/our-school/ground-workers.astro)
+  Route: /our-school/ground-workers
+  -----------------------------------------------------------------------
+
+  Same structure as Staff Directory.
+  [PATTERN] Ground Worker Profile Card
+  [INTERACTIVE] Ground Worker Modal
+
+  -----------------------------------------------------------------------
+  5E. FOOD HANDLERS PAGE  (src/pages/our-school/food-handlers.astro)
+  Route: /our-school/food-handlers
+  -----------------------------------------------------------------------
+
+  Same structure as Staff Directory.
+  [PATTERN] Food Handler Profile Card
+  [INTERACTIVE] Food Handler Modal
+
+================================================================================
+  PART 6 — CONTACT PAGE  (src/pages/contact.astro)
+================================================================================
+
+  Route: /contact
+  Layout: Layout.astro (noNavbarPadding = true)
+  Components imported: ScrollReveal, SecondaryNav
+
+  Sections on this page:
+  -----------------------------------------------------------------------
+
+  1.  SecondaryNav
+  2.  Page Header — "Contact Our School"
+      [SUB]   Eyebrow badge ("Get in Touch"), H1, Tagline
+
+  3.  Contact Info Cards Grid
+      Purpose: 4-card row showing key contact details at a glance.
+      [PATTERN] Contact Info Card (icon + title + detail line 1 + detail line 2)
+                - Phone Card
+                - Email Card
+                - Address Card
+                - Office Hours Card
+
+  4.  Departmental Contacts Section
+      Purpose: Directory grid of 6 departments with head contact details.
+      [PATTERN] Department Contact Card
+                [SUB] Icon
+                [SUB] Department Name (H3)
+                [SUB] Head of Department name
+                [SUB] Role label
+                [SUB] Email address
+                [SUB] Extension number badge
+
+  5.  Contact Form Section [INTERACTIVE]
+      Purpose: Two-column layout for sending enquiries.
+      [SUB]   5a. Left Info Panel (heading + info items: phone, email, address)
+      [SUB]   5b. Right Form Card
+                  [INTERACTIVE] Tab Bar (General | Admissions | Feedback | Complaint)
+                  [INTERACTIVE] Contact Form Fields:
+                                - Full Name input
+                                - Email Address input
+                                - Subject input
+                                - Message textarea
+                                - Submit Button ("Send Message")
+
+  6.  Emergency Contacts Section
+      Purpose: Dark full-width banner listing 4 emergency contact types.
+      [PATTERN] Emergency Card (icon + type label + two contact rows)
+                - Medical (Ext. 911 / Ambulance 10177)
+                - Security (Ext. 301 / Police 10111)
+                - Fire (10177 / Warden Ext. 302)
+                - Crisis (Childline / Lifeline)
+
+  Utility Component:
+  - ScrollReveal (manages .ws-reveal entrance animations)
+
+================================================================================
+  PART 7 — ENROLMENT PAGE  (src/pages/enrolment.astro)
+================================================================================
+
+  Route: /enrolment
+  Layout: Layout.astro (noNavbarPadding = true)
+  Components imported: SecondaryNav
+
+  Sections on this page:
+  -----------------------------------------------------------------------
+
+  1.  SecondaryNav
+  2.  Page Header — "Admissions & Enrolment"
+      [SUB]   Badge ("Join Our Family"), H1 with gradient accent, Long tagline
+
+  3.  Enrolment Process Section
+      Purpose: Step-by-step numbered guide to the application process.
+      [PATTERN] Process Step Card (step number badge + emoji icon + title + description)
+                6 Steps: Application → Assessment → Interview →
+                         Acceptance → Registration → Orientation
+
+  4.  Admission Requirements Section
+      Purpose: Grid of 8 required documents for enrolment.
+      [PATTERN] Requirement Card (emoji icon circle + title + description)
+                e.g. Birth Certificate, ID, Proof of Residence, etc.
+
+  5.  Online Application Form [INTERACTIVE]
+      Purpose: Two-section form to begin a learner's enrolment.
+      [SUB]   5a. Section 01 — Student Details
+                  Fields: Full Name, Date of Birth, Grade (dropdown), Current School
+      [SUB]   5b. Section 02 — Parent/Guardian Details
+                  Fields: Full Name, Relationship (dropdown), Email, Phone
+      [SUB]   5c. Submit Button ("Submit Application")
+      [SUB]   5d. Privacy Note ("Secured Submission · Privacy Protected")
+
+  6.  FAQ Section [INTERACTIVE]
+      Purpose: Accordion list of 7 frequently asked questions.
+      [PATTERN] FAQ Accordion Item
+                [SUB] Toggle Button (question text + +/- chevron)
+                [SUB] Answer Panel (expands/collapses with max-height animation)
+
+================================================================================
+  PART 8 — CALENDAR & EVENTS PAGE  (src/pages/calendar.astro)
+================================================================================
+
+  Route: /calendar
+  Layout: Layout.astro (noNavbarPadding = true)
+  Components imported: SecondaryNav
+  Data sources: src/data/events.json, src/data/importantDates.json
+
+  Sections on this page:
+  -----------------------------------------------------------------------
+
+  1.  SecondaryNav
+  2.  Page Header — "School Calendar & Events"
+      [SUB]   Badge ("Schedule"), H1, Tagline
+      [SUB]   Live Stats Bar (Total Events / Upcoming count / Important Dates count)
+
+  3.  Interactive Calendar [INTERACTIVE]
+      Purpose: JavaScript-rendered monthly calendar grid. Highlights
+               today's date and dots event dates by colour type.
+      [SUB]   3a. Calendar Card Header (month/year title + nav buttons)
+                  - Prev Month button
+                  - Go To Today button
+                  - Next Month button
+      [SUB]   3b. Weekday Header Row (Sun–Sat)
+      [SUB]   3c. Calendar Day Grid (JS-rendered)
+              [PATTERN] Day Cell (number + event dot indicators)
+                        Dot colours: maroon=School Event, green=Holiday,
+                                     gold=Exam, dark=Parent Meeting
+      [SUB]   3d. Legend Bar (4 colour-coded event type labels)
+
+  4.  Upcoming Events Feed
+      Purpose: Shows the next 6 upcoming events from events.json.
+      [PATTERN] Event Card
+                [SUB] Date Badge (coloured block: day / month / year)
+                [SUB] Category Tag + Event Type Label
+                [SUB] Event Title (H3)
+                [SUB] Detail Row (time icon + location icon)
+                [SUB] Description Paragraph
+
+================================================================================
+  PART 9 — OTHER INTERIOR PAGES
+================================================================================
+
+  The following pages follow the same structural pattern:
+  Layout.astro → SecondaryNav → Page Header → Content Sections → Footer
+
+  -----------------------------------------------------------------------
+  9A. ABOUT PAGE       (see Part 3 above for full breakdown)
+  9B. CURRICULUM PAGE  (src/pages/curriculum.astro)
+  -----------------------------------------------------------------------
+  Route: /curriculum
+  Sections: Page Header → Subject/Stream Cards Grid → Academic Info Blocks
+
+  -----------------------------------------------------------------------
+  9C. STUDENT LIFE PAGE  (src/pages/student-life.astro)
+  -----------------------------------------------------------------------
+  Route: /student-life
+  Sections: Page Header → Activities Grid → Photo Block → CTA Banner
+
+  -----------------------------------------------------------------------
+  9D. GALLERY PAGE  (src/pages/gallery.astro)
+  -----------------------------------------------------------------------
+  Route: /gallery
+  Sections: Page Header → Filterable Photo Gallery Grid
+      [PATTERN] Gallery Image Card (thumbnail + overlay caption on hover)
+
+  -----------------------------------------------------------------------
+  9E. MEMORIES PAGE  (src/pages/memories.astro)
+  -----------------------------------------------------------------------
+  Route: /memories
+  Sections: Page Header → Archive Grid of event memories and historic photos
+      [PATTERN] Memory Card (year badge + image + title + description)
+
+  -----------------------------------------------------------------------
+  9F. WALL OF FAME PAGE  (src/pages/wall-of-fame.astro)
+  -----------------------------------------------------------------------
+  Route: /wall-of-fame
+  Sections: Page Header → Honourees Grid
+      [PATTERN] Fame Card (portrait + name + achievement + year)
+
+  -----------------------------------------------------------------------
+  9G. POLICIES PAGE  (src/pages/policies.astro)
+  -----------------------------------------------------------------------
+  Route: /policies
+  Sections: Page Header → Policy Document List
+      [PATTERN] Policy Row (icon + policy name + download/view link)
+
+================================================================================
+  PART 10 — GLOBAL UI PATTERNS (Reused Across Pages)
+================================================================================
+
+  The following UI building blocks appear on multiple pages:
+
+  GP-1.  Section Heading / Title Block
+         Used on every content section.
+         Built from: eyebrow label + H2 + decorative rule line.
+
+  GP-2.  Page Hero Header
+         Full-width dark banner with background image.
+         Built from: background image div + eyebrow badge + H1 + tagline.
+
+  GP-3.  Info / Feature Card
+         Generic boxed container (shadow, border, rounded corners).
+         Variants: value card, facility card, department card, contact card.
+
+  GP-4.  Profile Card (Staff / SGB / Security / Ground / Food)
+         Overlapping avatar + role badge + name + CTA button.
+         Opens a Detail Modal on click.
+
+  GP-5.  Detail Modal Overlay
+         Fixed, full-screen, backdrop-blurred overlay.
+         Built from: backdrop + content panel + image panel + info panel.
+         Closes via: backdrop click OR close button OR Escape key.
+
+  GP-6.  Scroll Reveal Animation (.ws-reveal / .sh-reveal)
+         Applied via: IntersectionObserver in index.astro + ScrollReveal.astro
+         Effect: opacity 0 → 1 + translateY 20px → 0, staggered by index.
+
+  GP-7.  Stats Bar
+         Dark glassmorphism grid displaying key school numbers.
+         Used on: Hero (home), Our School page.
+
+  GP-8.  CTA Button
+         Distinct styled button (maroon/gold) driving user action.
+         Variants: "Enrol Now", "Contact Us", "View Gallery", "Profile".
+
+  GP-9.  Accordion Item (FAQ)
+         Toggle button + collapsible answer panel.
+         Used on: Enrolment page.
+
+  GP-10. Form (Contact / Enrolment)
+         Labelled input fields + select dropdowns + textarea + submit button.
+         Includes client-side validation and submit handler.
+
+================================================================================
+  END OF DOCUMENT
+  Total Pages Documented: 14  |  Total Component Types: 38+
+================================================================================

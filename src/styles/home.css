@@ -186,3 +186,92 @@ body {
         padding-right: 2rem;
     }
 }
+
+/* ── Shared section structure ── */
+.sh-section      { margin-bottom: 6rem; }
+.sh-news-section { margin-bottom: 6rem; }
+
+.sh-section-label {
+  text-align: center;
+  padding: 5rem 1rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+.sh-eyebrow {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: #543717;
+}
+.sh-heading {
+  font-family: 'Quicksand', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  margin: 0;
+}
+.sh-rule {
+  width: 3rem;
+  height: 2px;
+  background: linear-gradient(90deg, #543717, #cb8f24);
+  margin-top: 0.5rem;
+  border-radius: 2px;
+}
+
+/* ── Accent banner ── */
+.sh-banner {
+  background: linear-gradient(135deg, #3a2610 0%, #543717 50%, #3a2610 100%);
+  padding: 2rem clamp(1.5rem, 5vw, 4rem);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem 3rem;
+  margin-bottom: 3.5rem;
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
+}
+.sh-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+.sh-banner-left span {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 900;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #deb056;
+  white-space: nowrap;
+}
+.sh-banner-text {
+  font-family: 'Lato', sans-serif;
+  font-size: clamp(1rem, 2vw, 1.1rem);
+  font-weight: 400;
+  color: rgba(255,255,255,0.88);
+  line-height: 1.6;
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  position: relative;
+}
+
+/* ── sh-reveal ── */
+.sh-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.sh-reveal.sh-visible {
+  opacity: 1;
+  transform: translateY(0);
+}

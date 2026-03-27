@@ -11,7 +11,7 @@
 /* ── Hero Header ── */
 .enrolment-header {
     position: relative;
-    padding: 9rem 2rem 6rem;
+    padding: 7rem 2rem 3rem;
     overflow: hidden;
     text-align: center;
     background: #0c1222;
@@ -20,7 +20,7 @@
 .enrolment-header-bg {
     position: absolute;
     inset: 0;
-    background-image: url('/assets/images/documents/admission.jpeg');
+    background-image: url('https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_auto,w_1440,c_fill/v1773823747/admission_fbqqs3.avif');
     background-size: cover;
     background-position: center;
     opacity: 0.12;
@@ -31,7 +31,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(160deg, rgba(12, 18, 34, 0.85) 0%, rgba(150, 17, 7, 0.25) 60%, rgba(12, 18, 34, 0.95) 100%);
+    background: linear-gradient(160deg, rgba(12, 18, 34, 0.85) 0%, rgba(84, 55, 23, 0.25) 60%, rgba(12, 18, 34, 0.95) 100%);
 }
 
 /* Shimmer line across header */
@@ -63,25 +63,28 @@
 .enrolment-badge {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
     padding: 0.45rem 1.25rem;
     border-radius: 9999px;
     border: 1px solid rgba(203, 143, 36, 0.35);
     background: rgba(203, 143, 36, 0.1);
     backdrop-filter: blur(8px);
-    margin-bottom: 1.5rem;
+    -webkit-backdrop-filter: blur(8px);
     font-size: 0.6rem;
     font-weight: 900;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: #fbbf24;
+    color: #cb8f24;
+    /* layout */
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
 }
 
 /* ── Section Wrapper ── */
 .enrolment-sections {
     max-width: 80rem;
     margin: 0 auto;
-    padding: 4rem 3rem 5rem;
+    padding: 2rem 3rem 5rem;
     display: flex;
     flex-direction: column;
     gap: 4rem;
@@ -102,7 +105,7 @@
     font-weight: 900;
     letter-spacing: 0.35em;
     text-transform: uppercase;
-    color: #961107;
+    color: #543717;
 }
 
 .section-heading h2 {
@@ -124,184 +127,30 @@
 
 /* ── Process Steps ── */
 .process-section {
-    background: #0f172a;
+    background: #fff;
     border-radius: 1.25rem;
     padding: 3rem 2.5rem;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e2e8f0;
 }
 
 .process-section::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at 20% 50%, rgba(150, 17, 7, 0.18) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 50%, rgba(203, 143, 36, 0.1) 0%, transparent 60%);
     pointer-events: none;
 }
 
 .process-section .section-heading h2 {
-    color: #f8fafc;
+    color: var(--brand-primary);
 }
 
 .process-section .section-heading-label {
-    color: #fbbf24;
-}
-
-.process-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    position: relative;
-}
-
-.process-card {
-    position: relative;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 1rem;
-    padding: 2rem 1.5rem 1.75rem;
-    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    overflow: hidden;
-}
-
-.process-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 1rem;
-    background: linear-gradient(135deg, rgba(203, 143, 36, 0.08) 0%, transparent 60%);
-    opacity: 0;
-    transition: opacity 0.35s;
-}
-
-.process-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(203, 143, 36, 0.35);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(203, 143, 36, 0.2);
-}
-
-.process-card:hover::before {
-    opacity: 1;
-}
-
-.process-step-num {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #961107, #7b0a02);
-    color: #fbbf24;
-    font-size: 0.7rem;
-    font-weight: 900;
-    letter-spacing: 0.05em;
-    margin-bottom: 1.25rem;
-    box-shadow: 0 4px 12px rgba(150, 17, 7, 0.5);
-}
-
-.process-icon-wrap {
-    font-size: 1.8rem;
-    margin-bottom: 0.75rem;
-    display: block;
-    line-height: 1;
-}
-
-.process-card h3 {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #f1f5f9;
-    margin: 0 0 0.5rem;
-    font-family: var(--font-heading);
-}
-
-.process-card p {
-    font-size: 0.8rem;
-    color: #94a3b8;
-    line-height: 1.7;
-    margin: 0;
-}
-
-/* ── Requirements ── */
-.requirements-section {
-    /* light section */
-}
-
-.requirements-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-}
-
-.req-card {
-    background: #fff;
-    border-radius: 1rem;
-    padding: 1.75rem 1.25rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 0.75rem;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    position: relative;
-    overflow: hidden;
-}
-
-.req-card::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #961107, #cb8f24);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.req-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
-    border-color: #cbd5e1;
-}
-
-.req-card:hover::after {
-    transform: scaleX(1);
-}
-
-.req-icon-circle {
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #fef3c7, #fde68a);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.25rem;
-    flex-shrink: 0;
-    box-shadow: 0 4px 12px rgba(203, 143, 36, 0.2);
-}
-
-.req-card h3 {
-    font-size: 0.7rem;
-    font-weight: 900;
-    color: #0f172a;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin: 0;
-}
-
-.req-card p {
-    font-size: 0.72rem;
     color: #64748b;
-    line-height: 1.5;
-    margin: 0;
 }
+
 
 /* ── Application Form ── */
 .form-section-card {
@@ -347,7 +196,7 @@
     font-weight: 900;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: #961107;
+    color: #543717;
     white-space: nowrap;
     padding: 0.3rem 0.75rem;
     background: #fef2f2;
@@ -401,8 +250,8 @@
 
 .enrolment-field input:focus,
 .enrolment-field select:focus {
-    border-bottom-color: #961107;
-    box-shadow: 0 2px 0 0 rgba(150, 17, 7, 0.15);
+    border-bottom-color: #543717;
+    box-shadow: 0 2px 0 0 rgba(84, 55, 23, 0.15);
 }
 
 /* Select arrow */
@@ -417,8 +266,8 @@
 /* Submit button */
 .enrolment-submit {
     width: 100%;
-    padding: 1rem 2rem;
-    background: linear-gradient(135deg, #961107 0%, #7b0a02 100%);
+    padding: var(--btn-padding-desktop, 0.875rem 2rem);
+    background: linear-gradient(135deg, #543717 0%, #3a2610 100%);
     color: #fff;
     border: none;
     border-radius: 0.75rem;
@@ -430,7 +279,7 @@
     position: relative;
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 8px 24px rgba(150, 17, 7, 0.35);
+    box-shadow: 0 8px 24px rgba(84, 55, 23, 0.35);
     margin-top: 1rem;
 }
 
@@ -448,8 +297,8 @@
 
 .enrolment-submit:hover {
     transform: translateY(-2px);
-    box-shadow: 0 14px 32px rgba(150, 17, 7, 0.45);
-    background: linear-gradient(135deg, #a5180f 0%, #961107 100%);
+    box-shadow: 0 14px 32px rgba(84, 55, 23, 0.45);
+    background: linear-gradient(135deg, #5e3f1a 0%, #543717 100%);
 }
 
 .enrolment-submit:hover::before {
@@ -561,7 +410,7 @@
 
 .faq-item:hover,
 .faq-item.faq-open {
-    border-color: rgba(150, 17, 7, 0.25);
+    border-color: rgba(84, 55, 23, 0.25);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
@@ -595,14 +444,14 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    color: #961107;
+    color: #543717;
     font-size: 1rem;
     font-weight: 900;
     transition: background 0.3s, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s;
 }
 
 .faq-item.faq-open .faq-chevron {
-    background: linear-gradient(135deg, #961107, #7b0a02);
+    background: linear-gradient(135deg, #543717, #3a2610);
     color: #fbbf24;
     transform: rotate(45deg);
 }

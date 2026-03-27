@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import SecondaryNav from '../../components/SecondaryNav.astro';
 import SubNav from '../../components/SubNav.astro';
 import '../../styles/gallery.css';
+import * as xlsx from 'xlsx';
 
 const gallerySubNavItems = [
     { title: 'Achievements', href: '/gallery/achievements' },
@@ -10,31 +11,129 @@ const gallerySubNavItems = [
     { title: 'Year Book', href: '/gallery/yearbook' }
 ];
 
-const students = [
-    // Grade 12
-    { name: "Sipho Khumalo", grade: "Grade 12", year: "2023", role: "Head Boy", image: "/assets/images/gallery/grid1.jpg" },
-    { name: "Lerato Ndlovu", grade: "Grade 12", year: "2023", role: "Head Girl", image: "/assets/images/gallery/grid2.jpg" },
-    { name: "Tshepo Mofokeng", grade: "Grade 12", year: "2022", role: "Prefect", image: "/assets/images/gallery/grid3.jpg" },
+const cloudName = 'djpfl2uwe';
+const apiKey = '488785883143157';
+const apiSecret = 'qq5kq2-5R9aN4SNi8olLgh-Bb9A';
+
+let students = [];
+let availableYears = [];
+let availableGrades = [];
+
+try {
+    const url = `https://api.cloudinary.com/v1_1/${cloudName}/resources/search`;
+    const auth = Buffer.from(`${apiKey}:${apiSecret}`).toString('base64');
     
-    // Grade 11
-    { name: "Zanele Dlamini", grade: "Grade 11", year: "2023", role: "Student", image: "/assets/images/gallery/grid4.jpg" },
-    { name: "Kagiso Mbele", grade: "Grade 11", year: "2022", role: "Student", image: "/assets/images/gallery/grid5.jpg" },
-    { name: "Bontle Mokoena", grade: "Grade 11", year: "2023", role: "Class Rep", image: "/assets/images/gallery/grid6.jpg" },
+    let globalBackdropId = "gray-concrete-background_ht826n"; // Fallback
+    
+    // Fetch Backdrop and Search Data IN PARALLEL
+    const [bgResponse, response] = await Promise.all([
+        fetch(url, {
+            method: 'POST',
+            headers: { 'Authorization': `Basic ${auth}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ expression: 'folder="lotsha-web/yearbook"', max_results: 1 })
+        }).catch(e => { console.warn("Could not fetch global backdrop", e); return null; }),
+        fetch(url, {
+            method: 'POST',
+            headers: { 'Authorization': `Basic ${auth}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ expression: 'folder:"lotsha-web/yearbook/years/*"', max_results: 500 })
+        })
+    ]);
 
-    // Grade 10
-    { name: "Amahle Zulu", grade: "Grade 10", year: "2023", role: "Student", image: "/assets/images/gallery/grid1.jpg" },
-    { name: "Thabo Rapoo", grade: "Grade 10", year: "2021", role: "Student", image: "/assets/images/gallery/grid2.jpg" },
+    if (bgResponse) {
+        try {
+            const bgData = await bgResponse.json();
+            if (bgData.resources && bgData.resources.length > 0) {
+                globalBackdropId = bgData.resources[0].public_id.replace(/\//g, ':');
+            }
+        } catch(e) {}
+    }
+    
+    const data = await response.json();
+    
+    if (data.resources) {
+        const folders = {};
+        data.resources.forEach(res => {
+            const parts = res.asset_folder.split('/');
+            const year = parts[3] || 'Unknown';
+            const grade = parts[4] || 'Unknown';
+            const folderKey = `${year}/${grade}`;
+            
+            if (!folders[folderKey]) {
+                folders[folderKey] = { year, grade, images: [], excelUrl: null };
+            }
+            
+            if (res.resource_type === 'image') {
+                folders[folderKey].images.push(res);
+            } else if (res.format === 'xls' || res.format === 'xlsx') {
+                folders[folderKey].excelUrl = res.secure_url;
+            }
+        });
 
-    // Grade 9
-    { name: "Naledi Chauke", grade: "Grade 9", year: "2023", role: "Student", image: "/assets/images/gallery/grid3.jpg" },
-    { name: "Lebo Mathibe", grade: "Grade 9", year: "2022", role: "Student", image: "/assets/images/gallery/grid4.jpg" },
+        // PARALLEL fetch all Excel sheets
+        const folderEntries = Object.entries(folders);
+        
+        await Promise.all(folderEntries.map(async ([key, folder]) => {
+            // Alphabetical Ascending Sort
+            folder.images.sort((a, b) => a.filename.localeCompare(b.filename));
 
-    // Grade 8
-    { name: "Karabo Molefe", grade: "Grade 8", year: "2023", role: "New Student", image: "/assets/images/gallery/grid5.jpg" },
-    { name: "Mpho Phiri", grade: "Grade 8", year: "2021", role: "New Student", image: "/assets/images/gallery/grid6.jpg" },
-];
+            let studentNames = [];
+            if (folder.excelUrl) {
+                try {
+                    const xlsxRes = await fetch(folder.excelUrl);
+                    const buf = await xlsxRes.arrayBuffer();
+                    const workbook = xlsx.read(new Uint8Array(buf), { type: 'array' });
+                    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const rows = xlsx.utils.sheet_to_json(sheet, { header: 1 });
 
-const grades = ["Grade 12", "Grade 11", "Grade 10", "Grade 9", "Grade 8"];
+                    for (const row of rows) {
+                        if (row && typeof row[0] !== 'undefined') {
+                            const numStr = String(row[0]).trim();
+                            const num = parseInt(numStr, 10);
+                            if (!isNaN(num) && numStr !== '') {
+                                const surname = row[2] ? String(row[2]).trim() : '';
+                                const firstName = row[3] ? String(row[3]).trim() : '';
+                                if (surname || firstName) {
+                                    studentNames.push(`${firstName} ${surname}`.trim());
+                                }
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.error("Error parsing excel:", e);
+                }
+            }
+
+            folder.images.forEach((imgRes, index) => {
+                const urlParts = imgRes.secure_url.split('/upload/');
+                const bgTransform = `e_background_removal/u_${globalBackdropId},c_fill,w_1.0,h_1.0,fl_relative`;
+                
+                const smUrl = `${urlParts[0]}/upload/${bgTransform}/c_fill,w_300,h_375/f_avif,q_auto:low/${urlParts[1]}`;
+                const lgUrl = `${urlParts[0]}/upload/${bgTransform}/c_fill,w_500,h_625/f_avif,q_auto:good/${urlParts[1]}`;
+                
+                let name = studentNames[index];
+                if (!name) {
+                    name = imgRes.display_name.replace(/_/g, ' ');
+                }
+
+                students.push({
+                    name: name,
+                    grade: folder.grade,
+                    year: folder.year,
+                    role: "Student",
+                    imageSm: smUrl,
+                    imageLg: lgUrl
+                });
+            });
+        }));
+        
+        availableYears = [...new Set(students.map(s => s.year))].sort((a,b) => b.localeCompare(a));
+        availableGrades = [...new Set(students.map(s => s.grade))].sort();
+    }
+} catch (error) {
+    console.error("Error fetching yearbook from Cloudinary:", error);
+}
+
+const grades = availableGrades.length > 0 ? availableGrades : ["Grade 12", "Grade 11", "Grade 10", "Grade 9", "Grade 8"];
 ---
 
 <Layout title="Year Book - Tshikhuthula Secondary School" currentPage="gallery" noNavbarPadding={true} showMainNav={true}>
@@ -246,21 +345,21 @@ const grades = ["Grade 12", "Grade 11", "Grade 10", "Grade 9", "Grade 8"];
                     <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mr-2">Curriculum Year:</span>
                     <select class="year-select" id="year-filter-select">
                         <option value="all">All Years</option>
-                        <option value="2023">Class of 2023</option>
-                        <option value="2022">Class of 2022</option>
-                        <option value="2021">Class of 2021</option>
+                        {availableYears.map(year => (
+                            <option value={year}>Class of {year}</option>
+                        ))}
                     </select>
                 </div>
                 
                 <!-- Grade Filters -->
-                <div class="flex flex-wrap justify-center gap-3">
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center mr-2">Grade:</span>
-                    <button class="filter-btn grade-filter active" data-filter="all">All</button>
-                    <button class="filter-btn grade-filter" data-filter="Grade 12">Gr 12</button>
-                    <button class="filter-btn grade-filter" data-filter="Grade 11">Gr 11</button>
-                    <button class="filter-btn grade-filter" data-filter="Grade 10">Gr 10</button>
-                    <button class="filter-btn grade-filter" data-filter="Grade 9">Gr 9</button>
-                    <button class="filter-btn grade-filter" data-filter="Grade 8">Gr 8</button>
+                <div class="flex flex-wrap items-center justify-center gap-3">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mr-2">Grade:</span>
+                    <select class="year-select" id="grade-filter-select">
+                        <option value="all">All Grades</option>
+                        {availableGrades.map(grade => (
+                            <option value={grade}>{grade}</option>
+                        ))}
+                    </select>
                 </div>
             </div>
         </div>
@@ -277,7 +376,14 @@ const grades = ["Grade 12", "Grade 11", "Grade 10", "Grade 9", "Grade 8"];
                             {gradeStudents.map(student => (
                                 <div class="student-card student-item" data-year={student.year}>
                                     <div class="student-img-container">
-                                        <img src={student.image} alt={student.name} class="student-img" loading="lazy" />
+                                        <img 
+                                            src={student.imageLg} 
+                                            srcset={`${student.imageSm} 300w, ${student.imageLg} 500w`}
+                                            sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                                            alt={student.name} 
+                                            class="student-img" 
+                                            loading="lazy" 
+                                        />
                                     </div>
                                     <div class="student-info">
                                         <h4 class="student-name">{student.name}</h4>
@@ -316,14 +422,14 @@ const grades = ["Grade 12", "Grade 11", "Grade 10", "Grade 9", "Grade 8"];
 
     function initFilters() {
         const yearSelect = document.getElementById('year-filter-select');
-        const gradeBtns = document.querySelectorAll('.grade-filter');
+        const gradeSelect = document.getElementById('grade-filter-select');
         const studentCards = document.querySelectorAll('.student-item');
         const gradeSections = document.querySelectorAll('.grade-section');
 
-        let activeYear = 'all';
-        let activeGrade = 'all';
-
         function updateDisplay() {
+            const activeYear = yearSelect ? yearSelect.value : 'all';
+            const activeGrade = gradeSelect ? gradeSelect.value : 'all';
+
             // Filter students based on BOTH active filters
             studentCards.forEach(card => {
                 const cardYear = card.getAttribute('data-year');
@@ -366,23 +472,14 @@ const grades = ["Grade 12", "Grade 11", "Grade 10", "Grade 9", "Grade 8"];
             });
         }
 
-        // Year Dropdown Change
+        // Dropdown Change Listeners
         if (yearSelect) {
-            yearSelect.addEventListener('change', (e) => {
-                activeYear = e.target.value;
-                updateDisplay();
-            });
+            yearSelect.addEventListener('change', updateDisplay);
         }
 
-        // Grade Buttons Click
-        gradeBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                gradeBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                activeGrade = btn.getAttribute('data-filter');
-                updateDisplay();
-            });
-        });
+        if (gradeSelect) {
+            gradeSelect.addEventListener('change', updateDisplay);
+        }
     }
 
     document.addEventListener('DOMContentLoaded', () => {

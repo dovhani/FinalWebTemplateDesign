@@ -28,7 +28,7 @@
 .curriculum-header-bg {
     position: absolute;
     inset: 0;
-    background-image: url('/assets/images/hero/slide3.png');
+    background-image: url('https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_auto,w_1440,c_fill/v1773823793/slide3_liwnis.avif');
     background-size: cover;
     background-position: center;
     opacity: 0.2;
@@ -67,8 +67,8 @@
 }
 
 .phase-section.dark-section {
-    background-color: #0f172a;
-    color: white;
+    background-color: #ffffff;
+    color: #333;
 }
 
 /* Stream Cards (FET Layout) */
@@ -81,13 +81,14 @@
 
 .stream-card {
     background: white;
-    border-radius: 1rem;
+    border-radius: 2rem;
     padding: 2.5rem;
-    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
     position: relative;
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-top: 4px solid transparent;
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    border: 1px solid #f1f5f9;
+    border-top: 5px solid transparent;
 }
 
 .stream-card.science {
@@ -99,19 +100,19 @@
 }
 
 .stream-card.humanities {
-    border-top-color: #800000;
+    border-top-color: #543717;
 }
 
 .stream-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.12);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    border-color: rgba(203, 143, 36, 0.2);
 }
 
 .dark-section .stream-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: none;
-    border-top: 4px solid transparent;
+    background: #ffffff;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
 .dark-section .stream-card.science {
@@ -128,18 +129,20 @@
 
 
 .dark-section .stream-card:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: #ffffff;
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
 .stream-title {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     font-size: 1.75rem;
     font-weight: 700;
     margin-bottom: 1rem;
 }
 
 .dark-section .stream-title {
-    color: white;
+    color: var(--brand-primary);
 }
 
 .stream-desc {
@@ -150,7 +153,7 @@
 }
 
 .dark-section .stream-desc {
-    color: #94a3b8;
+    color: #64748b;
 }
 
 .subject-list {
@@ -170,8 +173,8 @@
 }
 
 .dark-section .subject-item {
-    border-bottom-color: rgba(255, 255, 255, 0.05);
-    color: #cbd5e1;
+    border-bottom-color: rgba(0, 0, 0, 0.05);
+    color: #475569;
 }
 
 .subject-item:last-child {
@@ -197,21 +200,21 @@
 .base-subject-card {
     background: white;
     padding: 1.5rem;
-    border-radius: 0.75rem;
+    border-radius: 2rem;
     text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    border: 1px solid #e2e8f0;
-    transition: all 0.2s ease;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+    border: 1px solid #f1f5f9;
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .base-subject-card:hover {
-    background: #800000;
+    background: #543717;
     color: white;
     transform: translateY(-3px);
 }
 
 .base-subject-card h4 {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     font-weight: 600;
     font-size: 1.1rem;
 }
@@ -248,16 +251,25 @@
 }
 
 .ab-label-eyebrow {
-    font-family: 'Lato', sans-serif;
-    font-weight: 700;
-    font-size: 0.7rem;
-    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.45rem 1.25rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(203, 143, 36, 0.35);
+    background: rgba(203, 143, 36, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-size: 0.6rem;
+    font-weight: 900;
     letter-spacing: 0.3em;
+    text-transform: uppercase;
     color: #cb8f24;
+    width: max-content;
 }
 
 .ab-label-heading {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     font-weight: 800;
     font-size: clamp(2rem, 4vw, 3rem);
     color: #0f172a;
@@ -265,12 +277,12 @@
 }
 
 .dark-section .ab-label-heading {
-    color: white;
+    color: var(--brand-primary);
 }
 
 .ab-label-rule {
     width: 3rem;
     height: 4px;
-    background: #800000;
+    background: #543717;
     margin-top: 0.5rem;
 }

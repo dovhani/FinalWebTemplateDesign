@@ -2,9 +2,10 @@
 // navigation.php - FOR PROJECT IN PhpFinalWebTemplate FOLDER
 
 // Main navigation function
-function renderNavigation($currentPage) {
+function renderNavigation($currentPage)
+{
     $base_path = '/'; // Add trailing slash
-    
+
     $pages = [
         'home' => ['title' => 'Home', 'file' => 'index.php'],
         'about' => ['title' => 'About Us', 'file' => 'about.php'],
@@ -14,7 +15,7 @@ function renderNavigation($currentPage) {
         'enrolment' => ['title' => 'Enrolment', 'file' => 'enrolment.php'],
         'contact' => ['title' => 'Contact Us', 'file' => 'contact.php']
     ];
-    
+
     echo '<nav class="main-nav">';
     echo '<div class="nav-container">';
     echo '<div class="logo">';
@@ -22,18 +23,18 @@ function renderNavigation($currentPage) {
     echo '<a href="/index.php" class="logo-link">';
     echo '<img src="/assets/images/logo5.png" alt="Learning Academy Logo" class="logo-image">';
     echo '<div class="logo-text">';
-    echo '<h1>Tshikhuthula</h1>';
-    echo '<p>Secondary School</p>';
+    echo '<h1>Lotsha</h1>';
+    echo '<p>Primary School</p>';
     echo '</div>';
     echo '</a>';
     echo '</div>';
     echo '<ul class="nav-menu">';
-    
+
     foreach ($pages as $key => $page) {
         $activeClass = ($currentPage === $key) ? 'active' : '';
         echo "<li><a href='/{$page['file']}' class='{$activeClass}'>{$page['title']}</a></li>";
     }
-    
+
     echo '</ul>';
     echo '<div class="hamburger" onclick="toggleMenu()">';
     echo '<span></span><span></span><span></span>';
@@ -43,9 +44,10 @@ function renderNavigation($currentPage) {
 }
 
 // School sub-navigation function
-function renderSchoolSubNav() {
+function renderSchoolSubNav()
+{
     $base_path = '/';
-    
+
     $subPages = [
         'staff.php' => 'Staff Directory',
         'sgb.php' => 'School Governing Body',
@@ -53,37 +55,38 @@ function renderSchoolSubNav() {
         'ground-workers.php' => 'Ground Workers',
         'security.php' => 'Security'
     ];
-    
+
     echo '<div class="sub-nav">';
     echo '<div class="sub-nav-container">';
     echo '<ul class="sub-nav-menu">';
-    
-    foreach ($subPages as $file => $title) {        
+
+    foreach ($subPages as $file => $title) {
         echo "<li><a href='/our-school/{$file}'>{$title}</a></li>";
     }
-    
+
     echo '</ul>';
     echo '</div>';
     echo '</div>';
 }
 
 // Gallery sub-navigation function
-function renderGallerySubNav() {
+function renderGallerySubNav()
+{
     $base_path = '/';
-    
+
     $subPages = [
         'achievements.php' => 'Achievements',
         'students-gallery.php' => 'Students Gallery'
     ];
-    
+
     echo '<div class="sub-nav gallery-sub-nav">';
     echo '<div class="sub-nav-container">';
     echo '<ul class="sub-nav-menu">';
-    
-    foreach ($subPages as $file => $title) {        
+
+    foreach ($subPages as $file => $title) {
         echo "<li><a href='/gallery/{$file}'>{$title}</a></li>";
     }
-    
+
     echo '</ul>';
     echo '</div>';
     echo '</div>';

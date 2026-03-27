@@ -1,0 +1,362 @@
+================================================================================
+  LOTSHA WEB TEMPLATE — COMPREHENSIVE WEB DESIGN ELEMENTS REFERENCE
+  Generated: 2026-03-24
+  Format: Plain Text Technical Reference (.txt)
+================================================================================
+
+This document provides a numbered list of all essential web design elements
+identified within the LotshaWebTemplate project. Each entry includes the
+element name, its source file, its category (Layout / UI / Interactive /
+Page), and a concise professional description of its purpose.
+
+--------------------------------------------------------------------------------
+SECTION A — GLOBAL LAYOUT & STRUCTURAL COMPONENTS
+--------------------------------------------------------------------------------
+
+1.  Element Name    : Layout (Base Layout Wrapper)
+    Source File     : src/layouts/Layout.astro
+    Category        : Layout
+    Purpose         : The root shell of every page. Wraps all page content
+                      with consistent HTML boilerplate, global metadata (title,
+                      description, Open Graph tags), imported global styles,
+                      and persistent components such as Navigation and Footer.
+                      Acts as the single source of truth for page structure.
+
+2.  Element Name    : Navigation (Primary Navigation Bar)
+    Source File     : src/components/Navigation.astro
+    Category        : Layout / Interactive
+    Purpose         : The main top-level navigation bar present on all pages.
+                      Provides site-wide wayfinding through primary links,
+                      houses the school logo/brand identity, and typically
+                      includes a mobile hamburger menu toggle for responsive
+                      behaviour. Anchors the user's orientation throughout
+                      the site.
+
+3.  Element Name    : Secondary Navigation Bar
+    Source File     : src/components/SecondaryNav.astro
+    Category        : Layout / Interactive
+    Purpose         : A supplementary navigation bar rendered beneath the
+                      primary nav on interior/sub-pages. Delivers page-
+                      specific or section-specific links (e.g., Our School
+                      sub-sections), reducing cognitive load by grouping
+                      related navigation options without cluttering the
+                      primary bar.
+
+4.  Element Name    : Sub Navigation
+    Source File     : src/components/SubNav.astro
+    Category        : Layout / Interactive
+    Purpose         : A tertiary navigation element used within deeply nested
+                      page sections. Provides localised in-page or within-
+                      section navigation, keeping long-form content organised
+                      and helping users jump to specific subsections quickly.
+
+5.  Element Name    : Footer
+    Source File     : src/components/Footer.astro
+    Category        : Layout
+    Purpose         : The site-wide closing section displayed at the bottom of
+                      every page. Contains supplementary links (policies,
+                      contact, social media), copyright information, school
+                      branding, and trust signals. Reinforces institutional
+                      identity and provides utility navigation for users who
+                      have scrolled to the end of content.
+
+--------------------------------------------------------------------------------
+SECTION B — HOME PAGE COMPONENTS
+--------------------------------------------------------------------------------
+
+6.  Element Name    : Hero Section
+    Source File     : src/components/home/Hero.astro
+    Category        : Layout / UI
+    Purpose         : The full-width, above-the-fold introductory section of
+                      the homepage. Displays the school's primary brand
+                      message, headline, logo, and a Call-To-Action (CTA).
+                      Creates the critical first impression, communicates the
+                      institution's identity, and drives immediate user
+                      engagement. Often includes background imagery or video
+                      and an animated scroll prompt.
+
+7.  Element Name    : Welcome Section
+    Source File     : src/components/home/Welcome.astro
+    Category        : Layout / UI
+    Purpose         : A narrative content block positioned after the Hero
+                      section. Introduces the school's mission, values, or a
+                      warm greeting from leadership. Humanises the institution,
+                      builds trust with prospective families, and transitions
+                      the user from visual impact (Hero) to contextual
+                      understanding.
+
+8.  Element Name    : Highlights Section
+    Source File     : src/components/home/Highlights.astro
+    Category        : Layout / UI
+    Purpose         : A curated grid or card-based section showcasing key
+                      achievements, announcements, or featured programmes.
+                      Draws attention to the most important or time-sensitive
+                      information on the site, acting as a visual content
+                      summary that guides users deeper into relevant sections.
+
+9.  Element Name    : News & Events Section
+    Source File     : src/components/home/NewsEvents.astro
+    Category        : Layout / UI
+    Purpose         : A dynamic content feed displaying recent news articles,
+                      upcoming school events, and calendar notices. Keeps the
+                      homepage fresh and relevant, encourages repeat visits,
+                      and ensures the school community stays informed about
+                      current happenings.
+
+--------------------------------------------------------------------------------
+SECTION C — INTERACTIVE & UTILITY COMPONENTS
+--------------------------------------------------------------------------------
+
+10. Element Name    : Scroll Reveal Animation
+    Source File     : src/components/ScrollReveal.astro
+    Category        : Interactive / Animation
+    Purpose         : A JavaScript-driven utility component that triggers CSS
+                      entrance animations (fade-in, slide-up, etc.) as content
+                      elements enter the browser viewport during scrolling.
+                      Enhances perceived page quality, guides the user's
+                      attention through content sequentially, and adds a
+                      polished, professional feel to the overall experience.
+
+--------------------------------------------------------------------------------
+SECTION D — INTERIOR PAGES (Full Page Components)
+--------------------------------------------------------------------------------
+
+11. Element Name    : Home Page
+    Source File     : src/pages/index.astro
+    Category        : Page
+    Purpose         : The root landing page of the website. Assembles all
+                      home-specific section components (Hero, Welcome,
+                      Highlights, NewsEvents) within the base Layout wrapper.
+                      Serves as the primary entry point for all site visitors
+                      and sets the overall tone of the user's experience.
+
+12. Element Name    : About Page
+    Source File     : src/pages/about.astro
+    Category        : Page
+    Purpose         : Communicates the school's history, vision, mission, and
+                      core values in long-form content. Builds institutional
+                      credibility and helps prospective parents, students, and
+                      community members understand who the school is and what
+                      it stands for.
+
+13. Element Name    : Our School Page
+    Source File     : src/pages/our-school.astro
+    Category        : Page
+    Purpose         : A hub/overview page that introduces the various facets
+                      of the school's operational and community structure.
+                      Serves as a parent-level navigation point that branches
+                      into specific sub-pages (e.g., Staff, SGB, Security).
+
+14. Element Name    : Staff Directory Page
+    Source File     : src/pages/our-school/staff.astro
+    Category        : Page / UI
+    Purpose         : Presents the school's staff members through a structured
+                      directory of profile cards. Each card displays the staff
+                      member's photo, name, role, and a trigger for an expanded
+                      detail modal. Promotes transparency, helps visitors
+                      identify key contacts, and humanises the institution.
+
+15. Element Name    : SGB (School Governing Body) Page
+    Source File     : src/pages/our-school/sgb.astro
+    Category        : Page / UI
+    Purpose         : Introduces the members of the School Governing Body with
+                      their roles and responsibilities. Demonstrates governance
+                      transparency and fulfils regulatory communication
+                      requirements for public-facing school websites.
+
+16. Element Name    : Security Page
+    Source File     : src/pages/our-school/security.astro
+    Category        : Page / UI
+    Purpose         : Outlines the school's security measures, protocols, and
+                      responsible personnel. Reassures parents and guardians
+                      about the safety of the school environment, addressing a
+                      key concern for families considering enrolment.
+
+17. Element Name    : Ground Workers Page
+    Source File     : src/pages/our-school/ground-workers.astro
+    Category        : Page / UI
+    Purpose         : Profiles the grounds and maintenance staff responsible
+                      for the physical upkeep of the school facility. Promotes
+                      an inclusive community identity by recognising all
+                      members of the school's operational team.
+
+18. Element Name    : Food Handlers Page
+    Source File     : src/pages/our-school/food-handlers.astro
+    Category        : Page / UI
+    Purpose         : Profiles kitchen and food service staff. Ensures
+                      transparency around food safety and nutrition services,
+                      which is a significant concern for parents of learners
+                      who rely on school feeding programmes.
+
+19. Element Name    : Curriculum Page
+    Source File     : src/pages/curriculum.astro
+    Category        : Page
+    Purpose         : Details the academic programmes, subjects, and
+                      educational frameworks offered by the school. Helps
+                      prospective families evaluate academic alignment with
+                      their child's needs and communicates the school's
+                      educational philosophy.
+
+20. Element Name    : Student Life Page
+    Source File     : src/pages/student-life.astro
+    Category        : Page
+    Purpose         : Showcases extracurricular activities, sports, clubs, and
+                      the broader school culture beyond the classroom. Appeals
+                      to both students and parents by illustrating a holistic
+                      approach to learner development.
+
+21. Element Name    : Enrolment Page
+    Source File     : src/pages/enrolment.astro
+    Category        : Page / Interactive
+    Purpose         : Provides prospective families with enrolment requirements,
+                      application procedures, and relevant forms or deadlines.
+                      Acts as a conversion page — guiding users through the
+                      key action of joining the school community. Often
+                      includes CTA buttons and downloadable documents.
+
+22. Element Name    : Calendar Page
+    Source File     : src/pages/calendar.astro
+    Category        : Page / Interactive
+    Purpose         : Displays the school's academic calendar, term dates,
+                      public holidays, and scheduled events in a visual
+                      format. Helps parents, learners, and staff plan ahead
+                      and stay aligned with the school's operational rhythm.
+
+23. Element Name    : Gallery Page
+    Source File     : src/pages/gallery.astro
+    Category        : Page / UI
+    Purpose         : A visual media gallery presenting photos from school
+                      events, activities, and campus life. Builds community
+                      connection, serves as social proof of school culture, and
+                      creates an emotional resonance with site visitors.
+
+24. Element Name    : Memories Page
+    Source File     : src/pages/memories.astro
+    Category        : Page / UI
+    Purpose         : An archive-style page dedicated to preserving historical
+                      milestones, special events, or memorable school moments.
+                      Reinforces a sense of tradition and community legacy, and
+                      provides returning alumni or long-standing families with
+                      a nostalgic connection to the institution.
+
+25. Element Name    : Wall of Fame Page
+    Source File     : src/pages/wall-of-fame.astro
+    Category        : Page / UI
+    Purpose         : Honours and celebrates outstanding students, alumni, or
+                      staff who have made significant contributions or
+                      achievements. Motivates current learners, acknowledges
+                      excellence, and strengthens school pride.
+
+26. Element Name    : Policies Page
+    Source File     : src/pages/policies.astro
+    Category        : Page
+    Purpose         : Presents the school's official policies (e.g., code of
+                      conduct, safety policy, assessment policy) in a clear,
+                      accessible format. Fulfils legal and governance
+                      obligations, promotes institutional accountability, and
+                      serves as a trusted reference for parents and staff.
+
+27. Element Name    : Contact Page
+    Source File     : src/pages/contact.astro
+    Category        : Page / Interactive
+    Purpose         : Provides all necessary contact information (address,
+                      phone, email, map) and typically a contact form for
+                      direct enquiries. Acts as the primary conversion point
+                      for visitors seeking to reach the school, reducing
+                      barrier-to-contact and improving community engagement.
+
+--------------------------------------------------------------------------------
+SECTION E — COMMON UI PATTERNS (Used Across Multiple Pages)
+--------------------------------------------------------------------------------
+
+28. Element Name    : Profile / Staff Card
+    Category        : UI Component
+    Purpose         : A self-contained card element displaying a staff member's
+                      photo (avatar), full name, job title, and a details
+                      trigger. Used within Staff, SGB, Security, Ground Workers,
+                      and Food Handlers pages. Provides a scannable, uniform
+                      layout for presenting people-focused content.
+
+29. Element Name    : Staff Detail Modal
+    Category        : UI / Interactive
+    Purpose         : An overlay dialog box triggered by clicking a staff card.
+                      Displays expanded information about a staff member (bio,
+                      qualifications, contact). Keeps the directory page clean
+                      and uncluttered while offering depth of information on
+                      demand. Closes via an overlay click or a close button.
+
+30. Element Name    : Call-To-Action (CTA) Button
+    Category        : UI / Interactive
+    Purpose         : A visually prominent button or link element designed to
+                      drive a specific user action (e.g., "Apply Now", "Contact
+                      Us", "View Gallery"). Used across multiple pages to guide
+                      conversion paths. Styled distinctly from standard links
+                      to command visual attention and communicate interactivity.
+
+31. Element Name    : Section Heading / Title Block
+    Category        : UI
+    Purpose         : A styled heading group (typically an H2 or H3 with an
+                      optional sub-label or decorative underline) used to
+                      introduce each content section. Establishes visual
+                      hierarchy, improves scannability, and orients the user
+                      within the page's content structure.
+
+32. Element Name    : Content Card / Info Card
+    Category        : UI
+    Purpose         : A boxed container with a border, shadow, or background
+                      that groups related pieces of information (icon, title,
+                      description). Used in Highlights, Curriculum, and
+                      Student Life sections. Breaks up long-form content into
+                      digestible, visually appealing units.
+
+33. Element Name    : Image / Media Block
+    Category        : UI
+    Purpose         : A dedicated area for displaying photographs, illustrations,
+                      or embedded media relevant to the surrounding content.
+                      Used across Gallery, Memories, Hero, and Welcome sections.
+                      Supports visual storytelling, increases engagement, and
+                      communicates atmosphere more effectively than text alone.
+
+34. Element Name    : Responsive Grid / Column Layout
+    Category        : Layout
+    Purpose         : A CSS Grid or Flexbox-based multi-column container used
+                      to arrange cards, images, or text blocks in a structured
+                      pattern. Adapts from multi-column on desktop to single-
+                      column on mobile. Ensures content remains readable and
+                      visually balanced across all screen sizes.
+
+35. Element Name    : Hamburger / Mobile Menu Toggle
+    Category        : UI / Interactive
+    Purpose         : An icon-driven button (three horizontal bars) displayed
+                      on small screens that toggles the visibility of the
+                      primary navigation menu. Essential for responsive design,
+                      collapses complex navigation into a single tap-target
+                      to preserve usable screen space on mobile devices.
+
+36. Element Name    : Breadcrumb Navigation
+    Category        : UI / Interactive
+    Purpose         : A secondary navigation aid showing the user's current
+                      location within the site hierarchy (e.g., Home > Our
+                      School > Staff). Improves wayfinding on deep interior
+                      pages, supports SEO through internal linking, and allows
+                      quick back-navigation to parent pages.
+
+37. Element Name    : Downloadable Document / Policy Link
+    Category        : UI / Interactive
+    Purpose         : A styled link or button that initiates a file download
+                      (PDF, Word document) or navigates to a document viewer.
+                      Used on the Policies and Enrolment pages. Delivers
+                      official documentation directly to users without
+                      requiring them to contact the school manually.
+
+38. Element Name    : School Logo / Brand Mark
+    Category        : UI
+    Purpose         : The school's visual identifier — a combination of an
+                      emblem/crest image and a stylised text logotype (e.g.,
+                      "LOTSHA"). Appears in the Navigation, Hero, and Footer.
+                      Anchors all brand communications, builds recognition,
+                      and reinforces institutional identity at every touchpoint.
+
+================================================================================
+END OF DOCUMENT — Total Elements Documented: 38
+================================================================================

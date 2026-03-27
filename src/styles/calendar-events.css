@@ -1,4 +1,4 @@
-/* calendar-events.css – Tshikhuthula School Calendar Page */
+/* calendar-events.css – Lotsha School Calendar Page */
 
 /* ────────────────────────────────────────
    HEADER
@@ -26,7 +26,7 @@
 .cal-header-bg {
     position: absolute;
     inset: 0;
-    background-image: url('/assets/images/hero/slide1.png');
+    background-image: url('https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_auto,w_1440,c_fill/v1773823791/slide1_ydp9jd.avif');
     background-size: cover;
     background-position: center;
     opacity: 0.12;
@@ -51,22 +51,25 @@
 .cal-badge {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 1.25rem;
+    justify-content: center;
+    padding: 0.45rem 1.25rem;
+    border-radius: 9999px;
     border: 1px solid rgba(203, 143, 36, 0.35);
     background: rgba(203, 143, 36, 0.1);
-    border-radius: 999px;
-    font-family: 'Lato', sans-serif;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     font-size: 0.6rem;
     font-weight: 900;
-    letter-spacing: 0.35em;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: #fbbf24;
+    color: #cb8f24;
+    /* layout */
+    gap: 0.5rem;
     margin-bottom: 1.5rem;
 }
 
 .cal-title {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     font-size: clamp(2.8rem, 7vw, 5.5rem);
     font-weight: 900;
     color: #fff;
@@ -112,7 +115,7 @@
 }
 
 .cal-stat-num {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     font-size: 2.2rem;
     font-weight: 900;
     color: #fbbf24;
@@ -158,9 +161,9 @@
    ──────────────────────────────────────── */
 .cal-section-card {
     background: #fff;
-    border-radius: 1.25rem;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.07);
+    border-radius: 2rem;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
     overflow: hidden;
 }
 
@@ -176,7 +179,7 @@
 }
 
 .cal-card-title {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     font-size: 1.25rem;
     font-weight: 700;
     color: #0f172a;
@@ -189,7 +192,7 @@
 .cal-card-title svg {
     width: 1.25rem;
     height: 1.25rem;
-    color: #961107;
+    color: #543717;
     flex-shrink: 0;
 }
 
@@ -214,8 +217,8 @@
 
 .cal-nav-btn:hover,
 .cal-nav-btn.active {
-    background: #961107;
-    border-color: #961107;
+    background: #543717;
+    border-color: #543717;
     color: #fff;
 }
 
@@ -282,7 +285,7 @@
 }
 
 .cal-day.today .cal-day-num {
-    background: #961107;
+    background: #543717;
     color: #fff;
     width: 1.5rem;
     height: 1.5rem;
@@ -354,11 +357,11 @@
     font-weight: 900;
     letter-spacing: 0.38em;
     text-transform: uppercase;
-    color: #961107;
+    color: #543717;
 }
 
 .cal-section-heading h2 {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     font-size: clamp(1.8rem, 4vw, 2.5rem);
     font-weight: 800;
     color: #0f172a;
@@ -387,10 +390,10 @@
     display: flex;
     background: #fff;
     border: 1px solid #f1f5f9;
-    border-radius: 1rem;
+    border-radius: 2rem;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
     animation: fadeUpCalEvent 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -407,8 +410,9 @@
 }
 
 .cal-event-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    border-color: rgba(203, 143, 36, 0.2);
 }
 
 /* Left date panel */
@@ -426,7 +430,7 @@
 }
 
 .cal-event-day {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     font-size: 2rem;
     font-weight: 900;
     line-height: 1;
@@ -488,7 +492,7 @@
 }
 
 .cal-event-title {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     font-size: 1rem;
     font-weight: 700;
     color: #0f172a;
@@ -498,7 +502,7 @@
 }
 
 .cal-event-card:hover .cal-event-title {
-    color: #961107;
+    color: #543717;
 }
 
 .cal-event-details {
@@ -520,7 +524,7 @@
 .cal-event-detail svg {
     width: 0.75rem;
     height: 0.75rem;
-    color: #961107;
+    color: #543717;
     flex-shrink: 0;
 }
 

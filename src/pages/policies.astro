@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ScrollReveal from '../components/ScrollReveal.astro';
 import SecondaryNav from '../components/SecondaryNav.astro';
 import '../styles/policies.css';
 
@@ -9,28 +10,28 @@ const generalPolicies = [
         size: "2.4 MB",
         updated: "Jan 2024",
         link: "#",
-        image: "/assets/images/documents/CodeOfConduct.jpg"
+        image: "https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_auto,w_600/v1773823750/CodeOfConduct_uhujbc.avif"
     },
     {
         title: "School Uniform Policy",
         size: "1.1 MB",
         updated: "Jan 2024",
         link: "#",
-        image: "/assets/images/documents/uniform.jpg"
+        image: "https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_auto,w_600/v1773823766/uniform_lfj1kj.avif"
     },
     {
         title: "Anti-Bullying & Harassment Policy",
         size: "1.8 MB",
         updated: "Feb 2023",
         link: "#",
-        image: "/assets/images/documents/bullying.jpg"
+        image: "https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_auto,w_600/v1773823748/bullying_e9wne7.avif"
     },
     {
         title: "Mobile Device Policy",
         size: "845 KB",
         updated: "Jan 2024",
         link: "#",
-        image: "/assets/images/documents/mobile.png"
+        image: "https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_auto,w_600/v1773823759/mobile_kqj0ib.avif"
     }
 ];
 
@@ -40,21 +41,21 @@ const academicPolicies = [
         size: "3.2 MB",
         updated: "Mar 2023",
         link: "#",
-        image: "/assets/images/documents/assesments.jpeg"
+        image: "https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_auto,w_600/v1773823747/assesments_eeuoac.avif"
     },
     {
         title: "Homework Policy",
         size: "950 KB",
         updated: "Jan 2024",
         link: "#",
-        image: "/assets/images/documents/homework.jpeg"
+        image: "https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_auto,w_600/v1773823751/homework_peozvn.avif"
     },
     {
         title: "Academic Intervention Strategy",
         size: "1.5 MB",
         updated: "Apr 2023",
         link: "#",
-        image: "/assets/images/documents/intervension.jpeg"
+        image: "https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_auto,w_600/v1773823755/intervension_mewc4o.avif"
     }
 ];
 
@@ -64,21 +65,21 @@ const forms = [
         size: "500 KB",
         updated: "Jan 2024",
         link: "#",
-        image: "/assets/images/documents/indemnity.png"
+        image: "https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_auto,w_600/v1773823753/indemnity_ukjdra.avif"
     },
     {
         title: "Subject Change Request Form",
         size: "450 KB",
         updated: "Feb 2024",
         link: "#",
-        image: "/assets/images/documents/request.jpg"
+        image: "https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_auto,w_600/v1773823760/request_zn3wnv.avif"
     },
     {
         title: "Medical Update Profile",
         size: "620 KB",
         updated: "Jan 2024",
         link: "#",
-        image: "/assets/images/documents/medical.jpeg"
+        image: "https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_auto,w_600/v1773823758/medical_y8exii.avif"
     }
 ];
 
@@ -87,19 +88,20 @@ const pdfIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="n
 const downloadIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>`;
 ---
 
-<Layout title="Policies & Documents - Tshikhuthula Secondary School" currentPage="policies" noNavbarPadding={true} showMainNav={true}>
+<Layout title="Policies & Documents - Lotsha Primary School"
+    description="View Lotsha Primary School official policies - including codes of conduct, uniform policy, homework, assessment, and more." currentPage="policies" noNavbarPadding={true} showMainNav={true}>
     
     <!-- ── Header ── -->
     <header class="policies-header ws-reveal">
         <div class="policies-header-bg"></div>
         <div class="policies-header-content">
             <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-gold-500/30 bg-gold-500/10 backdrop-blur-md mb-6">
-                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-gold-400">Official Documentation</span>
+                <span class="page-eyebrow">Official Documentation</span>
             </div>
             <h1 class="text-5xl md:text-7xl font-heading text-white font-display drop-shadow-lg tracking-tight mb-6">
                 Policies & <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Documents</span>
             </h1>
-            <p class="text-slate-300 max-w-2xl mx-auto page-header-tagline">
+            <p class="page-tagline">
                 Access all official school policies, codes of conduct, academic guidelines, and administrative forms in downloadable PDF format.
             </p>
         </div>
@@ -118,7 +120,7 @@ const downloadIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fi
                 {generalPolicies.map((doc, i) => (
                     <a href={doc.link} class={`doc-card doc-card--image ws-reveal delay-${i+1}`}>
                         <div class="doc-card-thumb">
-                            <img src={doc.image} alt={doc.title} />
+                            <img src={doc.image} alt={doc.title} loading="lazy" decoding="async" />
                         </div>
                         <div class="doc-card-body">
                             <div class="doc-badge">
@@ -149,7 +151,7 @@ const downloadIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fi
                 {academicPolicies.map((doc, i) => (
                     <a href={doc.link} class={`doc-card doc-card--image ws-reveal delay-${i+1}`}>
                         <div class="doc-card-thumb">
-                            <img src={doc.image} alt={doc.title} />
+                            <img src={doc.image} alt={doc.title} loading="lazy" decoding="async" />
                         </div>
                         <div class="doc-card-body">
                             <div class="doc-badge">
@@ -180,7 +182,7 @@ const downloadIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fi
                 {forms.map((doc, i) => (
                     <a href={doc.link} class={`doc-card doc-card--image ws-reveal delay-${i+1}`}>
                         <div class="doc-card-thumb">
-                            <img src={doc.image} alt={doc.title} />
+                            <img src={doc.image} alt={doc.title} loading="lazy" decoding="async" />
                         </div>
                         <div class="doc-card-body">
                             <div class="doc-badge doc-badge--maroon">
@@ -201,25 +203,6 @@ const downloadIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fi
 
 </Layout>
 
-<script>
-    function initReveal() {
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('reveal-active');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
+<ScrollReveal />
 
-        document.querySelectorAll('.ws-reveal').forEach(el => observer.observe(el));
-    }
-
-    document.addEventListener('DOMContentLoaded', initReveal);
-    document.addEventListener('astro:after-swap', initReveal);
-</script>

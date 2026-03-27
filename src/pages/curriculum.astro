@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ScrollReveal from '../components/ScrollReveal.astro';
 import SecondaryNav from '../components/SecondaryNav.astro';
 import '../styles/curriculum.css';
 
@@ -55,19 +56,20 @@ const getSubjects = [
 ];
 ---
 
-<Layout title="Curriculum - Tshikhuthula Secondary School" currentPage="curriculum" noNavbarPadding={true} showMainNav={true}>
+<Layout title="Curriculum - Lotsha Primary School"
+    description="Explore the CAPS-aligned curriculum at Lotsha Primary School. Our structured programmes aim to provide every learner with a world-class education from Grade R to Grade 7." currentPage="curriculum" noNavbarPadding={true} showMainNav={true}>
     
     <!-- ── Page Header ── -->
     <header class="curriculum-header ws-reveal">
         <div class="curriculum-header-bg"></div>
         <div class="curriculum-header-content">
             <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-gold-500/30 bg-gold-500/10 backdrop-blur-md mb-6">
-                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-gold-400">Academic Excellence</span>
+                <span class="page-eyebrow">Academic Excellence</span>
             </div>
             <h1 class="text-5xl md:text-7xl font-heading text-white font-display drop-shadow-lg tracking-tight">
                 Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Curriculum</span>
             </h1>
-            <p class="text-slate-300 max-w-3xl mx-auto page-header-tagline">
+            <p class="page-tagline">
                 CAPS-aligned learning · Critical thinking · Academic excellence
             </p>
         </div>
@@ -128,7 +130,7 @@ const getSubjects = [
                 ))}
             </div>
             
-            <div class="mt-20 p-6 bg-maroon-900 rounded-2xl text-center ws-reveal text-white shadow-xl relative overflow-hidden">
+            <div class="mt-20 p-8 md:p-12 bg-maroon-900 rounded-[2rem] text-center ws-reveal text-white shadow-2xl relative overflow-hidden">
                 <div class="absolute inset-0 bg-[url('/assets/images/grid.svg')] opacity-10"></div>
                 <div class="relative z-10">
                     <h3 class="text-2xl font-heading mb-4 text-gold-400">Academic Support Programs</h3>
@@ -143,26 +145,6 @@ const getSubjects = [
 
 </Layout>
 
-<script>
-    // Initialize standard reveal for curriculum page
-    function initReveal() {
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('reveal-active');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
+<ScrollReveal />
 
-        document.querySelectorAll('.ws-reveal').forEach(el => observer.observe(el));
-    }
-
-    document.addEventListener('DOMContentLoaded', initReveal);
-    document.addEventListener('astro:after-swap', initReveal);
-</script>

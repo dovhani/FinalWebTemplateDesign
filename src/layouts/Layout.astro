@@ -7,30 +7,85 @@ import '../styles/global.css';
 
 interface Props {
 	title: string;
+    description?: string;
 	currentPage?: string;
     style?: string;
     noNavbarPadding?: boolean;
     showMainNav?: boolean;
 }
 
-const { title, currentPage, style, noNavbarPadding = false, showMainNav = true } = Astro.props;
+const {
+    title,
+    description = "Lotsha Primary School — an outstanding institution in Limpopo, South Africa, committed to nurturing minds, shaping leaders, and building excellence since 1967.",
+    currentPage,
+    style,
+    noNavbarPadding = false,
+    showMainNav = true
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://tshikhuthula.co.za');
+const ogImage = "https://res.cloudinary.com/djpfl2uwe/image/upload/f_auto,q_auto,w_1200/v1773823791/slide1_ydp9jd.avif";
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<!-- Responsive preload for LCP hero image to save mobile bandwidth -->
+		{currentPage === 'home' && (
+		<link
+			rel="preload"
+			as="image"
+			imagesrcset="
+				https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_40,w_600,h_800,c_fill/v1773823791/slide1_ydp9jd.avif 600w,
+				https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_40,w_824,h_824,c_fill/v1773823791/slide1_ydp9jd.avif 824w,
+				https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_40,w_1024,h_768,c_fill/v1773823791/slide1_ydp9jd.avif 1024w,
+				https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_40,w_1440,h_800,c_fill/v1773823791/slide1_ydp9jd.avif 1440w
+			"
+			imagesizes="100vw"
+			type="image/avif"
+		/>
+		)}
 		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-		
-		<!-- Typography -->
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Cinzel+Decorative:wght@400;700;900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Manrope:wght@200..800&family=Inter:wght@100..900&family=Roboto:wght@100;300;400;700;900&family=Lato:wght@100;300;400;700;900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Cormorant+Garamond:ital,wght@0,300..900;1,300..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 
-        <!-- Cooper Hewitt Thin (open-source, Smithsonian) -->
+		<!-- Primary Meta Tags -->
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalURL} />
+
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:site_name" content="Lotsha Primary School" />
+		<meta property="og:locale" content="en_ZA" />
+
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
+
+		<!-- Preconnect for fonts — done early to warm the connection -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<!-- Load Google Fonts asynchronously — does NOT block FCP/LCP -->
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Lato:wght@300;400;700;900&family=Outfit:wght@300;400;700&family=Quicksand:wght@400;500;600;700&display=swap"
+			media="print"
+			onload="this.media='all'"
+		/>
+		<!-- Fallback for browsers with JS disabled -->
+		<noscript>
+			<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Lato:wght@300;400;700;900&family=Outfit:wght@300;400;700&family=Quicksand:wght@400;500;600;700&display=swap" />
+		</noscript>
+
+		<!-- Cooper Hewitt (self-hosting subset used in design) -->
         <style>
             @font-face {
                 font-family: 'Cooper Hewitt';
@@ -50,11 +105,31 @@ const { title, currentPage, style, noNavbarPadding = false, showMainNav = true }
             }
         </style>
         {style && <link rel="stylesheet" href={`/styles/${style}`} />}
+
+		<!-- JSON-LD Structured Data -->
+		<script type="application/ld+json" is:inline>
+		{
+			"@context": "https://schema.org",
+			"@type": "School",
+			"name": "Lotsha Primary School",
+			"description": "An outstanding public primary school in Limpopo, South Africa, committed to nurturing minds, shaping leaders, and building excellence since 1967.",
+			"url": "https://tshikhuthula.co.za",
+			"logo": "https://res.cloudinary.com/djpfl2uwe/image/upload/v1773824905/lotsha_logo_beq05b.png",
+			"image": "https://res.cloudinary.com/djpfl2uwe/image/upload/f_auto,q_auto,w_1200/v1773823791/slide1_ydp9jd.avif",
+			"telephone": "+27716924080",
+			"email": "info@tshikhuthula.co.za",
+			"address": {
+				"@type": "PostalAddress",
+				"addressCountry": "ZA",
+				"addressRegion": "Limpopo"
+			},
+			"foundingDate": "1967"
+		}
+		</script>
 	</head>
 	<body class="bg-slate-50 text-slate-900 selection:bg-primary-100 selection:text-primary-900 antialiased min-h-screen flex flex-col" data-page={currentPage}>
-		<!-- Dynamic Background -->
+		<!-- Dynamic Background (no external texture fetch) -->
 		<div class="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-50 via-white to-slate-50"></div>
-		<div class="fixed inset-0 -z-10 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] animate-pulse-slow"></div>
 
 		{showMainNav && <Navigation currentPage={currentPage} />}
 		<div class={`flex-grow ${noNavbarPadding ? 'no-navbar-padding' : ''}`}>
@@ -65,12 +140,12 @@ const { title, currentPage, style, noNavbarPadding = false, showMainNav = true }
 		<Footer />
 
         <!-- Back to Top Button -->
-        <button 
-            id="back-to-top" 
+        <button
+            id="back-to-top"
             class="fixed bottom-8 right-8 z-[150] w-12 h-12 bg-primary-600 text-white rounded-full shadow-2xl flex items-center justify-center opacity-0 invisible translate-y-4 hover:bg-primary-700 transition-all duration-300 active:scale-95"
             aria-label="Back to Top"
         >
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7" />
             </svg>
         </button>
@@ -79,17 +154,24 @@ const { title, currentPage, style, noNavbarPadding = false, showMainNav = true }
 
 <script>
     const backToTop = document.getElementById('back-to-top');
-    
+
     if (backToTop) {
+        let ticking = false;
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 500) {
-                backToTop.classList.remove('opacity-0', 'invisible', 'translate-y-4');
-                backToTop.classList.add('opacity-100', 'visible', 'translate-y-0');
-            } else {
-                backToTop.classList.add('opacity-0', 'invisible', 'translate-y-4');
-                backToTop.classList.remove('opacity-100', 'visible', 'translate-y-0');
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    if (window.scrollY > 500) {
+                        backToTop.classList.remove('opacity-0', 'invisible', 'translate-y-4');
+                        backToTop.classList.add('opacity-100', 'visible', 'translate-y-0');
+                    } else {
+                        backToTop.classList.add('opacity-0', 'invisible', 'translate-y-4');
+                        backToTop.classList.remove('opacity-100', 'visible', 'translate-y-0');
+                    }
+                    ticking = false;
+                });
+                ticking = true;
             }
-        });
+        }, { passive: true });
 
         backToTop.onclick = () => {
             window.scrollTo({

@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ScrollReveal from '../components/ScrollReveal.astro';
 import SecondaryNav from '../components/SecondaryNav.astro';
 import '../styles/enrolment.css';
 
@@ -34,6 +35,7 @@ const requirements = [
 const faqs = [
     { question: `What is the application deadline for ${currentYear}?`, answer: `Applications for the ${currentYear} academic year are accepted until November 30, ${prevYear}. Late applications may be considered if spaces are available.` },
     { question: "When will I know if my child has been accepted?", answer: "Acceptance letters are typically sent within 2 weeks of completing the application and assessment process. For late applications, decisions are made within 5 working days." },
+    { question: "What are the school fees at Lotsha Primary School?", answer: "Lotsha Primary School is a public school classified as Quintile 2 as a no-fee institution, there are no tuition fees for students attending this school. This quintile level school is eligible to receive up to R1,602 per learner from the Department of Education to cover operational expenses and educational resources." },
     { question: "Are there any scholarships or bursaries available?", answer: `Yes, we offer academic, sports, and arts scholarships as well as need-based financial assistance. Applications for scholarships close on October 31, ${prevYear}.` },
     { question: "What is the school's language policy?", answer: "English is the medium of instruction. We offer Afrikaans and isiZulu as additional language options. Support is available for English second language learners." },
     { question: "Does the school offer boarding facilities?", answer: "Currently, we do not offer boarding facilities. We are a day school only, with a comprehensive aftercare program available until 5:30 PM." },
@@ -41,19 +43,21 @@ const faqs = [
 ];
 ---
 
-<Layout title="Enrolment - Tshikhuthula Secondary School" currentPage="enrolment" noNavbarPadding={true} showMainNav={true}>
+<Layout title="Enrolment - Lotsha Primary School"
+    description="Apply for enrolment at Lotsha Primary School. Learn about our admission requirements, application process and important dates for the upcoming academic year." currentPage="enrolment" noNavbarPadding={true} showMainNav={true}>
     <SecondaryNav currentPage="enrolment" />
 
     <!-- ── Hero Header ── -->
-    <header class="enrolment-header">
+    <header class="enrolment-header ws-reveal">
         <div class="enrolment-header-bg"></div>
         <div class="enrolment-header-content">
             <div class="enrolment-badge">Join Our Family</div>
             <h1 class="text-5xl md:text-7xl font-heading text-white font-display drop-shadow-lg tracking-tight mb-6">
                 Admissions &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Enrolment</span>
             </h1>
-            <p class="text-slate-300 max-w-3xl mx-auto page-header-tagline text-center">
-                Join our legacy of academic excellence. Review our admission requirements and begin your application for {currentYear} below.
+            <p class="page-tagline:text-base">
+                The admission to public schools like Lotsha Primary School follows a structured process outlined by the South African Schools Act of 1996. As stipulated, children between the ages of 7 and 15 are mandated to attend school.<br/><br/>
+                Registration for the upcoming academic year typically occurs between April and October of the preceding year, with specific age criteria for entry into Grade R and Grade 1. Parents or guardians are required to submit essential documents, including birth certificates and immunization cards, while non-South African citizens must provide additional documentation.
             </p>
         </div>
     </header>
@@ -68,13 +72,21 @@ const faqs = [
                     <h2>Enrolment Process</h2>
                     <div class="section-heading-rule"></div>
                 </div>
-                <div class="process-grid">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {processSteps.map((step) => (
-                        <div class="process-card">
-                            <div class="process-step-num">{step.number}</div>
-                            <span class="process-icon-wrap">{step.icon}</span>
-                            <h3>{step.title}</h3>
-                            <p>{step.description}</p>
+                        <div class="group bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 p-10 flex flex-col relative overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:border-orange-200">
+                            <!-- Background Accent -->
+                            <div class="absolute -top-10 -right-10 w-32 h-32 bg-orange-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                            
+                            <div class="flex justify-between items-start mb-8 relative z-10">
+                                <span class="text-4xl">{step.icon}</span>
+                                <div class="w-10 h-10 flex items-center justify-center bg-slate-900 text-gold-400 rounded-full font-black text-xs shadow-lg shadow-slate-900/20 group-hover:bg-gold-500 group-hover:text-white transition-colors duration-500">
+                                    0{step.number}
+                                </div>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold text-slate-800 tracking-tight mb-4 relative z-10">{step.title}</h3>
+                            <p class="text-sm font-lato text-slate-600 leading-relaxed relative z-10">{step.description}</p>
                         </div>
                     ))}
                 </div>
@@ -87,12 +99,14 @@ const faqs = [
                     <h2>Admission Requirements</h2>
                     <div class="section-heading-rule"></div>
                 </div>
-                <div class="requirements-grid">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {requirements.map(req => (
-                        <div class="req-card">
-                            <div class="req-icon-circle">{req.icon}</div>
-                            <h3>{req.title}</h3>
-                            <p>{req.description}</p>
+                        <div class="bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 p-8 flex flex-col items-center text-center transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:border-orange-200">
+                            <div class="w-16 h-16 flex items-center justify-center bg-orange-50 rounded-2xl mb-6 text-3xl">
+                                {req.icon}
+                            </div>
+                            <h3 class="text-xs font-black tracking-widest uppercase text-slate-800 mb-2">{req.title}</h3>
+                            <p class="text-[0.65rem] text-slate-500 leading-relaxed font-lato">{req.description}</p>
                         </div>
                     ))}
                 </div>
@@ -205,6 +219,7 @@ const faqs = [
 
         </div>
     </div>
+    <ScrollReveal />
 </Layout>
 
 <script>

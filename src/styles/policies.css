@@ -26,7 +26,7 @@
     position: absolute;
     inset: 0;
     opacity: 0.35;
-    background-image: url('/assets/images/documents/School-Rules-and-policies-header.jpg');
+    background-image: url('https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_auto,w_600/v1773823760/School-Rules-and-policies-header_uhvrl5.avif');
     background-size: cover;
     background-position: center;
 }
@@ -61,12 +61,12 @@
 /* ── Document Card ── */
 .doc-card {
     background: white;
-    border-radius: 0.875rem;
+    border-radius: 2rem;
     display: flex;
     align-items: stretch;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+    border: 1px solid #f1f5f9;
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     text-decoration: none;
     overflow: hidden;
 }
@@ -76,8 +76,9 @@
 }
 
 .doc-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    border-color: rgba(203, 143, 36, 0.2);
 }
 
 /* Left: image – 1:1, covers full card height */
@@ -107,7 +108,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 1.5rem 1.75rem;
+    padding: 2rem;
     position: relative;
     gap: 0.75rem;
 }
@@ -119,18 +120,23 @@
     right: 1.1rem;
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    background: rgba(128, 0, 0, 0.08);
-    color: #800000;
-    font-family: 'Lato', sans-serif;
-    font-size: 0.68rem;
-    font-weight: 700;
+    justify-content: center;
+    padding: 0.45rem 1.25rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(203, 143, 36, 0.35);
+    background: rgba(203, 143, 36, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 0.35rem 0.75rem;
-    border-radius: 999px;
-    transition: background 0.2s ease, color 0.2s ease;
+    color: #cb8f24;
+    /* Layout */
+    gap: 0.35rem;
+    transition: all 0.2s ease;
     white-space: nowrap;
+    z-index: 10;
 }
 
 .doc-badge svg {
@@ -140,17 +146,17 @@
 }
 
 .doc-card:hover .doc-badge {
-    background: #800000;
+    background: #cb8f24;
     color: white;
 }
 
 .doc-badge--maroon {
-    background: rgba(128, 0, 0, 0.08);
-    color: #800000;
+    background: rgba(84, 55, 23, 0.08);
+    color: #543717;
 }
 
 .doc-card:hover .doc-badge--maroon {
-    background: #800000;
+    background: #543717;
     color: white;
 }
 
@@ -162,7 +168,7 @@
 }
 
 .doc-title {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     font-size: 1rem;
     font-weight: 700;
     color: #0f172a;
@@ -239,16 +245,25 @@
 }
 
 .ab-label-eyebrow {
-    font-family: 'Lato', sans-serif;
-    font-weight: 700;
-    font-size: 0.7rem;
-    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.45rem 1.25rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(203, 143, 36, 0.35);
+    background: rgba(203, 143, 36, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-size: 0.6rem;
+    font-weight: 900;
     letter-spacing: 0.3em;
+    text-transform: uppercase;
     color: #cb8f24;
+    width: max-content;
 }
 
 .ab-label-heading {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     font-weight: 800;
     font-size: clamp(2rem, 4vw, 2.5rem);
     color: #0f172a;
@@ -258,6 +273,6 @@
 .ab-label-rule {
     width: 3rem;
     height: 4px;
-    background: #800000;
+    background: #543717;
     margin-top: 0.5rem;
 }

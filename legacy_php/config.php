@@ -99,7 +99,7 @@ if (ENVIRONMENT === 'development') {
 }
 
 // Site settings
-define('SITE_NAME', 'Tshikhuthula Secondary School');
+define('SITE_NAME', 'Lotsha Primary School');
 define('SITE_EMAIL', 'info@tshikhuthula.edu');
 define('SITE_PHONE', '+27 123 456 7890');
 

@@ -4,7 +4,7 @@
 .our-school-header {
     background-color: #0f172a;
     position: relative;
-    padding: 8rem 2rem 5rem;
+    padding: 7rem 2rem 3rem;
     overflow: hidden;
     text-align: center;
 }
@@ -12,10 +12,6 @@
 .our-school-header-bg {
     position: absolute;
     inset: 0;
-    opacity: 0.35;
-    background-image: url('/assets/images/hero/slide5.png');
-    background-size: cover;
-    background-position: center;
 }
 
 .our-school-header-bg::after {

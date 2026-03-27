@@ -5,7 +5,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Quicksand', sans-serif;
 }
 
 body {
@@ -213,8 +213,9 @@ body {
 }
 
 .page-header h1 {
-    font-size: 3rem;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
     margin-bottom: 15px;
+    line-height: 1.15;
 }
 
 .page-header p {
@@ -305,10 +306,12 @@ body {
 
 /* Buttons */
 .btn {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: linear-gradient(135deg, #ff6b35, #ff8e53);
     color: white;
-    padding: 12px 25px;
+    padding: var(--btn-padding-desktop, 0.875rem 2rem);
     border-radius: 5px;
     text-decoration: none;
     font-weight: 600;
@@ -522,10 +525,6 @@ footer {
         display: flex;
     }
     
-    .page-header h1 {
-        font-size: 2.5rem;
-    }
-    
     .footer-content {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -534,10 +533,6 @@ footer {
 @media (max-width: 768px) {
     .page-header {
         padding: 40px 20px;
-    }
-    
-    .page-header h1 {
-        font-size: 2rem;
     }
     
     .cards-grid {

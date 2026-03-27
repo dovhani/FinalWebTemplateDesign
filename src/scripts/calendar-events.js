@@ -1,11 +1,11 @@
 // calendar-events.js
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Event filtering
     function filterEvents(category) {
         const eventCards = document.querySelectorAll('.event-card');
         const filterButtons = document.querySelectorAll('.filter-btn');
-        
+
         // Update active button
         filterButtons.forEach(btn => {
             if (btn.textContent.toLowerCase().includes(category.toLowerCase())) {
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 btn.classList.remove('active');
             }
         });
-        
+
         // Filter events
         eventCards.forEach(card => {
             if (category === 'all' || card.dataset.category === category) {
@@ -35,22 +35,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Form step navigation
     document.querySelectorAll('.next-step').forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const currentStep = document.querySelector('.form-step.active');
             const nextStep = document.getElementById('step' + this.dataset.next);
             const currentStepNumber = currentStep.id.replace('step', '');
-            
+
             // Validate current step
             if (validateStep(currentStepNumber)) {
                 currentStep.classList.remove('active');
                 nextStep.classList.add('active');
-                
+
                 // Update step indicator
                 document.querySelectorAll('.step').forEach(step => {
                     step.classList.remove('active');
                 });
                 document.querySelector(`.step[data-step="${this.dataset.next}"]`).classList.add('active');
-                
+
                 // Smooth scroll to next step
                 nextStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
@@ -58,19 +58,19 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.querySelectorAll('.prev-step').forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const currentStep = document.querySelector('.form-step.active');
             const prevStep = document.getElementById('step' + this.dataset.prev);
-            
+
             currentStep.classList.remove('active');
             prevStep.classList.add('active');
-            
+
             // Update step indicator
             document.querySelectorAll('.step').forEach(step => {
                 step.classList.remove('active');
             });
             document.querySelector(`.step[data-step="${this.dataset.prev}"]`).classList.add('active');
-            
+
             // Smooth scroll to previous step
             prevStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
@@ -81,12 +81,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const step = document.getElementById('step' + stepNumber);
         const inputs = step.querySelectorAll('input[required], select[required], textarea[required]');
         let isValid = true;
-        
+
         inputs.forEach(input => {
             if (!input.value.trim()) {
                 input.style.borderColor = '#dc3545';
                 isValid = false;
-                
+
                 // Add error message
                 let errorDiv = input.parentElement.querySelector('.error-message');
                 if (!errorDiv) {
@@ -105,14 +105,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     errorDiv.remove();
                 }
             }
-            
+
             // Email validation
             if (input.type === 'email' && input.value.trim()) {
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(input.value)) {
                     input.style.borderColor = '#dc3545';
                     isValid = false;
-                    
+
                     let errorDiv = input.parentElement.querySelector('.error-message');
                     if (!errorDiv) {
                         errorDiv = document.createElement('div');
@@ -126,18 +126,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
-        
+
         return isValid;
     }
 
     // Character counter for description
     const descriptionTextarea = document.getElementById('event-description');
     if (descriptionTextarea) {
-        descriptionTextarea.addEventListener('input', function() {
+        descriptionTextarea.addEventListener('input', function () {
             const charCount = this.value.length;
             const counter = this.parentElement.querySelector('.char-count');
             counter.textContent = `${charCount}/500 characters`;
-            
+
             if (charCount > 500) {
                 counter.style.color = '#dc3545';
             } else {
@@ -149,9 +149,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Recurring event toggle
     const recurringCheckbox = document.getElementById('recurring-event');
     const recurringOptions = document.getElementById('recurring-options');
-    
+
     if (recurringCheckbox && recurringOptions) {
-        recurringCheckbox.addEventListener('change', function() {
+        recurringCheckbox.addEventListener('change', function () {
             if (this.checked) {
                 recurringOptions.style.display = 'block';
             } else {
@@ -162,12 +162,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add to calendar functionality
     document.querySelectorAll('.add-to-calendar-btn').forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const eventData = JSON.parse(this.dataset.event);
-            
+
             // Create ICS file
             const icsContent = generateICSEvent(eventData);
-            
+
             // Download ICS file
             const blob = new Blob([icsContent], { type: 'text/calendar' });
             const url = window.URL.createObjectURL(blob);
@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
             a.click();
             document.body.removeChild(a);
             window.URL.revokeObjectURL(url);
-            
+
             // Show success message
             showToast('Event added to your calendar!', 'success');
         });
@@ -188,12 +188,12 @@ document.addEventListener('DOMContentLoaded', function() {
     function generateICSEvent(event) {
         const startDate = new Date(event.event_date + 'T' + (event.start_time || '00:00'));
         const endDate = event.end_time ? new Date(event.event_date + 'T' + event.end_time) : new Date(startDate.getTime() + 3600000);
-        
+
         // Format dates for ICS
         const formatDate = (date) => {
             return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
         };
-        
+
         return `BEGIN:VCALENDAR
 VERSION:2.0
 CALSCALE:GREGORIAN
@@ -213,7 +213,7 @@ END:VCALENDAR`;
         const toast = document.createElement('div');
         toast.className = `toast toast-${type}`;
         toast.textContent = message;
-        
+
         toast.style.cssText = `
             position: fixed;
             top: 20px;
@@ -226,9 +226,9 @@ END:VCALENDAR`;
             z-index: 1000;
             animation: slideIn 0.3s ease;
         `;
-        
+
         document.body.appendChild(toast);
-        
+
         setTimeout(() => {
             toast.style.animation = 'slideOut 0.3s ease';
             setTimeout(() => {
@@ -245,18 +245,18 @@ END:VCALENDAR`;
     }
 
     // Mobile app modal
-    window.showMobileOptions = function() {
+    window.showMobileOptions = function () {
         const modal = document.getElementById('mobileAppModal');
         modal.style.display = 'block';
     };
 
     // Close modal
-    document.querySelector('.close-modal').addEventListener('click', function() {
+    document.querySelector('.close-modal').addEventListener('click', function () {
         document.getElementById('mobileAppModal').style.display = 'none';
     });
 
     // Close modal when clicking outside
-    window.addEventListener('click', function(event) {
+    window.addEventListener('click', function (event) {
         const modal = document.getElementById('mobileAppModal');
         if (event.target === modal) {
             modal.style.display = 'none';
@@ -266,9 +266,9 @@ END:VCALENDAR`;
     // Form submission
     const eventForm = document.getElementById('eventSubmissionForm');
     if (eventForm) {
-        eventForm.addEventListener('submit', async function(e) {
+        eventForm.addEventListener('submit', async function (e) {
             e.preventDefault();
-            
+
             // Validate all steps
             let allValid = true;
             for (let i = 1; i <= 3; i++) {
@@ -276,33 +276,33 @@ END:VCALENDAR`;
                     allValid = false;
                 }
             }
-            
+
             if (!allValid) {
                 showToast('Please fill all required fields correctly', 'error');
                 return;
             }
-            
+
             // Submit form via AJAX
             const formData = new FormData(this);
-            
+
             try {
                 const response = await fetch('submit-event.php', {
                     method: 'POST',
                     body: formData
                 });
-                
+
                 const result = await response.json();
-                
+
                 if (result.success) {
                     showToast('Event submitted successfully! We\'ll review it soon.', 'success');
                     eventForm.reset();
-                    
+
                     // Reset to step 1
                     document.querySelectorAll('.form-step').forEach(step => {
                         step.classList.remove('active');
                     });
                     document.getElementById('step1').classList.add('active');
-                    
+
                     // Reset step indicators
                     document.querySelectorAll('.step').forEach(step => {
                         step.classList.remove('active');
@@ -326,12 +326,16 @@ END:VCALENDAR`;
     // Initialize tooltips
     const tooltipTriggers = document.querySelectorAll('[data-tooltip]');
     tooltipTriggers.forEach(trigger => {
-        trigger.addEventListener('mouseenter', function() {
+        trigger.addEventListener('mouseenter', function () {
+            // READ first — get the trigger position before any DOM mutation
+            const rect = this.getBoundingClientRect();
+
             const tooltip = document.createElement('div');
             tooltip.className = 'custom-tooltip';
             tooltip.textContent = this.dataset.tooltip;
+            // Use visibility:hidden to measure without showing, then position
             tooltip.style.cssText = `
-                position: absolute;
+                position: fixed;
                 background: #333;
                 color: white;
                 padding: 0.5rem 0.75rem;
@@ -340,18 +344,24 @@ END:VCALENDAR`;
                 white-space: nowrap;
                 z-index: 1000;
                 pointer-events: none;
+                visibility: hidden;
             `;
-            
             document.body.appendChild(tooltip);
-            
-            const rect = this.getBoundingClientRect();
-            tooltip.style.top = (rect.top - tooltip.offsetHeight - 5) + 'px';
-            tooltip.style.left = (rect.left + rect.width/2 - tooltip.offsetWidth/2) + 'px';
-            
+
+            // Now batch the reads of tooltip dimensions in one rAF (after paint)
+            // so we don't force a synchronous relayout
+            requestAnimationFrame(() => {
+                const tw = tooltip.offsetWidth;
+                const th = tooltip.offsetHeight;
+                tooltip.style.top = (rect.top + window.scrollY - th - 5) + 'px';
+                tooltip.style.left = (rect.left + window.scrollX + rect.width / 2 - tw / 2) + 'px';
+                tooltip.style.visibility = 'visible';
+            });
+
             this.dataset.tooltipId = tooltip;
         });
-        
-        trigger.addEventListener('mouseleave', function() {
+
+        trigger.addEventListener('mouseleave', function () {
             if (this.dataset.tooltipId) {
                 this.dataset.tooltipId.remove();
                 delete this.dataset.tooltipId;

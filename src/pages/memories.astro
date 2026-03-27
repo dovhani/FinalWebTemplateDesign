@@ -17,7 +17,7 @@ const categories = [
 ];
 
 const categoryColors: Record<string, string> = {
-  'school-trip':          '#961107',
+  'school-trip':          '#543717',
   'district-visit':       '#1e40af',
   'motivational-speaker': '#059669',
   'fun-day':              '#cb8f24',
@@ -33,10 +33,11 @@ const categoryBgs: Record<string, string> = {
 };
 ---
 
-<Layout title="Memories - Tshikhuthula Secondary School" currentPage="memories" noNavbarPadding={true} showMainNav={true}>
+<Layout title="Memories - Lotsha Primary School"
+    description="Relive memorable moments from Lotsha Primary School - school trips, fun days, motivational speaker visits, ceremonies and events across the years." currentPage="memories" noNavbarPadding={true} showMainNav={true}>
 
     <!-- ── HERO HEADER ── -->
-    <header class="mem-header">
+    <header class="mem-header ws-reveal">
         <div class="mem-header-bg"></div>
         <div class="mem-header-shimmer"></div>
         <div class="mem-header-content">
@@ -48,7 +49,7 @@ const categoryBgs: Record<string, string> = {
                 Our <span class="mem-title-accent">Cherished</span><br/>Moments
             </h1>
             <p class="mem-tagline">
-                A living archive of the experiences, ceremonies, and celebrations that define the spirit of Tshikhuthula Secondary School.
+                A living archive of the experiences, ceremonies, and celebrations that define the spirit of Lotsha Primary School.
             </p>
 
             <!-- Year stat pills -->
@@ -85,7 +86,7 @@ const categoryBgs: Record<string, string> = {
                             <button
                                 class={`mem-cat-tab${i === 0 ? ' active' : ''}`}
                                 data-cat={cat.key}
-                                style={i === 0 ? '' : `--cat-color:${categoryColors[cat.key] || '#961107'}`}
+                                style={i === 0 ? '' : `--cat-color:${categoryColors[cat.key] || '#543717'}`}
                             >
                                 <span class="mem-cat-icon">{cat.icon}</span>
                                 {cat.label}
@@ -116,7 +117,7 @@ const categoryBgs: Record<string, string> = {
                                 alt={memory.title}
                                 class="mem-card-img"
                                 loading="lazy"
-                                onerror="this.src='/assets/images/hero/slide1.png'"
+                                onerror="this.src='https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_auto,w_1440,c_fill/v1773823791/slide1_ydp9jd.avif'"
                             />
                             <!-- Category tag overlay -->
                             <div class="mem-card-cat-tag" style={`background:${categoryColors[memory.category]}`}>
@@ -175,10 +176,12 @@ const categoryBgs: Record<string, string> = {
             card.style.display = show ? '' : 'none';
             if (show) {
                 visible++;
-                // Re-trigger animation
+                // Re-trigger animation without a forced reflow:
+                // Remove the visible class, yield to the browser via rAF, then add it back
                 card.classList.remove('mem-card-visible');
-                void card.offsetWidth;
-                card.classList.add('mem-card-visible');
+                requestAnimationFrame(() => {
+                    card.classList.add('mem-card-visible');
+                });
             }
         });
         if (countEl) countEl.textContent = String(visible);

@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ScrollReveal from '../components/ScrollReveal.astro';
 import SecondaryNav from '../components/SecondaryNav.astro';
 import SubNav from '../components/SubNav.astro';
 import '../styles/our-school.css';
@@ -52,19 +53,22 @@ const departments = [
 ];
 ---
 
-<Layout title="Our School - Tshikhuthula Secondary School" currentPage="our-school" noNavbarPadding={true} showMainNav={true}>
+<Layout title="Our School - Lotsha Primary School"
+    description="Discover the Lotsha Primary School community - our dedicated staff, governing body, and support teams committed to excellence in education." currentPage="our-school" noNavbarPadding={true} showMainNav={true}>
     <SecondaryNav currentPage="our-school" />
     <!-- ── Header ── -->
     <header class="our-school-header ws-reveal">
-        <div class="our-school-header-bg"></div>
+        <div class="our-school-header-bg">
+            <img class="absolute inset-0 w-full h-full object-cover opacity-35" fetchpriority="high" decoding="sync" alt="School presentation" src="https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_auto,w_1440,c_fill/v1773823795/slide5_nxrbzd.avif" />
+        </div>
         <div class="our-school-header-content flex flex-col items-center justify-center">
             <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-gold-500/30 bg-gold-500/10 backdrop-blur-md mb-6">
-                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-gold-400">Welcome</span>
+                <span class="page-eyebrow">Welcome</span>
             </div>
             <h1 class="text-5xl md:text-7xl font-heading text-white font-display drop-shadow-lg tracking-tight mb-6">
                 Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">School</span>
             </h1>
-            <p class="text-slate-300 max-w-3xl mx-auto text-lg leading-relaxed font-lato text-center">
+            <p class="page-tagline">
                 Discover our school community, facilities, and dedicated staff members.
             </p>
         </div>
@@ -103,10 +107,9 @@ const departments = [
             .os-stats-bar {
                 display: grid;
                 grid-template-columns: repeat(4, 1fr);
-                background: rgba(6, 11, 20, 0.82);
-                backdrop-filter: blur(16px);
-                -webkit-backdrop-filter: blur(16px);
-                border: 1px solid rgba(255,255,255,0.08);
+                background: #543717; /* Changed to brown */
+                border-top: 1px solid rgba(255,255,255,0.08); /* subtle line */
+                border-bottom: 1px solid rgba(255,255,255,0.08);
                 border-radius: 0;
                 overflow: hidden;
             }
@@ -124,19 +127,19 @@ const departments = [
             .os-stat-icon {
                 width: 2.5rem;
                 height: 2.5rem;
-                background: rgba(153, 27, 27, 0.15);
-                border: 1px solid rgba(153, 27, 27, 0.25);
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(222, 176, 86, 0.3);
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                color: #961107;
+                color: #deb056; /* gold icon text */
                 flex-shrink: 0;
                 transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
             }
             .os-stat-card:hover .os-stat-icon {
                 transform: scale(1.1) rotate(-5deg);
-                border-color: #961107;
-                background: rgba(153, 27, 27, 0.25);
+                border-color: #deb056;
+                background: rgba(255, 255, 255, 0.2);
                 color: #fff;
             }
             .os-stat-icon svg { width: 1.1rem; height: 1.1rem; }
@@ -146,7 +149,7 @@ const departments = [
                 gap: 0.1rem;
             }
             .os-stat-number {
-                font-family: 'Outfit', sans-serif;
+                font-family: 'Quicksand', sans-serif;
                 font-weight: 200;
                 font-size: clamp(1.2rem, 2.5vw, 1.65rem);
                 color: #deb056;
@@ -177,17 +180,24 @@ const departments = [
 
             /* ── Shared section helpers ── */
             .os-section-eyebrow {
-                display: inline-block;
-                font-family: 'Lato', sans-serif;
-                font-weight: 800;
-                font-size: 0.6rem;
-                letter-spacing: 0.28em;
-                text-transform: uppercase;
-                color: #deb056;
-                margin-bottom: 0.75rem;
-            }
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.45rem 1.25rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(203, 143, 36, 0.35);
+    background: rgba(203, 143, 36, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #cb8f24;
+    width: max-content;
+}
             .os-section-heading {
-                font-family: 'Outfit', sans-serif;
+                font-family: 'Quicksand', sans-serif;
                 font-weight: 400;
                 font-size: clamp(1.8rem, 3.5vw, 2.6rem);
                 color: #f8fafc;
@@ -197,7 +207,7 @@ const departments = [
             .os-welcome-em { font-style: italic; color: #deb056; }
             .os-section-rule {
                 width: 3rem; height: 2px;
-                background: linear-gradient(90deg, #961107, #deb056);
+                background: linear-gradient(90deg, #543717, #deb056);
                 margin: 0 auto 1rem;
             }
             .os-section-sub {
@@ -216,10 +226,10 @@ const departments = [
                 grid-template-columns: 1fr 1fr;
                 gap: 4rem;
                 align-items: center;
-                background: rgba(6, 11, 20, 0.82);
-                backdrop-filter: blur(16px);
-                -webkit-backdrop-filter: blur(16px);
-                border: 1px solid rgba(255,255,255,0.08);
+                background: #fff;
+                border-radius: 1.25rem;
+                border: 1px solid #e2e8f0;
+                box-shadow: 0 4px 24px rgba(0,0,0,0.04);
                 padding: 3.5rem;
             }
             @media (max-width: 768px) {
@@ -232,20 +242,20 @@ const departments = [
                 }
             }
             .os-welcome-heading {
-                font-family: 'Outfit', sans-serif;
+                font-family: 'Quicksand', sans-serif;
                 font-weight: 900;
                 font-size: clamp(1.1rem, 2vw, 1.25rem);
                 letter-spacing: 0.15em;
                 text-transform: uppercase;
-                color: #f8fafc;
+                color: var(--brand-primary);
                 line-height: 1.3;
                 margin-bottom: 1.25rem;
             }
             .os-welcome-body {
                 font-family: 'Lato', sans-serif;
                 font-size: 1.15rem;
-                font-weight: 300;
-                color: rgba(255,255,255,0.75);
+                font-weight: 400;
+                color: #475569;
                 line-height: 1.6;
                 margin-bottom: 1rem;
             }
@@ -253,36 +263,36 @@ const departments = [
             .os-pillar { display: flex; gap: 1rem; align-items: flex-start; }
             .os-pillar-icon {
                 width: 2.5rem; height: 2.5rem;
-                background: rgba(153, 27, 27, 0.15);
-                border: 1px solid rgba(153, 27, 27, 0.30);
+                background: rgba(var(--brand-rgb), 0.15);
+                border: 1px solid rgba(var(--brand-rgb), 0.30);
                 display: flex; align-items: center; justify-content: center;
-                color: #961107; flex-shrink: 0;
+                color: #543717; flex-shrink: 0;
                 transition: background 0.3s ease, color 0.3s ease;
             }
-            .os-pillar:hover .os-pillar-icon { background: rgba(153,27,27,0.30); color: #fff; }
+            .os-pillar:hover .os-pillar-icon { background: rgba(var(--brand-rgb),0.30); color: #fff; }
             .os-pillar-icon svg { width: 1rem; height: 1rem; }
             .os-pillar-title {
                 font-family: 'Lato', sans-serif; font-weight: 800;
                 font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
-                color: #f8fafc; margin-bottom: 0.25rem;
+                color: var(--brand-primary); margin-bottom: 0.25rem;
             }
             .os-pillar-desc {
                 font-family: 'Lato', sans-serif; font-size: 0.82rem;
-                color: rgba(255,255,255,0.50); line-height: 1.6;
+                color: #64748b; line-height: 1.6;
             }
             .os-welcome-image-frame {
                 position: absolute;
                 inset: 0;
                 overflow: hidden;
-                border: 1px solid rgba(255,255,255,0.10);
+                border: 1px solid #e2e8f0;
                 border-radius: 6px;
-                background: rgba(6,11,20,0.5);
+                background: #f8fafc;
             }
             .os-welcome-image-placeholder {
                 width: 100%; height: 100%;
                 display: flex; align-items: center; justify-content: center;
-                background: rgba(6,11,20,0.5);
-                color: rgba(255,255,255,0.25); font-style: italic; font-size: 0.9rem;
+                background: #f8fafc;
+                color: #94a3b8; font-style: italic; font-size: 0.9rem;
             }
             .os-welcome-img {
                 position: absolute; inset: 0; width: 100%; height: 100%;
@@ -295,94 +305,10 @@ const departments = [
             }
             .os-welcome-image-overlay {
                 position: absolute; inset: 0;
-                background: linear-gradient(135deg, rgba(150,17,7,0.15), transparent 60%);
+                background: linear-gradient(135deg, rgba(84,55,23,0.15), transparent 60%);
                 pointer-events: none;
             }
 
-            /* ── Departments Section ── */
-            .os-dept-section {
-                background: rgba(6, 11, 20, 0.82);
-                backdrop-filter: blur(16px);
-                -webkit-backdrop-filter: blur(16px);
-                border: 1px solid rgba(255,255,255,0.08);
-                padding: 3.5rem;
-            }
-            @media (max-width: 768px) { .os-dept-section { padding: 2rem; } }
-            .os-dept-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-            @media (max-width: 640px) { .os-dept-grid { grid-template-columns: 1fr; } }
-            .os-dept-card {
-                position: relative;
-                background: rgba(255,255,255,0.04);
-                border: 1px solid rgba(255,255,255,0.07);
-                padding: 2rem 1.75rem 1.75rem; overflow: hidden;
-                transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
-            }
-            .os-dept-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(203,143,36,0.25); transform: translateY(-4px); }
-            .os-dept-top-bar {
-                position: absolute; top: 0; left: 0; right: 0; height: 3px;
-                background: linear-gradient(90deg, #961107, #deb056);
-                transform: scaleX(0); transform-origin: left; transition: transform 0.35s ease;
-            }
-            .os-dept-card:hover .os-dept-top-bar { transform: scaleX(1); }
-            .os-dept-icon { font-size: 2.25rem; margin-bottom: 1rem; display: block; }
-            .os-dept-title {
-                font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.1rem;
-                color: #f8fafc; margin-bottom: 0.5rem; letter-spacing: 0.03em;
-            }
-            .os-dept-desc {
-                font-family: 'Lato', sans-serif; font-size: 0.82rem;
-                color: rgba(255,255,255,0.50); line-height: 1.65; margin-bottom: 1.25rem;
-            }
-            .os-dept-meta { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 0.85rem; display: flex; flex-direction: column; gap: 0.4rem; }
-            .os-dept-meta-row { display: flex; justify-content: space-between; align-items: center; }
-            .os-dept-meta-key {
-                font-family: 'Lato', sans-serif; font-size: 0.55rem; font-weight: 900;
-                letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35);
-            }
-            .os-dept-meta-val { font-family: 'Lato', sans-serif; font-size: 0.78rem; font-weight: 600; color: #deb056; }
-
-            /* ── Personnel Section ── */
-            .os-personnel-section {
-                background: rgba(6, 11, 20, 0.82);
-                backdrop-filter: blur(16px);
-                -webkit-backdrop-filter: blur(16px);
-                border: 1px solid rgba(255,255,255,0.08);
-                padding: 3.5rem;
-            }
-            @media (max-width: 768px) { .os-personnel-section { padding: 2rem; } }
-            .os-personnel-grid {
-                display: grid; grid-template-columns: repeat(5, 1fr);
-                gap: 1px; background: rgba(255,255,255,0.06);
-                border: 1px solid rgba(255,255,255,0.06);
-            }
-            @media (max-width: 900px) { .os-personnel-grid { grid-template-columns: repeat(3, 1fr); } }
-            @media (max-width: 500px)  { .os-personnel-grid { grid-template-columns: repeat(2, 1fr); } }
-            .os-personnel-card {
-                display: flex; flex-direction: column; align-items: center; justify-content: center;
-                padding: 2rem 1rem; background: rgba(6,11,20,0.60);
-                text-decoration: none; text-align: center; gap: 0.5rem;
-                position: relative; overflow: hidden; transition: background 0.3s ease;
-            }
-            .os-personnel-card::before {
-                content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-                background: linear-gradient(90deg, #961107, #deb056);
-                transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease;
-            }
-            .os-personnel-card:hover { background: rgba(150,17,7,0.12); }
-            .os-personnel-card:hover::before { transform: scaleX(1); }
-            .os-personnel-icon { font-size: 1.75rem; margin-bottom: 0.25rem; transition: transform 0.3s ease; }
-            .os-personnel-card:hover .os-personnel-icon { transform: scale(1.15) rotate(-5deg); }
-            .os-personnel-title {
-                font-family: 'Outfit', sans-serif; font-size: 0.65rem; font-weight: 800;
-                letter-spacing: 0.18em; text-transform: uppercase; color: #f8fafc;
-            }
-            .os-personnel-desc { font-family: 'Lato', sans-serif; font-size: 0.6rem; color: rgba(255,255,255,0.40); line-height: 1.4; }
-            .os-personnel-arrow {
-                font-size: 0.85rem; color: #deb056; margin-top: 0.25rem;
-                opacity: 0; transform: translateX(-4px);
-                transition: opacity 0.25s ease, transform 0.25s ease;
-            }
-            .os-personnel-card:hover .os-personnel-arrow { opacity: 1; transform: translateX(0); }
         </style>
         
         <!-- Welcome Section -->
@@ -390,7 +316,7 @@ const departments = [
             <div class="os-welcome-text">
                 <!-- Eyebrow -->
                 <span class="os-section-eyebrow">Est. 1967 · Limpopo, South Africa</span>
-                <h2 class="os-welcome-heading">Welcome to<br/><em class="os-welcome-em">Tshikhuthula</em></h2>
+                <h2 class="os-welcome-heading">Welcome to<br/><em class="os-welcome-em">Lotsha</em></h2>
                 <p class="os-welcome-body">
                     A beacon of educational excellence in Limpopo since 1967. We are committed to nurturing young
                     minds, shaping future leaders, and building a community of lifelong learners.
@@ -425,7 +351,7 @@ const departments = [
             <div class="os-welcome-image-col" style="position: relative; height: 100%; min-height: 400px; width: 100%;">
                 <div class="os-welcome-image-frame">
                     <div class="os-welcome-image-placeholder">School Campus Image</div>
-                    <img src="/assets/images/backgrounds/face.jpg" alt="School Campus" class="os-welcome-img" style="opacity:1;" />
+                    <img src="https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_auto,w_1440,c_fill/v1773823666/face_ikjis7.avif" alt="School Campus" class="os-welcome-img" style="opacity:1;" / loading="lazy">
                     <div class="os-welcome-image-overlay"></div>
                 </div>
             </div>
@@ -440,21 +366,22 @@ const departments = [
                 <div class="os-section-rule"></div>
             </div>
 
-            <div class="os-dept-grid">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {departments.map((dept, i) => (
-                    <div class="os-dept-card animate-fade-in opacity-0" style={`animation-delay: ${0.1 * i}s; animation-fill-mode: forwards;`}>
+                    <div class="bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 p-8 os-dept-card animate-fade-in opacity-0" style={`animation-delay: ${0.1 * i}s; animation-fill-mode: forwards;`}>
                         <div class="os-dept-top-bar"></div>
-                        <div class="os-dept-icon">{dept.icon}</div>
-                        <h3 class="os-dept-title">{dept.title}</h3>
-                        <p class="os-dept-desc">{dept.description}</p>
-                        <div class="os-dept-meta">
-                            <div class="os-dept-meta-row">
-                                <span class="os-dept-meta-key">Head of Dept</span>
-                                <span class="os-dept-meta-val">{dept.head}</span>
+                        <div class="text-4xl mb-6 block">{dept.icon}</div>
+                        <h3 class="text-xl font-bold text-slate-800 tracking-tight mb-4">{dept.title}</h3>
+                        <p class="text-sm font-lato text-slate-600 leading-relaxed mb-8">{dept.description}</p>
+                        
+                        <div class="space-y-4 pt-6 border-t border-slate-50">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs font-black tracking-widest uppercase text-slate-400">Head of Dept</span>
+                                <span class="text-sm font-bold text-slate-700">{dept.head}</span>
                             </div>
-                            <div class="os-dept-meta-row">
-                                <span class="os-dept-meta-key">Staff</span>
-                                <span class="os-dept-meta-val">{dept.staff}</span>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs font-black tracking-widest uppercase text-slate-400">Staff Count</span>
+                                <span class="text-sm font-bold text-slate-700">{dept.staff}</span>
                             </div>
                         </div>
                     </div>
@@ -468,41 +395,42 @@ const departments = [
                 <span class="os-section-eyebrow">School Personnel</span>
                 <h2 class="os-section-heading">Meet Our <em class="os-welcome-em">Team</em></h2>
                 <div class="os-section-rule"></div>
-                <p class="os-section-sub">Access directories for every member of the dedicated team that keeps Tshikhuthula running every day.</p>
+                <p class="os-section-sub">Access directories for every member of the dedicated team that keeps Lotsha running every day.</p>
             </div>
 
-            <div class="os-personnel-grid">
-                <a href="/our-school/staff" class="os-personnel-card">
-                    <div class="os-personnel-icon">👩‍🏫</div>
-                    <h3 class="os-personnel-title">Teaching Staff</h3>
-                    <p class="os-personnel-desc">Meet our qualified educators</p>
-                    <div class="os-personnel-arrow">→</div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                <a href="/our-school/staff" class="group bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 p-8 flex flex-col items-center text-center transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:border-orange-200">
+                    <div class="w-16 h-16 flex items-center justify-center bg-orange-50 rounded-2xl mb-6 text-3xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">👩‍🏫</div>
+                    <h3 class="text-xs font-black tracking-widest uppercase text-slate-800 mb-2">Teaching Staff</h3>
+                    <p class="text-[0.65rem] text-slate-500 leading-relaxed">Meet our qualified educators</p>
+                    <div class="mt-4 text-orange-400 opacity-0 group-hover:opacity-100 transition-opacity">→</div>
                 </a>
-                <a href="/our-school/sgb" class="os-personnel-card">
-                    <div class="os-personnel-icon">🤝</div>
-                    <h3 class="os-personnel-title">SGB Members</h3>
-                    <p class="os-personnel-desc">School Governing Body</p>
-                    <div class="os-personnel-arrow">→</div>
+                <a href="/our-school/sgb" class="group bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 p-8 flex flex-col items-center text-center transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:border-orange-200">
+                    <div class="w-16 h-16 flex items-center justify-center bg-orange-50 rounded-2xl mb-6 text-3xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">🤝</div>
+                    <h3 class="text-xs font-black tracking-widest uppercase text-slate-800 mb-2">SGB Members</h3>
+                    <p class="text-[0.65rem] text-slate-500 leading-relaxed">School Governing Body</p>
+                    <div class="mt-4 text-orange-400 opacity-0 group-hover:opacity-100 transition-opacity">→</div>
                 </a>
-                <a href="/our-school/food-handlers" class="os-personnel-card">
-                    <div class="os-personnel-icon">🍎</div>
-                    <h3 class="os-personnel-title">Food Handlers</h3>
-                    <p class="os-personnel-desc">Nutrition &amp; Food Services</p>
-                    <div class="os-personnel-arrow">→</div>
+                <a href="/our-school/food-handlers" class="group bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 p-8 flex flex-col items-center text-center transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:border-orange-200">
+                    <div class="w-16 h-16 flex items-center justify-center bg-orange-50 rounded-2xl mb-6 text-3xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">🍎</div>
+                    <h3 class="text-xs font-black tracking-widest uppercase text-slate-800 mb-2">Food Handlers</h3>
+                    <p class="text-[0.65rem] text-slate-500 leading-relaxed">Nutrition & Food Services</p>
+                    <div class="mt-4 text-orange-400 opacity-0 group-hover:opacity-100 transition-opacity">→</div>
                 </a>
-                <a href="/our-school/ground-workers" class="os-personnel-card">
-                    <div class="os-personnel-icon">🌳</div>
-                    <h3 class="os-personnel-title">Ground Workers</h3>
-                    <p class="os-personnel-desc">Maintenance &amp; Facilities</p>
-                    <div class="os-personnel-arrow">→</div>
+                <a href="/our-school/ground-workers" class="group bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 p-8 flex flex-col items-center text-center transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:border-orange-200">
+                    <div class="w-16 h-16 flex items-center justify-center bg-orange-50 rounded-2xl mb-6 text-3xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">🌳</div>
+                    <h3 class="text-xs font-black tracking-widest uppercase text-slate-800 mb-2">Ground Workers</h3>
+                    <p class="text-[0.65rem] text-slate-500 leading-relaxed">Maintenance & Facilities</p>
+                    <div class="mt-4 text-orange-400 opacity-0 group-hover:opacity-100 transition-opacity">→</div>
                 </a>
-                <a href="/our-school/security" class="os-personnel-card">
-                    <div class="os-personnel-icon">👮</div>
-                    <h3 class="os-personnel-title">Security Team</h3>
-                    <p class="os-personnel-desc">Safety &amp; Security</p>
-                    <div class="os-personnel-arrow">→</div>
+                <a href="/our-school/security" class="group bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 p-8 flex flex-col items-center text-center transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:border-orange-200">
+                    <div class="w-16 h-16 flex items-center justify-center bg-orange-50 rounded-2xl mb-6 text-3xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">👮</div>
+                    <h3 class="text-xs font-black tracking-widest uppercase text-slate-800 mb-2">Security Team</h3>
+                    <p class="text-[0.65rem] text-slate-500 leading-relaxed">Safety & Security</p>
+                    <div class="mt-4 text-orange-400 opacity-0 group-hover:opacity-100 transition-opacity">→</div>
                 </a>
             </div>
         </section>
     </div>
+    <ScrollReveal />
 </Layout>

@@ -17,7 +17,7 @@
 .contact-header-bg {
     position: absolute;
     inset: 0;
-    background-image: url("/assets/images/backgrounds/heritagebg.jpg");
+    background-image: url("https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_auto,w_1440,c_fill/v1773823666/heritagebg_ljjz0b.avif");
     background-size: cover;
     background-position: center 30%;
     z-index: 1;
@@ -76,22 +76,22 @@
 .contact-cards-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 0;
-    border: 1px solid #f1f5f9;
-    box-shadow: 0 8px 48px rgba(15, 23, 42, 0.06);
+    gap: 1.5rem;
 }
 
 .contact-card {
-    padding: 3rem 2rem;
+    padding: 2.5rem 2rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
-    border-right: 1px solid #f1f5f9;
-    border-top: 4px solid #961107;
     background: #fff;
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    border-radius: 2rem;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
     position: relative;
+    overflow: hidden;
 }
 
 .contact-card:last-child {
@@ -99,16 +99,16 @@
 }
 
 .contact-card:hover {
-    background: #0f172a;
-    transform: translateY(-6px);
-    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.18);
-    z-index: 2;
+    background: #fff;
+    transform: translateY(-8px);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.08);
+    border-color: rgba(203, 143, 36, 0.2);
 }
 
 .contact-card-icon {
     width: 2.25rem;
     height: 2.25rem;
-    color: #961107;
+    color: #543717;
     margin-bottom: 1rem;
     transition: color 0.4s ease, transform 0.4s ease;
     flex-shrink: 0;
@@ -136,11 +136,11 @@
 }
 
 .contact-card:hover .contact-card-title {
-    color: #cbd5e1;
+    color: #cb8f24;
 }
 
 .contact-card-detail {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     font-size: 0.9rem;
     font-weight: 500;
     color: #334155;
@@ -154,17 +154,17 @@
 }
 
 .contact-card:hover .contact-card-detail {
-    color: #e2e8f0;
+    color: #475569;
 }
 
 .contact-card:hover .contact-card-detail.secondary {
-    color: rgba(255, 255, 255, 0.4);
+    color: #94a3b8;
 }
 
 .contact-card-rule {
     width: 2rem;
     height: 2px;
-    background: linear-gradient(90deg, #961107, #cb8f24);
+    background: linear-gradient(90deg, #543717, #cb8f24);
     margin-top: 1rem;
     transition: width 0.4s ease;
     border-radius: 2px;
@@ -189,25 +189,24 @@
 .dept-card {
     background: #fff;
     border: 1px solid #f1f5f9;
-    border-left: 4px solid #961107;
-    padding: 2rem;
+    border-radius: 2rem;
+    padding: 2.25rem;
     display: flex;
-    gap: 1.25rem;
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+    gap: 1.5rem;
+    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
 }
 
 .dept-card:hover {
-    transform: translateX(6px);
-    box-shadow: 0 12px 40px rgba(150, 17, 7, 0.1);
-    border-color: #961107;
-    border-left-color: #cb8f24;
+    transform: translateY(-8px);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.08);
+    border-color: rgba(203, 143, 36, 0.2);
 }
 
 .dept-card-icon {
     width: 2rem;
     height: 2rem;
-    color: #961107;
+    color: #543717;
     flex-shrink: 0;
     margin-top: 0.2rem;
     transition: color 0.4s ease, transform 0.4s ease;
@@ -239,10 +238,10 @@
 }
 
 .dept-card-head {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     font-size: 1rem;
     font-weight: 700;
-    color: #961107;
+    color: #543717;
     margin-top: 0.25rem;
 }
 
@@ -256,7 +255,7 @@
 }
 
 .dept-card-email {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     font-size: 0.82rem;
     color: #64748b;
     margin-top: 0.5rem;
@@ -292,7 +291,7 @@
 }
 
 .form-info-text {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     font-size: 1rem;
     color: #64748b;
     line-height: 1.8;
@@ -309,7 +308,7 @@
     display: flex;
     align-items: center;
     gap: 0.875rem;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     font-size: 0.95rem;
     font-weight: 500;
     color: #334155;
@@ -318,17 +317,17 @@
 .form-info-item svg {
     width: 1.25rem;
     height: 1.25rem;
-    color: #961107;
+    color: #543717;
     flex-shrink: 0;
 }
 
 /* Form card */
 .form-card {
     background: #fff;
+    border-radius: 2rem;
     border: 1px solid #f1f5f9;
-    border-top: 4px solid #961107;
-    padding: 2.5rem;
-    box-shadow: 0 16px 56px rgba(15, 23, 42, 0.08);
+    padding: 3rem;
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.05);
 }
 
 /* Tabs */
@@ -360,10 +359,10 @@
 }
 
 .form-tab.active {
-    background: #961107;
+    background: #543717;
     color: #fff;
-    border-color: #961107;
-    box-shadow: 0 4px 16px rgba(150, 17, 7, 0.25);
+    border-color: #543717;
+    box-shadow: 0 4px 16px rgba(84, 55, 23, 0.25);
 }
 
 /* Form fields */
@@ -400,7 +399,7 @@
     padding: 0.875rem 1rem;
     background: #f8fafc;
     border: 1px solid #e2e8f0;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     font-size: 0.95rem;
     color: #0f172a;
     outline: none;
@@ -414,9 +413,9 @@
 
 .form-group input:focus,
 .form-group textarea:focus {
-    border-color: #961107;
+    border-color: #543717;
     background: #fff;
-    box-shadow: 0 0 0 3px rgba(150, 17, 7, 0.08);
+    box-shadow: 0 0 0 3px rgba(84, 55, 23, 0.08);
 }
 
 .form-group textarea {
@@ -430,8 +429,8 @@
     justify-content: center;
     gap: 0.75rem;
     width: 100%;
-    padding: 1rem 2rem;
-    background: linear-gradient(135deg, #7b0a02, #961107);
+    padding: var(--btn-padding-desktop, 0.875rem 2rem);
+    background: linear-gradient(135deg, #3a2610, #543717);
     color: #fff;
     font-family: 'Lato', sans-serif;
     font-size: 0.7rem;
@@ -450,9 +449,9 @@
 }
 
 .form-submit:hover {
-    background: linear-gradient(135deg, #961107, #a5180f);
+    background: linear-gradient(135deg, #543717, #5e3f1a);
     transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(150, 17, 7, 0.3);
+    box-shadow: 0 8px 28px rgba(84, 55, 23, 0.3);
 }
 
 /* ── Emergency Section ── */
@@ -483,18 +482,20 @@
 }
 
 .emergency-card {
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 2rem 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2.5rem 2rem;
     background: rgba(255, 255, 255, 0.04);
-    border-top: 3px solid #961107;
-    transition: all 0.35s ease;
-    backdrop-filter: blur(8px);
+    border-radius: 2rem;
+    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 .emergency-card:hover {
     background: rgba(255, 255, 255, 0.08);
-    border-top-color: #cb8f24;
-    transform: translateY(-4px);
+    transform: translateY(-8px);
+    border-color: rgba(203, 143, 36, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
 .emergency-icon {
@@ -520,7 +521,7 @@
 }
 
 .emergency-card p {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     font-size: 0.9rem;
     color: rgba(255, 255, 255, 0.65);
     margin-bottom: 0.375rem;
@@ -548,7 +549,7 @@
     }
 
     .contact-card:nth-child(3) {
-        border-top: 4px solid #961107;
+        border-top: 4px solid #543717;
     }
 
     .dept-grid {
@@ -572,7 +573,7 @@
 
     .contact-card {
         border-right: none;
-        border-top: 4px solid #961107;
+        border-top: 4px solid #543717;
     }
 
     .contact-card+.contact-card {

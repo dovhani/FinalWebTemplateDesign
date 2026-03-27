@@ -28,7 +28,7 @@
     position: absolute;
     inset: 0;
     opacity: 0.35;
-    background-image: url('/assets/images/hero/slide1.png');
+    background-image: url('https://res.cloudinary.com/djpfl2uwe/image/upload/f_avif,q_auto,w_1440,c_fill/v1773823791/slide1_ydp9jd.avif');
     background-size: cover;
     background-position: center;
 }

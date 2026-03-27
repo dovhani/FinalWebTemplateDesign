@@ -23,10 +23,10 @@ const upcomingEvents = eventsData.slice(0, 6);
 
 const getEventColor = (eventType: string) => {
     const colors: Record<string, string> = {
-        'school_event': '#961107',
+        'school_event': '#543717',
         'holiday': '#059669',
         'exam': '#cb8f24',
-        'parent_meeting': '#7b0a02',
+        'parent_meeting': '#3a2610',
         'other': '#64748b'
     };
     return colors[eventType] || '#64748b';
@@ -48,13 +48,14 @@ const getEventTypeLabel = (type: string) => {
 };
 ---
 
-<Layout title="Calendar & Events - Tshikhuthula Secondary School" currentPage="calendar-events" noNavbarPadding={true} showMainNav={true}>
+<Layout title="School Calendar | Lotsha Primary School"
+    description="Stay up to date with Lotsha Primary School academic calendar, upcoming events, parent meetings, sports days, and cultural activities." currentPage="calendar-events" noNavbarPadding={true} showMainNav={true}>
     <SecondaryNav currentPage="calendar-events" />
 
-    <!-- ── Header ── -->
-    <header class="cal-header">
-        <div class="cal-header-bg"></div>
+    <!-- Hero Header -->
+    <header class="cal-header ws-reveal">
         <div class="cal-header-shimmer"></div>
+        <div class="cal-header-bg"></div>
         <div class="cal-header-content">
             <div class="cal-badge">Schedule</div>
             <h1 class="cal-title">
@@ -116,7 +117,7 @@ const getEventTypeLabel = (type: string) => {
                 <!-- Legend -->
                 <div class="cal-legend">
                     <div class="cal-legend-item">
-                        <span class="cal-legend-dot" style="background:#961107"></span> School Event
+                        <span class="cal-legend-dot" style="background:#543717"></span> School Event
                     </div>
                     <div class="cal-legend-item">
                         <span class="cal-legend-dot" style="background:#059669"></span> Holiday
@@ -125,7 +126,7 @@ const getEventTypeLabel = (type: string) => {
                         <span class="cal-legend-dot" style="background:#cb8f24"></span> Exam
                     </div>
                     <div class="cal-legend-item">
-                        <span class="cal-legend-dot" style="background:#7b0a02"></span> Parent Meeting
+                        <span class="cal-legend-dot" style="background:#3a2610"></span> Parent Meeting
                     </div>
                 </div>
             </section>
@@ -194,10 +195,10 @@ const getEventTypeLabel = (type: string) => {
 
     function getEventColor(eventType) {
         const colors = {
-            'school_event': '#961107',
+            'school_event': '#543717',
             'holiday': '#059669',
             'exam': '#cb8f24',
-            'parent_meeting': '#7b0a02',
+            'parent_meeting': '#3a2610',
             'other': '#64748b'
         };
         return colors[eventType] || '#64748b';
